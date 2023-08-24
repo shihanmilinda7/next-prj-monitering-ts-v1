@@ -113,8 +113,8 @@ const Login = () => {
         <div className="sm:w-1/2 xl:w-3/5 h-full hidden md:flex flex-auto items-center justify-center p-10 overflow-hidden bg-purple-900 text-white bg-no-repeat bg-cover relative">
           <div className="absolute bg-gradient-to-b from-indigo-600 to-blue-500 opacity-75 inset-0 z-0"></div>
           <div className="w-full  max-w-md z-10">
-            <div className="sm:text-4xl xl:text-5xl font-bold leading-tight mb-6">Next Generation Task Monitering </div>
-            <div className="sm:text-sm xl:text-md text-gray-200 font-normal"> "Discover streamlined productivity with NextTask - the ultimate task management solution. Effortlessly create, prioritize, and collaborate on tasks. Never miss a deadline again, stay organized, and achieve your goals with ease. Join the productivity revolution - sign up for NextTask today."</div>
+            <div className="sm:text-4xl xl:text-5xl font-bold leading-tight mb-6">Next Generation Project Monitering  </div>
+            <div className="sm:text-sm xl:text-md text-gray-200 font-normal"> "The Project Monitoring Web App is a powerful tool designed to streamline and enhance the process of overseeing and managing projects. It provides real-time visibility into project progress, performance, and key metrics, enabling project managers and stakeholders to make informed decisions and take timely actions. The web app offers a user-friendly interface and a range of features to facilitate efficient project monitoring."</div>
           </div>
           <ul className="circles">
             <li></li>
