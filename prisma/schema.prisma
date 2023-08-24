@@ -28,6 +28,24 @@ model staff{
   createdAt DateTime @default(now())
 }
 
+model projects{
+  projectid       Int      @id @default(autoincrement())
+  projectname String   
+  projectdescription String   
+  startdate String   
+  enddate String   
+  projectstatus String   
+}
+
+model projecttasks{
+  taskid       Int      @id @default(autoincrement())
+  projectid Int   
+  taskname String   
+  taskdescription String   
+  startdate String   
+  enddate String   
+}
+
 model categories{
   categoryid       Int      @id @default(autoincrement())
   categoryname String   
