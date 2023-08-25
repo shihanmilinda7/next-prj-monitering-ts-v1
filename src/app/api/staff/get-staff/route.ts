@@ -15,15 +15,15 @@ export async function GET(request: Request) {
   const postsPerPage = 10; // Number of posts per page
   const offset = (currentPage - 1) * postsPerPage;
 
-  const totalProjectCount = await prisma.projects.count();
+  const totalStaffCount = await prisma.staff.count();
 
-  const project = await prisma.projects.findMany({
+  const staff = await prisma.staff.findMany({
     skip: offset,
     take: postsPerPage,
   });
 
-  if (project.length > 0) {
-    res = { message: "SUCCESS", project, totalProjectCount };
+  if (staff.length > 0) {
+    res = { message: "SUCCESS", staff, totalStaffCount };
   } else {
     res = { message: "FAIL" };
   }

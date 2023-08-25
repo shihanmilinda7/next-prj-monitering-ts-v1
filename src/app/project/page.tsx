@@ -13,8 +13,9 @@ import Spinner from "../dashboard/loading";
 import Link from "next/link";
 import { ProjectTable } from "../components/project/project-table";
 import { ProjectObjectTypes } from "../components/project/types";
+import Pagination from "../components/common-comp/pagination";
 
-export default function Staff() {
+export default function Project() {
   const router = useRouter();
   // const { data: session, status } = useSession();
 
@@ -33,6 +34,20 @@ export default function Staff() {
     ProjectObjectTypes[]
   >([]);
 
+  const [tablePagination, setTablePagination] = useState(1);
+  const [totalProjectCount, setTotalProjectCount] = useState(1);
+
+  const nextTabel = () => {
+    if (Math.ceil(totalProjectCount / 10) > tablePagination) {
+      setTablePagination((prv: number) => prv + 1);
+    }
+  };
+
+  const prvTabel = () => {
+    if (tablePagination > 1) {
+      setTablePagination((prv: number) => prv - 1);
+    }
+  };
   //re render page
   // const toggleReloadTable = () => {
   //   setReloadTable((prv: boolean) => !prv)
@@ -41,15 +56,16 @@ export default function Staff() {
   useEffect(() => {
     // declare the data fetching function
     const fetchData = async () => {
-      const reponse = await fetch("api/project");
+      const reponse = await fetch("api/project?page-number=" + tablePagination);
       const res = await reponse.json();
       setProjectRowObjects(res.project);
+      setTotalProjectCount(res.totalProjectCount);
       console.log("res", res.project);
     };
 
     // call the function
     fetchData().catch(console.error);
-  }, []);
+  }, [tablePagination]);
 
   return (
     <div>
@@ -65,7 +81,12 @@ export default function Staff() {
           Create New Project
         </Link>
       </div>
-      <div>{projectRowObjects && <ProjectTable projectRowObjects={projectRowObjects}/>}</div>
+      <div>
+        {projectRowObjects && (
+          <ProjectTable projectRowObjects={projectRowObjects} tablePagination={tablePagination}/>
+        )}
+      </div>
+      <Pagination tablePagination={tablePagination} totalProjectCount={totalProjectCount} prvTabel={prvTabel} nextTabel={nextTabel}/>
     </div>
   );
 }

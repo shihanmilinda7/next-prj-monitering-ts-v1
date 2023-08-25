@@ -10,12 +10,12 @@ export async function GET(request: Request) {
   let res;
 
   const projectid: string = searchParams.get("projectid") ?? "";
-
   const project = await prisma.projects.findMany({
     where: {
       projectid: parseInt(projectid),
     },
   });
+  console.log("projectid", project);
 
   if (project.length > 0) {
     const projectTasks = await prisma.projecttasks.findMany({
@@ -23,7 +23,6 @@ export async function GET(request: Request) {
         projectid: parseInt(projectid),
       },
     });
-console.log("projectTasks",projectTasks,)
     if (projectTasks.length > 0) {
       res = { message: "SUCCESS", project, projectTasks };
     } else {
@@ -90,56 +89,70 @@ export async function POST(request: Request) {
 
 export async function PUT(request: Request) {
   const {
-    staffid,
-    staffname,
-    contracttype,
-    contactno,
-    nic,
-    password,
-    username,
-    userid,
-    role,
+    projectid,
+    projectname,
+    projectdescription,
+    startdate,
+    enddate,
+    projectstatus,
+    taskRowObjects,
   } = await request.json();
-  const hashedPassword = await bcrypt.hash(password, 10);
-
   let message: string = "SUCCESS";
+  console.log("projectname", projectname);
   try {
     await prisma.$transaction(async (tx) => {
-      // 1. update staff .
-      const updateStaff = await tx.staff.updateMany({
-        where: { staffid },
+      // 1. update project.
+      const updateProject = await tx.projects.updateMany({
+        where: { projectid },
         data: {
-          staffname,
-          contracttype,
-          contactno,
-          nic,
+          projectname,
+          projectdescription,
+          startdate,
+          enddate,
+          projectstatus,
         },
       });
 
-      // 2. update user
-      const updateUser = await tx.users.updateMany({
-        where: { userid },
-        data: {
-          username,
-          password: hashedPassword,
-          role,
-        },
-      });
+      // 2. update tasks details.
+      for (let i = 0; i < taskRowObjects.length; i++) {
+        const element = taskRowObjects[i];
+        if(element.rowStatus != 'deleted'){
+          if (element.taskid) {
+            const tmpTaskId = element.taskid;
+            await tx.projecttasks.updateMany({
+              where: { taskid: tmpTaskId },
+              data: {
+                taskname: element.taskname,
+                taskdescription: element.taskdescription,
+                startdate: element.startdate,
+                enddate: element.startdate,
+              },
+            });
+          } else {
+            await tx.projecttasks.create({
+              data: {
+                projectid: projectid,
+                taskname: element.taskname,
+                taskdescription: element.taskdescription,
+                startdate: element.startdate,
+                enddate: element.startdate,
+              },
+            });
+          }
+        }else{
+          await tx.projecttasks.delete({
+            where: {
+              taskid: element.taskid,
+            },
+          });
+        }
+        
+      }
 
       return "";
     });
-
-    // const updateStaff = await tx.staff.updateMany({
-    //     where: { staffid },
-    //     data: {
-    //         staffname,
-    //         contracttype,
-    //         contactno,
-    //         nic,
-    //     },
-    // });
   } catch (error) {
-    console.error("Error updating staff:", error);
+    console.error("Error updating project tasks", error);
     message = "FAIL";
   }
   return NextResponse.json(message);

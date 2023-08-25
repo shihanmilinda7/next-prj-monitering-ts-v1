@@ -4,6 +4,7 @@ import ConfirmAlertbox from "@/app/components/common-comp/confirm-alertbox";
 import DateInputField from "@/app/components/common-comp/input-fields/date-input-fields";
 import SelectBoxInputField from "@/app/components/common-comp/input-fields/select-input-field";
 import TextInputField from "@/app/components/common-comp/input-fields/text-input-fields";
+import Pagination from "@/app/components/common-comp/pagination";
 import { WithRole } from "@/app/components/common-comp/withRole";
 import Navbar from "@/app/components/navbar/navbar";
 import NewProjectTask from "@/app/components/project/project-task-addnew";
@@ -16,7 +17,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-export default function Staff() {
+export default function NewProject() {
   //get pathname
   let pathname: string = "";
 
@@ -60,6 +61,9 @@ export default function Staff() {
   const [pageReload, setPageReload] = useState(false);
 
   const [taskRowObjects, setTaskRowObjects] = useState<TaskObjectTypes[]>([]);
+  // const [initialTaskRowObjects, setInitialTaskRowObjects] = useState<
+  //   TaskObjectTypes[]
+  // >([]);
 
   const statusOptionValues = [
     { value: "", name: "Select Status" },
@@ -69,17 +73,36 @@ export default function Staff() {
     { value: "Suspended", name: "Suspended" },
   ];
 
+  const [tablePagination, setTablePagination] = useState(1);
+
+  const nextTabel = () => {
+    if (Math.ceil(taskRowObjects.length / 10) > tablePagination) {
+      setTablePagination((prv: number) => prv + 1);
+    }
+  };
+
+  const prvTabel = () => {
+    if (tablePagination > 1) {
+      setTablePagination((prv: number) => prv - 1);
+    }
+  };
+
   const updateTaskRowObjectArray = (
     tasks?: any,
     index?: number,
-    deleteTask?: boolean
+    options?: { deleteTask?: boolean; deltaskid?: number }
   ) => {
     const tmpArray: any = [...taskRowObjects];
-    if (deleteTask) {
+
+    if (options?.deleteTask) {
       if (index || index == 0) {
-        console.log("deleteTask", deleteTask);
-        tmpArray.splice(index, 1);
-        setTaskRowObjects(tmpArray);
+        if (!options?.deltaskid) {
+          tmpArray.splice(index, 1);
+          setTaskRowObjects(tmpArray);
+        } else {
+          tmpArray[index]["rowStatus"] = "deleted";
+          setTaskRowObjects(tmpArray);
+        }
       }
     } else {
       if (tasks) {
@@ -90,8 +113,10 @@ export default function Staff() {
           });
           setTaskRowObjects(tmpArray);
         } else {
+          //update display object
           tmpArray.push(tasks);
           setTaskRowObjects(tmpArray);
+          //update initial object
         }
       }
     }
@@ -100,32 +125,35 @@ export default function Staff() {
   //for states update
   useEffect(() => {
     // declare the data fetching function
-    const fetchData = async () => {
-      const reponse = await fetch(
-        pathname + "/api/project/get-as-project?projectid=" + selProjectid
-      );
-      const res = await reponse.json();
-      console.log("res", res.project);
-      const project = res.project[0];
-      const projectTasks = res.projectTasks;
-      console.log("project.projectid",projectTasks,)
-      //update states
-      setProjectid(project.projectid);
-      setProjectname(project.projectname);
-      setProjectdescription(project.projectdescription);
-      setStartdate(project.startdate);
-      setEnddate(project.enddate);
-      setProjectstatus(project.projectstatus);
-      setTaskRowObjects(projectTasks);
-      setPageReload(true)
-    };
 
-    // call the function
-    fetchData().catch(console.error);
+    if (selProjectid) {
+      const fetchData = async () => {
+        const reponse = await fetch(
+          pathname + "/api/project/get-as-project?projectid=" + selProjectid
+        );
+        const res = await reponse.json();
+        console.log("res", res);
+        const project = res.project[0];
+        const projectTasks = res.projectTasks;
+        console.log("project.projectid", projectTasks);
+        //update states
+        setProjectid(project.projectid);
+        setProjectname(project.projectname);
+        setProjectdescription(project.projectdescription);
+        setStartdate(project.startdate);
+        setEnddate(project.enddate);
+        setProjectstatus(project.projectstatus);
+        setTaskRowObjects(projectTasks);
+        // setPageReload(true)
+      };
+
+      // call the function
+      fetchData().catch(console.error);
+    }
   }, []);
 
   //for page reload
-  useEffect(() => {}, [pageReload]);
+  // useEffect(() => {}, [pageReload]);
 
   const cancelButton = () => {
     router.push("/project");
@@ -135,7 +163,11 @@ export default function Staff() {
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
-    await addnew();
+    if (!projectid) {
+      await addnew();
+    } else {
+      await update();
+    }
   };
 
   //add new project action
@@ -151,18 +183,21 @@ export default function Staff() {
       if (validation == 0) {
         if (taskRowObjects.length > 0) {
           //api call
-          const response = await fetch(pathname + "/api/project", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              projectname,
-              projectdescription,
-              startdate,
-              enddate,
-              projectstatus,
-              taskRowObjects,
-            }),
-          });
+          const response = await fetch(
+            pathname + "/api/project/get-as-project",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                projectname,
+                projectdescription,
+                startdate,
+                enddate,
+                projectstatus,
+                taskRowObjects,
+              }),
+            }
+          );
           const jsonResponse = await response.json();
 
           if (jsonResponse == "SUCCESS") {
@@ -205,6 +240,76 @@ export default function Staff() {
     }
   };
 
+  //update project action
+  const update = async () => {
+    const validation = inputFieldValidation({
+      projectname,
+      projectdescription,
+      startdate,
+      enddate,
+    });
+    try {
+      //check input field empty or not
+      if (validation == 0) {
+        if (taskRowObjects.length > 0) {
+          //api call
+          const response = await fetch(
+            pathname + "/api/project/get-as-project",
+            {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                projectid,
+                projectname,
+                projectdescription,
+                startdate,
+                enddate,
+                projectstatus,
+                taskRowObjects,
+              }),
+            }
+          );
+          const jsonResponse = await response.json();
+
+          if (jsonResponse == "SUCCESS") {
+            toast.success("Project updated successfully!", {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+            router.push("/project");
+          }
+        } else {
+          toast.info("Project should be contain at least one task!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      }
+    } catch (error) {
+      toast.error("Error!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
   //re render page
   // const toggleReloadTable = () => {
   //   setReloadTable((prv: boolean) => !prv)
@@ -231,7 +336,7 @@ export default function Staff() {
       <Navbar />
       <div className="flex items-center justify-center p-4">
         <h1 className="text-4xl font-extrabold uppercase text-indigo-600 mr-auto">
-          New Project
+          {!projectid ? "New Project" : "Project - " + projectname}
         </h1>
       </div>
       <div className="flex items-center justify-center p-2">
@@ -303,6 +408,14 @@ export default function Staff() {
               arrayUpdateFuntion={updateTaskRowObjectArray}
             />
           </div>
+          {/* <div className="w-full">
+            <Pagination
+              tablePagination={tablePagination}
+              totalProjectCount={taskRowObjects.length }
+              prvTabel={prvTabel}
+              nextTabel={nextTabel}
+            />
+          </div> */}
           <div className="flex px-3 w-full">
             <div className="ml-auto">
               <ConfirmAlertbox

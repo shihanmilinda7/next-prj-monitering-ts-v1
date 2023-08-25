@@ -6,8 +6,10 @@ import { ProjectObjectTypes, TaskObjectTypes } from "./types";
 
 export const ProjectTable = ({
   projectRowObjects,
+  tablePagination
 }: {
-  projectRowObjects: ProjectObjectTypes[];
+  projectRowObjects: ProjectObjectTypes[],
+  tablePagination:number
 }) => {
   const tableHeads = [
     "#",
@@ -41,7 +43,7 @@ export const ProjectTable = ({
                   className="even:bg-blue-gray-50/50"
                   key={tableRow.projectid}
                 >
-                  <td className="text-left py-3 px-4 font-bold">{index + 1}</td>
+                  <td className="text-left py-3 px-4 font-bold">{(tablePagination-1)*10+(index + 1)}</td>
                   <td className="text-left py-3 px-4">
                     {tableRow.projectname}
                   </td>

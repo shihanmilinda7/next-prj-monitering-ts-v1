@@ -19,7 +19,7 @@ const NewProjectTask = ({
   arrayUpdateFuntion: (
     taskObject?: TaskObjectTypes,
     index?: number,
-    deleteTask?: boolean
+    options?: { deleteTask?: boolean; deltaskid?: number }
   ) => void;
   selRowObject?: TaskObjectTypes;
   index?: number;
@@ -58,7 +58,7 @@ const NewProjectTask = ({
       enddate,
     });
     if (validation == 0) {
-      setIsOpen(false);
+      // setIsOpen(false);
       arrayUpdateFuntion(
         { taskname, taskdescription, startdate, enddate },
         index
@@ -72,7 +72,14 @@ const NewProjectTask = ({
   const deleteAction = () => {
     setIsOpen(false);
     const deleteTask: boolean | undefined = true;
-    arrayUpdateFuntion({}, index, deleteTask);
+    if (!taskid) {
+      console.log("no task id");
+      arrayUpdateFuntion({}, index, { deleteTask });
+    } else {
+      console.log("taskid", taskid);
+      const deltaskid: any = taskid;
+      arrayUpdateFuntion({}, index, { deleteTask, deltaskid });
+    }
   };
 
   return (
