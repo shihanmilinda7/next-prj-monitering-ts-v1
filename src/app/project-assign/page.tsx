@@ -17,6 +17,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { PrjAssignStaffTable } from "../components/project-assign/staff-table";
+import { PrjAssignProjectTable } from "../components/project-assign/project-table";
+import { PrjAssignTaskTable } from "../components/project-assign/task-table";
 
 export default function ProjectAssign() {
   //get pathname
@@ -47,35 +49,21 @@ export default function ProjectAssign() {
   //   return null;
   // }
 
-  //define state variables
-  // const [reloadTable, setReloadTable] = useState(false);
-
-  // const searchParams = useSearchParams();
-  // const selProjectid = searchParams.get("projectid");
-
-  // const [projectid, setProjectid] = useState("");
-  // const [projectname, setProjectname] = useState("");
-  // const [projectdescription, setProjectdescription] = useState("");
-  // const [startdate, setStartdate] = useState("");
-  // const [enddate, setEnddate] = useState("");
-  // const [projectstatus, setProjectstatus] = useState("");
-  // const [pageReload, setPageReload] = useState(false);
-
   const [staffRowObjects, setStaffRowObjects] = useState<any[]>([]);
-  const [tablePagination, setTablePagination] = useState(1);
-  const [totalProjectCount, setTotalProjectCount] = useState(1);
   const [staffid, setStaffid] = useState<any>();
   const [staffname, setStaffname] = useState("No any selection");
+  const [staffTablePage, setStaffTablePage] = useState(1);
+  const [totalStaffCount, setTotalStaffCount] = useState(1);
 
-  const nextTabel = () => {
-    if (Math.ceil(totalProjectCount / 10) > tablePagination) {
-      setTablePagination((prv: number) => prv + 1);
+  const nextStaffTabel = () => {
+    if (Math.ceil(totalStaffCount / 10) > staffTablePage) {
+      setStaffTablePage((prv: number) => prv + 1);
     }
   };
 
-  const prvTabel = () => {
-    if (tablePagination > 1) {
-      setTablePagination((prv: number) => prv - 1);
+  const prvStaffTabel = () => {
+    if (staffTablePage > 1) {
+      setStaffTablePage((prv: number) => prv - 1);
     }
   };
 
@@ -84,288 +72,174 @@ export default function ProjectAssign() {
     setStaffname(staffname);
   };
 
-  // const statusOptionValues = [
-  //   { value: "", name: "Select Status" },
-  //   { value: "Pending", name: "Pending" },
-  //   { value: "Started", name: "Started" },
-  //   { value: "End", name: "End" },
-  //   { value: "Suspended", name: "Suspended" },
-  // ];
+  const [projectRowObjects, setProjectRowObjects] = useState<any[]>([]);
+  const [projectid, setProjectid] = useState<any>();
+  const [projectname, setProjectname] = useState("No any selection");
+  const [projectTablePage, setProjectTablePage] = useState(1);
+  const [totalProjectCount, setTotalProjectCount] = useState(1);
 
-  // const [tablePagination, setTablePagination] = useState(1);
+  const nextProjectTabel = () => {
+    if (Math.ceil(totalProjectCount / 10) > projectTablePage) {
+      setProjectTablePage((prv: number) => prv + 1);
+    }
+  };
 
-  // const nextTabel = () => {
-  //   if (Math.ceil(taskRowObjects.length / 10) > tablePagination) {
-  //     setTablePagination((prv: number) => prv + 1);
-  //   }
-  // };
+  const prvProjectTabel = () => {
+    if (projectTablePage > 1) {
+      setProjectTablePage((prv: number) => prv - 1);
+    }
+  };
 
-  // const prvTabel = () => {
-  //   if (tablePagination > 1) {
-  //     setTablePagination((prv: number) => prv - 1);
-  //   }
-  // };
+  const [taskRowObjects, setTaskRowObjects] = useState<any[]>([]);
+  const [taskTablePage, setTaskTablePage] = useState(1);
+  const [totalTaskCount, setTotalTaskCount] = useState(1);
 
-  // const updateTaskRowObjectArray = (
-  //   tasks?: any,
-  //   index?: number,
-  //   options?: { deleteTask?: boolean; deltaskid?: number }
-  // ) => {
-  //   const tmpArray: any = [...taskRowObjects];
+  const nextTaskTabel = () => {
+    if (Math.ceil(totalTaskCount / 10) > taskTablePage) {
+      setProjectTablePage((prv: number) => prv + 1);
+    }
+  };
 
-  //   if (options?.deleteTask) {
-  //     if (index || index == 0) {
-  //       if (!options?.deltaskid) {
-  //         tmpArray.splice(index, 1);
-  //         setTaskRowObjects(tmpArray);
-  //       } else {
-  //         tmpArray[index]["rowStatus"] = "deleted";
-  //         setTaskRowObjects(tmpArray);
-  //       }
-  //     }
-  //   } else {
-  //     if (tasks) {
-  //       if (index || index == 0) {
-  //         const keys: any = Object.keys(tasks);
-  //         keys.forEach((key: any) => {
-  //           tmpArray[index][key] = tasks[key];
-  //         });
-  //         setTaskRowObjects(tmpArray);
-  //       } else {
-  //         //update display object
-  //         tmpArray.push(tasks);
-  //         setTaskRowObjects(tmpArray);
-  //         //update initial object
-  //       }
-  //     }
-  //   }
-  // };
+  const prvTaskTabel = () => {
+    if (taskTablePage > 1) {
+      setTaskTablePage((prv: number) => prv - 1);
+    }
+  };
 
-  //for states update
+  const projectTableClickEvent = (projectid: number, projectname: string) => {
+    setProjectid(projectid);
+    setProjectname(projectname);
+    // declare the data fetching function
+    const fetchData = async () => {
+      const reponse = await fetch(
+        pathname +
+          "/api/project/get-task-as-project-pagination?page-number=" +
+          taskTablePage +
+          "&projectid=" +
+          projectid
+      );
+      const res = await reponse.json();
+      console.log("res", res);
+      setTaskRowObjects(res.projecttasks);
+      setTotalProjectCount(res.totalProjectTaskCount);
+    };
+    // call the function
+    fetchData().catch(console.error);
+  };
+
+  //for staff table pagination update
   useEffect(() => {
     // declare the data fetching function
     const fetchData = async () => {
       const reponse = await fetch(
-        pathname + "/api/staff/get-staff?page-number=" + tablePagination
+        pathname + "/api/staff/get-staff?page-number=" + staffTablePage
       );
       const res = await reponse.json();
-      console.log("res", res);
       setStaffRowObjects(res.staff);
-      setTotalProjectCount(res.totalStaffCount);
-
-      // const project = res.project[0];
-      // const projectTasks = res.projectTasks;
-      // console.log("project.projectid", projectTasks);
+      setTotalStaffCount(res.totalStaffCount);
     };
     // call the function
     fetchData().catch(console.error);
-  }, [tablePagination]);
+  }, [staffTablePage]);
 
-  //for page reload
-  // useEffect(() => {}, [pageReload]);
+  //for project table pagination update
+  useEffect(() => {
+    // declare the data fetching function
+    const fetchData = async () => {
+      const reponse = await fetch(
+        pathname + "/api/project?page-number=" + projectTablePage
+      );
+      const res = await reponse.json();
+      console.log("res", res);
+      setProjectRowObjects(res.project);
+      setTotalProjectCount(res.totalProjectCount);
+    };
+    // call the function
+    fetchData().catch(console.error);
+  }, [projectTablePage]);
 
-  const cancelButton = () => {
-    router.push("/project");
-  };
+  //for task table pagination update
+  useEffect(() => {}, [taskTablePage]);
 
-  // const submitButtonHandler = async (
-  //   e: React.MouseEvent<HTMLButtonElement>
-  // ) => {
-  //   e.preventDefault();
-  //   if (!projectid) {
-  //     await addnew();
-  //   } else {
-  //     await update();
-  //   }
-  // };
+  //for task table
+  useEffect(() => {}, [projectid, staffid]);
 
-  // //add new project action
-  // const addnew = async () => {
-  //   const validation = inputFieldValidation({
-  //     projectname,
-  //     projectdescription,
-  //     startdate,
-  //     enddate,
-  //   });
-  //   try {
-  //     //check input field empty or not
-  //     if (validation == 0) {
-  //       if (taskRowObjects.length > 0) {
-  //         //api call
-  //         const response = await fetch(
-  //           pathname + "/api/project/get-as-project",
-  //           {
-  //             method: "POST",
-  //             headers: { "Content-Type": "application/json" },
-  //             body: JSON.stringify({
-  //               projectname,
-  //               projectdescription,
-  //               startdate,
-  //               enddate,
-  //               projectstatus,
-  //               taskRowObjects,
-  //             }),
-  //           }
-  //         );
-  //         const jsonResponse = await response.json();
-
-  //         if (jsonResponse == "SUCCESS") {
-  //           toast.success("Project created successfully!", {
-  //             position: "top-right",
-  //             autoClose: 3000,
-  //             hideProgressBar: false,
-  //             closeOnClick: true,
-  //             pauseOnHover: true,
-  //             draggable: true,
-  //             progress: undefined,
-  //             theme: "colored",
-  //           });
-  //           router.push("/project");
-  //         }
-  //       } else {
-  //         toast.info("Project should be contain at least one task!", {
-  //           position: "top-right",
-  //           autoClose: 5000,
-  //           hideProgressBar: false,
-  //           closeOnClick: true,
-  //           pauseOnHover: true,
-  //           draggable: true,
-  //           progress: undefined,
-  //           theme: "colored",
-  //         });
-  //       }
-  //     }
-  //   } catch (error) {
-  //     toast.error("Error!", {
-  //       position: "top-right",
-  //       autoClose: 5000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: "colored",
-  //     });
-  //   }
-  // };
-
-  // //update project action
-  // const update = async () => {
-  //   const validation = inputFieldValidation({
-  //     projectname,
-  //     projectdescription,
-  //     startdate,
-  //     enddate,
-  //   });
-  //   try {
-  //     //check input field empty or not
-  //     if (validation == 0) {
-  //       if (taskRowObjects.length > 0) {
-  //         //api call
-  //         const response = await fetch(
-  //           pathname + "/api/project/get-as-project",
-  //           {
-  //             method: "PUT",
-  //             headers: { "Content-Type": "application/json" },
-  //             body: JSON.stringify({
-  //               projectid,
-  //               projectname,
-  //               projectdescription,
-  //               startdate,
-  //               enddate,
-  //               projectstatus,
-  //               taskRowObjects,
-  //             }),
-  //           }
-  //         );
-  //         const jsonResponse = await response.json();
-
-  //         if (jsonResponse == "SUCCESS") {
-  //           toast.success("Project updated successfully!", {
-  //             position: "top-right",
-  //             autoClose: 3000,
-  //             hideProgressBar: false,
-  //             closeOnClick: true,
-  //             pauseOnHover: true,
-  //             draggable: true,
-  //             progress: undefined,
-  //             theme: "colored",
-  //           });
-  //           router.push("/project");
-  //         }
-  //       } else {
-  //         toast.info("Project should be contain at least one task!", {
-  //           position: "top-right",
-  //           autoClose: 5000,
-  //           hideProgressBar: false,
-  //           closeOnClick: true,
-  //           pauseOnHover: true,
-  //           draggable: true,
-  //           progress: undefined,
-  //           theme: "colored",
-  //         });
-  //       }
-  //     }
-  //   } catch (error) {
-  //     toast.error("Error!", {
-  //       position: "top-right",
-  //       autoClose: 5000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: "colored",
-  //     });
-  //   }
-  // };
-  //re render page
-  // const toggleReloadTable = () => {
-  //   setReloadTable((prv: boolean) => !prv)
-  // }
-
-  // useEffect(() => {
-  //   // declare the data fetching function
-  //   // const fetchData = async () => {
-  //   //   const columns = JSON.stringify({ staffid: true })
-  //   //   const staff_details = await fetch(
-  //   //     "api/staff",
-  //   //   );
-  //   //   const res = await staff_details.json();
-  //   //   setStaffRowData(res.staff);
-  //   //   console.log("res", res,)
-  //   // };
-
-  //   // // call the function
-  //   // fetchData().catch(console.error);
-  // }, []);
+  const saveEvent =() =>{
+    console.log("taskRowObjects",taskRowObjects,)
+  }
   return (
     // <WithRole roles={['admin']}>
     <div>
       <Navbar />
       <div className="flex items-center justify-center p-4">
         <h1 className="text-4xl font-extrabold uppercase text-indigo-600 mr-auto">
-          Project Assign
+          Project assign
         </h1>
+        <button onClick={saveEvent} className="flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600  hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500">
+          Save
+        </button>
       </div>
-      <div className="w-1/3 pl-4">
-        <h1 className="text-2xl font-extrabold text-indigo-400 mr-auto">
-          Name - {staffname}
-        </h1>
-        <div>
-          {staffRowObjects && (
-            <PrjAssignStaffTable
-              staffTableClickEvent={staffTableClickEvent}
-              staffRowObjects={staffRowObjects}
-              tablePagination={tablePagination}
+      <div className="flex">
+        <div className="w-1/3 pl-4">
+          <h1 className="text-2xl font-extrabold text-indigo-400 mr-auto">
+            Staff name - {staffname}
+          </h1>
+          <div>
+            {staffRowObjects && (
+              <PrjAssignStaffTable
+                staffTableClickEvent={staffTableClickEvent}
+                staffRowObjects={staffRowObjects}
+                tablePagination={staffTablePage}
+              />
+            )}
+            <Pagination
+              tablePagination={staffTablePage}
+              totalProjectCount={totalStaffCount}
+              prvTabel={prvStaffTabel}
+              nextTabel={nextStaffTabel}
             />
-          )}
-          <Pagination
-            tablePagination={tablePagination}
-            totalProjectCount={totalProjectCount}
-            prvTabel={prvTabel}
-            nextTabel={nextTabel}
-          />
+          </div>
+        </div>
+        <div className="w-1/3 pl-4">
+          <h1 className="text-2xl font-extrabold text-indigo-400 mr-auto">
+            Project name - {projectname}
+          </h1>
+          <div>
+            {staffRowObjects && (
+              <PrjAssignProjectTable
+                projectTableClickEvent={projectTableClickEvent}
+                projectRowObjects={projectRowObjects}
+                tablePagination={projectTablePage}
+                staffid={staffid}
+              />
+            )}
+            <Pagination
+              tablePagination={projectTablePage}
+              totalProjectCount={totalProjectCount}
+              prvTabel={prvProjectTabel}
+              nextTabel={nextProjectTabel}
+            />
+          </div>
+        </div>
+        <div className="w-1/3 pl-4">
+          <h1 className="text-2xl font-extrabold text-indigo-400 mr-auto">
+            Task list
+          </h1>
+          <div>
+            {taskRowObjects && (
+              <PrjAssignTaskTable
+                taskRowObjectsIn={taskRowObjects}
+                tablePagination={taskTablePage}
+                setTaskRowObjects={setTaskRowObjects}
+              />
+            )}
+            {/* <Pagination
+              tablePagination={tablePagination}
+              totalProjectCount={totalProjectCount}
+              prvTabel={prvTabel}
+              nextTabel={nextTabel}
+            /> */}
+          </div>
         </div>
       </div>
     </div>

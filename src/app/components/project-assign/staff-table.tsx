@@ -49,7 +49,7 @@ export const PrjAssignStaffTable = ({
                   selectRow(e, index, tableRow.staffid, tableRow.staffname)
                 }
                 className={
-                  index != selRow ? "bg-blue-gray-50/5 cursor-pointer transition ease-in hover:bg-gray-300" : "bg-indigo-400  cursor-pointer transition ease-in duration-500"
+                  index != selRow ? "bg-blue-gray-50/5 cursor-pointer transition ease-in hover:bg-gray-300" : "bg-indigo-400 cursor-pointer transition ease-in duration-500"
                 }
                 key={tableRow.staffid}
               >

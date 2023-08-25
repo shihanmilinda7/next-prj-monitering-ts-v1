@@ -128,7 +128,7 @@ const Navbar = () => {
                 Project
               </Link>
             </li> */}
-            <div className={userRole == "admin" ? "dropdown inline-block relative rounded-lg" : "hidden"}>
+            <div className={userRole == "admin" ? "dropdown inline-block relative rounded-lg z-50" : "hidden"}>
               <button className={nonActiveStyle + " inline-flex"}>
                 <span className="mr-1">Project</span>
                 <svg
