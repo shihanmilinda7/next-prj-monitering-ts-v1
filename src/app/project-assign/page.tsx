@@ -106,9 +106,7 @@ export default function ProjectAssign() {
     }
   };
 
-  const projectTableClickEvent = (projectid: number, projectname: string) => {
-    setProjectid(projectid);
-    setProjectname(projectname);
+  const getTasks = async () => {
     // declare the data fetching function
     const fetchData = async () => {
       const reponse = await fetch(
@@ -125,6 +123,14 @@ export default function ProjectAssign() {
     };
     // call the function
     fetchData().catch(console.error);
+  };
+  const projectTableClickEvent = async (
+    projectid: number,
+    projectname: string
+  ) => {
+    setProjectid(projectid);
+    setProjectname(projectname);
+    await getTasks();
   };
 
   //for staff table pagination update
@@ -162,11 +168,15 @@ export default function ProjectAssign() {
   useEffect(() => {}, [taskTablePage]);
 
   //for task table
-  useEffect(() => {}, [projectid, staffid]);
+  useEffect(() => {
+    getTasks();
+  }, [projectid, staffid, taskTablePage]);
 
-  const saveEvent =() =>{
-    console.log("taskRowObjects",taskRowObjects,)
-  }
+  const saveEvent = () => {
+    console.log("staffid", staffid);
+    console.log("projectid", projectid);
+    console.log("taskRowObjects", taskRowObjects);
+  };
   return (
     // <WithRole roles={['admin']}>
     <div>
@@ -175,7 +185,10 @@ export default function ProjectAssign() {
         <h1 className="text-4xl font-extrabold uppercase text-indigo-600 mr-auto">
           Project assign
         </h1>
-        <button onClick={saveEvent} className="flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600  hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500">
+        <button
+          onClick={saveEvent}
+          className="flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600  hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
+        >
           Save
         </button>
       </div>

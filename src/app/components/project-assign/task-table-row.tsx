@@ -38,7 +38,7 @@ export const PrjAssignTaskTableRow = ({
             id="cb1"
             value="cb1"
             onChange={(e) =>
-              updateData({ ...tableRow, selected: e.target.value })
+              updateData({ ...tableRow, selected: e.target.checked })
             }
             className="
 appearance-none h-6 w-6 bg-gray-400 rounded-full 
