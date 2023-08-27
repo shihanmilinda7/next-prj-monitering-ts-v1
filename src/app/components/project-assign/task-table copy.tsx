@@ -3,21 +3,19 @@
 import { useEffect, useState } from "react";
 import { PrjAssignTaskTableRow } from "./task-table-row";
 import { toast } from "react-toastify";
-import { setsaved, setunsaved } from "@/store/saveSlice";
-import { useSelector, useDispatch } from "react-redux";
 
 export const PrjAssignTaskTable = ({
   staffid,
   projectid,
   taskRowObjectsIn,
   tablePagination,
-  toggleSaveFlag,
+  setTaskRowObjects,
 }: {
   staffid: number;
   projectid: number;
   taskRowObjectsIn: any[];
   tablePagination: number;
-  toggleSaveFlag: () => void;
+  setTaskRowObjects: (taskObject: any[]) => void;
 }) => {
   let pathname: string = "";
 
@@ -37,11 +35,6 @@ export const PrjAssignTaskTable = ({
   const tableHeads = ["#", "Task Name", "Select"];
 
   const [taskRows, setTaskRows] = useState(taskRowObjectsIn);
-  // const [saveBtnActive, setSaveBtnActive] = useState(true)
-
-  //redux
-  const save = useSelector((state: any) => state.saveReducer.saveState);
-  const dispatch = useDispatch();
 
   // const updateData = (
   //   e: React.ChangeEvent<HTMLInputElement>,
@@ -54,10 +47,6 @@ export const PrjAssignTaskTable = ({
     const q = [...taskRowObjectsIn];
     setTaskRows(q);
     // console.log("saddddddddd", q);
-    console.log("save", save);
-    // if(!save){
-    //   setSaveBtnActive(false);
-    // }
   }, [taskRowObjectsIn]);
 
   const updateTableRows = (newVal: any) => {
@@ -95,10 +84,6 @@ export const PrjAssignTaskTable = ({
           theme: "colored",
         });
       }
-      console.log("save-befor",save,)
-      dispatch(setsaved());
-      toggleSaveFlag();
-      console.log("save-after",save,)
     } catch (error) {
       toast.error(`${error}`, {
         position: "top-right",

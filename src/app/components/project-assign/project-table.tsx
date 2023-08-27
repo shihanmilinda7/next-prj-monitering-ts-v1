@@ -19,14 +19,13 @@ export const PrjAssignProjectTable = ({
 
   const selectRow = (
     e: React.MouseEvent<HTMLTableRowElement>,
-    index: number,
     projectid: number,
     projectname: string
   ) => {
     if (staffid) {
-      setSetRow(index);
+      setSetRow(projectid);
       projectTableClickEvent(projectid, projectname);
-    }else{
+    } else {
       toast.info("No staff selected!", {
         position: "top-right",
         autoClose: 5000,
@@ -62,14 +61,14 @@ export const PrjAssignProjectTable = ({
             {projectRowObjects.map((tableRow: any, index: number) => (
               <tr
                 onClick={(e) =>
-                  selectRow(e, index, tableRow.projectid, tableRow.projectname)
+                  selectRow(e, tableRow.projectid, tableRow.projectname)
                 }
                 className={
-                  index != selRow
+                  tableRow.projectid != selRow
                     ? "bg-blue-gray-50/5 cursor-pointer transition ease-in hover:bg-gray-300"
                     : "bg-indigo-400  cursor-pointer transition ease-in duration-500"
                 }
-                key={tableRow.staffid}
+                key={tableRow.projectid}
               >
                 <td className="text-left py-3 px-4 font-bold">
                   {(tablePagination - 1) * 10 + (index + 1)}

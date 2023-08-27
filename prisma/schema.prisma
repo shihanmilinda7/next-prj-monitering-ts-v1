@@ -46,6 +46,19 @@ model projecttasks{
   enddate String   
 }
 
+model projectassigns{
+  projectassignid       Int      @id @default(autoincrement())
+  projectid Int   
+  staffid Int
+}
+
+model projecttasksassigns{
+  projecttaskassignid       Int      @id @default(autoincrement())
+  projectid Int   
+  staffid Int
+  taskid Int
+}
+
 model categories{
   categoryid       Int      @id @default(autoincrement())
   categoryname String   

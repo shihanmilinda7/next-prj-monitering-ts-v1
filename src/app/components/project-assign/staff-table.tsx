@@ -1,27 +1,28 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export const PrjAssignStaffTable = ({
   staffTableClickEvent,
   staffRowObjects,
   tablePagination,
 }: {
-  staffTableClickEvent: (staffid: number, staffname: string) => void
+  staffTableClickEvent: (staffid: number, staffname: string) => void;
   staffRowObjects: any[];
   tablePagination: number;
 }) => {
   const tableHeads = ["#", "Staff Name", "Designation", " "];
   const [selRow, setSetRow] = useState<any>();
+  const save = useSelector((state: any) => state.saveReducer.saveState);
 
   const selectRow = (
     e: React.MouseEvent<HTMLTableRowElement>,
-    index: number,
     staffid: number,
     staffname: string
   ) => {
-    setSetRow(index);
-    staffTableClickEvent(staffid,staffname);
+    setSetRow(staffid);
+    staffTableClickEvent(staffid, staffname);
   };
 
   useEffect(() => {}, [selRow]);
@@ -46,10 +47,12 @@ export const PrjAssignStaffTable = ({
             {staffRowObjects.map((tableRow: any, index: number) => (
               <tr
                 onClick={(e) =>
-                  selectRow(e, index, tableRow.staffid, tableRow.staffname)
+                  selectRow(e, tableRow.staffid, tableRow.staffname)
                 }
                 className={
-                  index != selRow ? "bg-blue-gray-50/5 cursor-pointer transition ease-in hover:bg-gray-300" : "bg-indigo-400 cursor-pointer transition ease-in duration-500"
+                  tableRow.staffid != selRow
+                    ? "bg-blue-gray-50/5 cursor-pointer transition ease-in hover:bg-gray-300"
+                    : "bg-indigo-400 cursor-pointer transition ease-in duration-500"
                 }
                 key={tableRow.staffid}
               >
