@@ -37,12 +37,13 @@ export const PrjAssignTaskTable = ({
   const tableHeads = ["#", "Task Name", "Select"];
 
   const [taskRows, setTaskRows] = useState(taskRowObjectsIn);
-  // const [saveBtnActive, setSaveBtnActive] = useState(true)
+  const [saveBtnActive, setSaveBtnActive] = useState(false);
 
   //redux
   const save = useSelector((state: any) => state.saveReducer.saveState);
   const dispatch = useDispatch();
-
+  const btnStyle =
+    "mb-4 ml-auto flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600  hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500 ";
   // const updateData = (
   //   e: React.ChangeEvent<HTMLInputElement>,
   //   newTaskObject: any[]
@@ -65,6 +66,7 @@ export const PrjAssignTaskTable = ({
       r.taskid === newVal.taskid ? newVal : r
     );
     setTaskRows(updatedArray);
+    setSaveBtnActive(true);
     // setTaskRowObjects(updatedArray);
   };
 
@@ -95,10 +97,10 @@ export const PrjAssignTaskTable = ({
           theme: "colored",
         });
       }
-      console.log("save-befor",save,)
+      console.log("save-befor", save);
       dispatch(setsaved());
       toggleSaveFlag();
-      console.log("save-after",save,)
+      setSaveBtnActive(false);
     } catch (error) {
       toast.error(`${error}`, {
         position: "top-right",
@@ -116,7 +118,7 @@ export const PrjAssignTaskTable = ({
     <div className="md:px-2 py-2 w-full">
       <button
         onClick={saveEvent}
-        className="mb-4 flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600  hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
+        className={saveBtnActive ? btnStyle : "hidden"}
       >
         Save
       </button>

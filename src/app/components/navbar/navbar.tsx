@@ -41,7 +41,8 @@ const Navbar = () => {
   const commonStyles =
     "text-xl md:p-4 py-2 block hover:text-indigo-900 text-white";
   const activeStyle =
-    commonStyles + " rounded-t-lg bg-indigo-500 text-indigo-900 font-bold";
+    // commonStyles + " rounded-t-lg bg-indigo-500 text-indigo-900";
+    commonStyles + " overline";
   const nonActiveStyle = commonStyles + " text-white";
 
   //style for dropdown
@@ -66,7 +67,7 @@ const Navbar = () => {
       >
         <div>
           <a href="#">
-            <h1 className="text-4xl text-red-100 font-extrabold italic">SDS</h1>
+            <h1 className="text-4xl text-red-100 italic">CeyInfo  Solutions</h1>
           </a>
         </div>
 
@@ -178,7 +179,16 @@ const Navbar = () => {
                 </li>
               </ul>
             </div>
-
+            <li className={(userRole == "admin" || userRole == "user") ? "" : "hidden"}>
+              <Link
+                href="/time-allocation"
+                className={
+                  currentRoute === "/time-allocation" ? activeStyle : nonActiveStyle
+                }
+              >
+                Daily Achievements
+              </Link>
+            </li>
             {/* <li className={userRole == 'admin' ? "" : "hidden"}><Link href="/category" className={currentRoute === '/category' ? activeStyle : nonActiveStyle}>Category</Link></li> */}
             {/* <li className={userRole == 'admin' ? "" : "hidden"}><Link href="/task" className={currentRoute === '/task' ? activeStyle : nonActiveStyle}>Task</Link></li> */}
             {/* <li className={userRole == 'admin' ? "" : "hidden"}><Link href="/" className={currentRoute === '/' ? activeStyle : nonActiveStyle}>Report</Link></li> */}

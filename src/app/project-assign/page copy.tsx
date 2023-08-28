@@ -111,7 +111,7 @@ export default function ProjectAssign() {
     const fetchData = async () => {
       const reponse = await fetch(
         pathname +
-        "/api/project/get-task-as-project-pagination?page-number=" +
+          "/api/project/get-task-as-project-pagination?page-number=" +
           taskTablePage +
           "&projectid=" +
           projectId
@@ -207,7 +207,7 @@ export default function ProjectAssign() {
     <div>
       <Navbar />
       <div className="flex items-center justify-center p-4">
-        <h1 className="text-4xl font-extrabold uppercase text-indigo-600 mr-auto">
+        <h1 className="text-4xl   uppercase text-indigo-600 mr-auto">
           Project assign
         </h1>
         <button
@@ -219,7 +219,7 @@ export default function ProjectAssign() {
       </div>
       <div className="flex">
         <div className="w-1/3 pl-4">
-          <h1 className="text-2xl font-extrabold text-indigo-400 mr-auto">
+          <h1 className="text-2xl   text-indigo-400 mr-auto">
             Staff name : {staffname}
           </h1>
           <div>
@@ -239,7 +239,7 @@ export default function ProjectAssign() {
           </div>
         </div>
         <div className="w-1/3 pl-4">
-          <h1 className="text-2xl font-extrabold text-indigo-400 mr-auto">
+          <h1 className="text-2xl   text-indigo-400 mr-auto">
             Project name - {projectname}
           </h1>
           <div>
@@ -260,9 +260,7 @@ export default function ProjectAssign() {
           </div>
         </div>
         <div className="w-1/3 pl-4">
-          <h1 className="text-2xl font-extrabold text-indigo-400 mr-auto">
-            Task list
-          </h1>
+          <h1 className="text-2xl   text-indigo-400 mr-auto">Task list</h1>
           <div>
             {taskRowObjects && (
               <PrjAssignTaskTable

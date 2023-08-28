@@ -335,7 +335,7 @@ export default function NewProject() {
     <div>
       <Navbar />
       <div className="flex items-center justify-center p-4">
-        <h1 className="text-4xl font-extrabold uppercase text-indigo-600 mr-auto">
+        <h1 className="text-4xl   uppercase text-indigo-600 mr-auto">
           {!projectid ? "New Project" : "Project - " + projectname}
         </h1>
       </div>

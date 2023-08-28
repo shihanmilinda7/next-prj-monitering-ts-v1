@@ -49,7 +49,7 @@ export const ProjectTaskTable = ({
                   </td>
                   <td className="text-left py-3 px-4">{tableRow.startdate}</td>
                   <td className="text-left py-3 px-4">{tableRow.enddate}</td>
-                  <td className="text-left py-3 px-4 cursor-pointer hover:text-amber-900 hover:font-extrabold">
+                  <td className="text-left py-3 px-4 cursor-pointer hover:text-amber-900 hover: ">
                     <NewProjectTask
                       arrayUpdateFuntion={arrayUpdateFuntion}
                       selRowObject={tableRow}

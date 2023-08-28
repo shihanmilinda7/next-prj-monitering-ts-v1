@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 export const PrjAssignStaffTable = ({
   staffTableClickEvent,
@@ -21,8 +22,21 @@ export const PrjAssignStaffTable = ({
     staffid: number,
     staffname: string
   ) => {
-    setSetRow(staffid);
-    staffTableClickEvent(staffid, staffname);
+    if (save) {
+      setSetRow(staffid);
+      staffTableClickEvent(staffid, staffname);
+    } else {
+      toast.error("Please Save changes!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
   };
 
   useEffect(() => {}, [selRow]);
@@ -64,7 +78,7 @@ export const PrjAssignStaffTable = ({
                   {tableRow.designation ? tableRow.designation : "No Data"}
                 </td>
 
-                {/* <td className="text-left py-3 px-4 cursor-pointer hover:text-amber-900 hover:font-extrabold">
+                {/* <td className="text-left py-3 px-4 cursor-pointer hover:text-amber-900 hover: ">
                   <button
                     onClick={(e) =>
                       selectRow(e, index, tableRow.staffid, tableRow.staffname)

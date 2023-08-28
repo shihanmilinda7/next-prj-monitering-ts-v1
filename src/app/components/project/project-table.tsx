@@ -13,8 +13,8 @@ export const ProjectTable = ({
 }) => {
   const tableHeads = [
     "#",
-    "Project Name",
-    "Project Description",
+    "Name",
+    "Description",
     "Start Date",
     "End Date",
     "Status",
@@ -58,7 +58,7 @@ export const ProjectTable = ({
                   <div className="flex items-center justify-center p-4">
                     <Link
                       href={"/project/new-project?projectid="+tableRow.projectid}
-                      className="flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
+                      className="flex justify-center bg-gradient-to-r from-green-500 to-green-600 hover:bg-gradient-to-l hover:from-green-500 hover:to-green-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
                     >
                       View More..
                     </Link>

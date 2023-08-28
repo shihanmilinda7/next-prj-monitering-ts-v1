@@ -21,22 +21,25 @@ type taskPhotoObjTypes = {
   categoryid?: number;
   categorydetailid?: number;
   photodataurl?: string;
-}
+};
 
 export default function Task() {
-  const router = useRouter()
+  const router = useRouter();
 
   const { data: session, status } = useSession();
 
-  if (status === 'loading') {
-    return <div><Spinner/></div>;
+  if (status === "loading") {
+    return (
+      <div>
+        <Spinner />
+      </div>
+    );
   }
 
   if (!session) {
-    router.push('/'); // Redirect to login page if not authenticated
+    router.push("/"); // Redirect to login page if not authenticated
     return null;
   }
-
 
   //get pathname
   let pathname: string = "";
@@ -44,7 +47,7 @@ export default function Task() {
   try {
     pathname = window.location.href;
     // console.log("pathname1", window.location.href);
-  } catch (error) { }
+  } catch (error) {}
 
   if (pathname) {
     const r: number = pathname.indexOf("/", 7);
@@ -54,29 +57,29 @@ export default function Task() {
     // console.log("pathname", pathname);
   }
 
-
-
   const searchParams = useSearchParams();
-  const taskid = searchParams.get('taskid');
-  const clientname = searchParams.get('clientname');
-  const location = searchParams.get('location');
-  const categoryid = searchParams.get('categoryid');
-  const categoryname = searchParams.get('categoryname');
+  const taskid = searchParams.get("taskid");
+  const clientname = searchParams.get("clientname");
+  const location = searchParams.get("location");
+  const categoryid = searchParams.get("categoryid");
+  const categoryname = searchParams.get("categoryname");
 
   let taskidInt: number;
   if (taskid) {
-    taskidInt = parseInt(taskid)
+    taskidInt = parseInt(taskid);
   }
 
-  const [fetchedCategoryDetailsData, setFetchedCategoryDetailsData] = useState<CategoryDetailObj[]>([]);
+  const [fetchedCategoryDetailsData, setFetchedCategoryDetailsData] = useState<
+    CategoryDetailObj[]
+  >([]);
   const [taskPhotos, setTaskPhotos] = useState<taskPhotoObjTypes[]>([]);
   const [reloadPage, setReloadPage] = useState(false);
   const [endTaskButton, setEndTaskButton] = useState(false);
 
   //page reload
   const toggleReloadPage = () => {
-    setReloadPage((prv: boolean) => !prv)
-  }
+    setReloadPage((prv: boolean) => !prv);
+  };
 
   // //get category detials as task
   // const getCategoryDetails = async () => {
@@ -116,13 +119,12 @@ export default function Task() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ taskid }),
       }
-
     );
 
     const res = await res_update_task.json();
 
     if (res == "SUCCESS") {
-      toast.success('Task completed successfully!', {
+      toast.success("Task completed successfully!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -132,9 +134,9 @@ export default function Task() {
         progress: undefined,
         theme: "light",
       });
-      router.push("/dashboard")
+      router.push("/dashboard");
     } else {
-      toast.error('Error!', {
+      toast.error("Error!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -147,38 +149,44 @@ export default function Task() {
     }
 
     return res;
-  }
+  };
 
   useEffect(() => {
-    fetch(
-      pathname + "/api/category/get_cat_as_catid?categoryid=" + categoryid,
-    ).then((res) => res.json()).then((resJson: { message: string, categoriesData: CategoryDetailObj[] }) => {
-      // setFetchedCategoryDetailsData((p)=> [...p,...resJson.categoriesData]);
-      setFetchedCategoryDetailsData(resJson.categoriesData);
-      fetch(
-        pathname + "/api/task/upload_photos?taskid=" + taskid,
-      ).then((res) => res.json()).then((resJson: { message: string, taskPhotos: taskPhotoObjTypes[] }) => {
-        // setTaskPhotos((t)=> [...t,...resJson.taskPhotos]);
-        setTaskPhotos(resJson.taskPhotos);
-      })
-    })
+    fetch(pathname + "/api/category/get_cat_as_catid?categoryid=" + categoryid)
+      .then((res) => res.json())
+      .then(
+        (resJson: { message: string; categoriesData: CategoryDetailObj[] }) => {
+          // setFetchedCategoryDetailsData((p)=> [...p,...resJson.categoriesData]);
+          setFetchedCategoryDetailsData(resJson.categoriesData);
+          fetch(pathname + "/api/task/upload_photos?taskid=" + taskid)
+            .then((res) => res.json())
+            .then(
+              (resJson: {
+                message: string;
+                taskPhotos: taskPhotoObjTypes[];
+              }) => {
+                // setTaskPhotos((t)=> [...t,...resJson.taskPhotos]);
+                setTaskPhotos(resJson.taskPhotos);
+              }
+            );
+        }
+      );
   }, [reloadPage]);
 
   useEffect(() => {
     if (fetchedCategoryDetailsData.length == taskPhotos.length) {
-      setEndTaskButton(true)
+      setEndTaskButton(true);
     } else {
-      setEndTaskButton(false)
+      setEndTaskButton(false);
     }
-  }, [fetchedCategoryDetailsData, taskPhotos])
+  }, [fetchedCategoryDetailsData, taskPhotos]);
 
   return (
-    <WithRole roles={['admin', 'user']}>
-
+    <WithRole roles={["admin", "user"]}>
       <div>
         <Navbar />
         <div className="flex items-center justify-center p-4">
-          <h1 className="text-xl md:text-2xl lg:text-base xl:text-4xl font-extrabold uppercase text-indigo-600 mr-auto">
+          <h1 className="text-xl md:text-2xl lg:text-base xl:text-4xl   uppercase text-indigo-600 mr-auto">
             Task Submission
           </h1>
         </div>
@@ -187,37 +195,48 @@ export default function Task() {
             {/* <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">
             Prev
           </button> */}
-            <h5 className="font-semibold text-xl md:text-xl lg:text-base xl:text-2xl text-blueGray-700">{clientname} - {location}</h5>
-            <h5 className="font-semibold text-sm md:text-sm lg:text-base xl:text-xl text-blueGray-700">Category: {categoryname}</h5>
+            <h5 className="font-semibold text-xl md:text-xl lg:text-base xl:text-2xl text-blueGray-700">
+              {clientname} - {location}
+            </h5>
+            <h5 className="font-semibold text-sm md:text-sm lg:text-base xl:text-xl text-blueGray-700">
+              Category: {categoryname}
+            </h5>
           </div>
-          <div>
-
-          </div>
+          <div></div>
         </div>
         <div className="flex flex-wrap pt-4">
           {fetchedCategoryDetailsData.map((task, index) => {
-            const taskPhotoObject = taskPhotos.find((p: taskPhotoObjTypes) => p.categorydetailid == task.categorydetailid)
+            const taskPhotoObject = taskPhotos.find(
+              (p: taskPhotoObjTypes) =>
+                p.categorydetailid == task.categorydetailid
+            );
             // console.log("taskPhotoObject",taskPhotoObject?.taskphotoid)
             return (
-              <div key={task.categorydetailid} className="mt-4 w-full lg:w-6/12 xl:w-3/12 px-5 mb-4">
+              <div
+                key={task.categorydetailid}
+                className="mt-4 w-full lg:w-6/12 xl:w-3/12 px-5 mb-4"
+              >
                 <div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-3 xl:mb-0 shadow-lg">
                   <div className="flex-auto p-4">
                     <div className="flex flex-wrap">
                       <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
-                        <h5 className="text-blueGray-400 uppercase font-bold text-xl mb-3">{task.categorydetailname}</h5>
+                        <h5 className="text-blueGray-400 uppercase font-bold text-xl mb-3">
+                          {task.categorydetailname}
+                        </h5>
                         <WebcamComponent
                           taskDetails={task}
                           taskid={taskidInt}
                           pathname={pathname}
                           taskphotoid={taskPhotoObject?.taskphotoid ?? 0}
-                          photodataurl={taskPhotoObject?.photodataurl ?? ''}
+                          photodataurl={taskPhotoObject?.photodataurl ?? ""}
                           setReloadPage={toggleReloadPage}
                         />
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>)
+              </div>
+            );
           })}
         </div>
         {endTaskButton && (
@@ -227,12 +246,10 @@ export default function Task() {
               leftButtonAction={endTaskClickEvent}
               title="Are you sure?"
               description="Do you want to end task ?"
-              buttonColour='bg-gradient-to-r from-green-500 to-green-600 hover:bg-gradient-to-l hover:from-green-500 hover:to-green-600'
+              buttonColour="bg-gradient-to-r from-green-500 to-green-600 hover:bg-gradient-to-l hover:from-green-500 hover:to-green-600"
             />
           </div>
         )}
-
-
 
         {/* <UploadButton<OurFileRouter>
         endpoint="imageUploader"

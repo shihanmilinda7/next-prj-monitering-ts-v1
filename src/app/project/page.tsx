@@ -71,8 +71,8 @@ export default function Project() {
     <div>
       <Navbar />
       <div className="flex items-center justify-center p-4">
-        <h1 className="text-4xl font-extrabold uppercase text-indigo-600 mr-auto">
-          Project
+        <h1 className="text-4xl text-indigo-600 mr-auto">
+          Projects
         </h1>
         <Link
           href="/project/new-project"
@@ -83,10 +83,18 @@ export default function Project() {
       </div>
       <div>
         {projectRowObjects && (
-          <ProjectTable projectRowObjects={projectRowObjects} tablePagination={tablePagination}/>
+          <ProjectTable
+            projectRowObjects={projectRowObjects}
+            tablePagination={tablePagination}
+          />
         )}
       </div>
-      <Pagination tablePagination={tablePagination} totalProjectCount={totalProjectCount} prvTabel={prvTabel} nextTabel={nextTabel}/>
+      <Pagination
+        tablePagination={tablePagination}
+        totalProjectCount={totalProjectCount}
+        prvTabel={prvTabel}
+        nextTabel={nextTabel}
+      />
     </div>
   );
 }

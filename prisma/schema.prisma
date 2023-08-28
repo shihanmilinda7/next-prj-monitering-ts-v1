@@ -59,6 +59,23 @@ model projecttasksassigns{
   taskid Int
 }
 
+model timealloc{
+  timeallocid       Int      @id @default(autoincrement())
+  date String   
+  staffid Int 
+  projectid Int 
+  remark    String  
+}
+
+model timeallocdetails{
+  timeallocdetailid       Int      @id @default(autoincrement())
+  timeallocid Int
+  taskid Int
+  projecttaskassignid Int
+  time String   
+  remark    String  
+}
+
 model categories{
   categoryid       Int      @id @default(autoincrement())
   categoryname String   
@@ -88,3 +105,4 @@ model taskphotos{
   photodataurl String
   createdAt DateTime @default(now())
 }
+
