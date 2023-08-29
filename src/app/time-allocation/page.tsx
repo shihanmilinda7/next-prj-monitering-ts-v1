@@ -40,22 +40,23 @@ export default function TimeAllocation() {
   }
 
   const router = useRouter();
-  // const { data: session, status } = useSession();
+  const { data: session, status } = useSession();
 
-  // if (status === 'loading') {
-  //   return <div><Spinner /></div>;
-  // }
+  if (status === 'loading') {
+    return <div><Spinner /></div>;
+  }
 
-  // if (!session) {
-  //   router.push('/'); // Redirect to login page if not authenticated
-  //   return null;
-  // }
+  if (!session) {
+    router.push('/'); // Redirect to login page if not authenticated
+    return null;
+  }
+  const tmpUser = session?.user;
 
   //redux
   const date = useSelector((state: any) => state.timeAllocDateReducer.date);
   const dispatch = useDispatch();
 
-  const [staffid, setStaffid] = useState<any>(42);
+  const [staffid, setStaffid] = useState<any>(tmpUser?.staffid);
 
   const [projectRowObjects, setProjectRowObjects] = useState<any[]>([]);
   const [projectid, setProjectid] = useState<any>();
@@ -146,7 +147,7 @@ export default function TimeAllocation() {
       const tmpAssignTasks = assignTasks.map((obj: any) => {
         return {
           ...obj,
-          time: "",
+          time: 0,
           remark: "",
         };
       });

@@ -189,6 +189,16 @@ const Navbar = () => {
                 Daily Achievements
               </Link>
             </li>
+            <li className={(userRole == "admin") ? "" : "hidden"}>
+              <Link
+                href="/work-done-report"
+                className={
+                  currentRoute === "/work-done-report" ? activeStyle : nonActiveStyle
+                }
+              >
+                Progress Report
+              </Link>
+            </li>
             {/* <li className={userRole == 'admin' ? "" : "hidden"}><Link href="/category" className={currentRoute === '/category' ? activeStyle : nonActiveStyle}>Category</Link></li> */}
             {/* <li className={userRole == 'admin' ? "" : "hidden"}><Link href="/task" className={currentRoute === '/task' ? activeStyle : nonActiveStyle}>Task</Link></li> */}
             {/* <li className={userRole == 'admin' ? "" : "hidden"}><Link href="/" className={currentRoute === '/' ? activeStyle : nonActiveStyle}>Report</Link></li> */}

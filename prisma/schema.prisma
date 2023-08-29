@@ -72,7 +72,7 @@ model timeallocdetails{
   timeallocid Int
   taskid Int
   projecttaskassignid Int
-  time String   
+  time Int   
   remark    String  
 }
 

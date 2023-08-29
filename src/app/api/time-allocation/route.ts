@@ -78,7 +78,7 @@ export async function POST(request: Request) {
             timeallocid: headerId,
             taskid: element.taskid,
             projecttaskassignid: element.projecttaskassignid,
-            time: element.time ?? "",
+            time: parseInt(element.time) ?? 0,
             remark: element.remark ?? "",
           },
         });
@@ -111,7 +111,7 @@ export async function PUT(request: Request) {
         await tx.timeallocdetails.updateMany({
           where: { timeallocdetailid: element.timeallocdetailid },
           data: {
-            time: element.time,
+            time: parseInt(element.time) ?? 0,
             remark: element.remark,
           },
         });
