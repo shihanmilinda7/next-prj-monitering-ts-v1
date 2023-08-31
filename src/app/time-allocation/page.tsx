@@ -59,9 +59,6 @@ export default function TimeAllocation() {
 
   //redux
   const date = useSelector((state: any) => state.timeAllocDateReducer.date);
-  const rSearchProjactName = useSelector(
-    (state: any) => state.searchReducer.projectname
-  );
 
   const dispatch = useDispatch();
 
@@ -91,7 +88,7 @@ export default function TimeAllocation() {
   const [totalTaskCount, setTotalTaskCount] = useState(1);
 
   const [saveFlag, setSaveFlag] = useState(false);
-  const [onactive, setOnactive] = useState(false);
+  // const [onactive, setOnactive] = useState(false);
 
   const toggleSaveFlag = () => {
     setSaveFlag((prv: boolean) => !prv);
@@ -245,7 +242,6 @@ export default function TimeAllocation() {
     // <WithRole roles={['admin']}>
     <div>
       <Navbar />
-
       <div className="flex">
         <div className="flex flex-col w-1/3">
           <div className="flex items-center justify-center p-4">
@@ -254,7 +250,7 @@ export default function TimeAllocation() {
             </h1>
           </div>
           <div className="flex flex-row">
-            <div className="w-full px-3 sm:w-1/5">
+            {/* <div className="w-full px-3 sm:w-1/5">
               <CheckBoxInputField
                 label="Leave"
                 id="projectdescription"
@@ -264,55 +260,41 @@ export default function TimeAllocation() {
                 value={onactive}
                 onChange={(e) => setOnactive(e.target.checked)}
               />
-            </div>
+            </div> */}
           </div>
-          <div className={`p-4 ${onactive ? "" : "pointer-events-none"}`}>
-            <h1 className="text-2xl text-indigo-400 mr-auto">
-              Project name - {projectname}
-            </h1>
-            <div>
-              {projectRowObjects && (
-                <PrjAssignProjectTable
-                  projectTableClickEvent={projectTableClickEvent}
-                  projectRowObjects={projectRowObjects}
-                  tablePagination={projectTablePage}
-                  staffid={staffid}
-                  search = {false}
-                />
-              )}
-              <Pagination
+          {/* <div className={`p-4 ${onactive ? "" : "pointer-events-none"}`}> */}
+          <h1 className="text-2xl text-indigo-400 mr-auto">
+            Project name - {projectname}
+          </h1>
+          <div>
+            {projectRowObjects && (
+              <PrjAssignProjectTable
+                projectTableClickEvent={projectTableClickEvent}
+                projectRowObjects={projectRowObjects}
                 tablePagination={projectTablePage}
-                totalProjectCount={totalProjectCount}
-                prvTabel={prvProjectTabel}
-                nextTabel={nextProjectTabel}
-              />
-            </div>
-          </div>
-        </div>
-        <div
-          className={`p-4 flex flex-col w-2/3 ${
-            onactive ? "" : "pointer-events-none"
-          }`}
-        >
-          {/* <div className="flex flex-col w-2/3"> */}
-          <div className="p-4">
-            {taskRowObjects && (
-              <PrjAssignTaskTimeAllocTable
-                taskHeaderObject={taskHeaderObject}
                 staffid={staffid}
-                projectid={projectid}
-                taskRowObjectsIn={taskRowObjects}
-                tablePagination={taskTablePage}
-                toggleSaveFlag={toggleSaveFlag}
+                search={false}
               />
             )}
-            {/* <Pagination
-              tablePagination={taskTablePage}
-              totalProjectCount={totalTaskCount}
-              prvTabel={prvTaskTabel}
-              nextTabel={nextTaskTabel}
-            /> */}
+            <Pagination
+              tablePagination={projectTablePage}
+              totalProjectCount={totalProjectCount}
+              prvTabel={prvProjectTabel}
+              nextTabel={nextProjectTabel}
+            />
           </div>
+        </div>
+        <div className="p-4 w-2/3">
+          {taskRowObjects && (
+            <PrjAssignTaskTimeAllocTable
+              taskHeaderObject={taskHeaderObject}
+              staffid={staffid}
+              projectid={projectid}
+              taskRowObjectsIn={taskRowObjects}
+              tablePagination={taskTablePage}
+              toggleSaveFlag={toggleSaveFlag}
+            />
+          )}
         </div>
       </div>
     </div>

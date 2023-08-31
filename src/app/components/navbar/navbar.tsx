@@ -113,7 +113,7 @@ const Navbar = () => {
                 Dashboard
               </Link>
             </li>
-            <li className={userRole == "admin" ? "" : "hidden"}>
+            <li className={userRole == "Admin" || userRole == "Manager" ? "" : "hidden"}>
               <Link
                 href="/staff"
                 className={
@@ -123,7 +123,7 @@ const Navbar = () => {
                 Staff
               </Link>
             </li>
-            {/* <li className={userRole == "admin" ? "" : "hidden"}>
+            {/* <li className={userRole == "Admin" ? "" : "hidden"}>
               <Link
                 href="/project"
                 className={
@@ -133,7 +133,7 @@ const Navbar = () => {
                 Project
               </Link>
             </li> */}
-            <div className={userRole == "admin" ? "dropdown inline-block relative rounded-lg z-50" : "hidden"}>
+            <div className={userRole == "Admin" || userRole == "Manager" ? "dropdown inline-block relative rounded-lg z-50" : "hidden"}>
               <button className={nonActiveStyle + " inline-flex"}>
                 <span className="mr-1">Project</span>
                 <svg
@@ -145,7 +145,7 @@ const Navbar = () => {
                 </svg>
               </button>
               <ul className="dropdown-menu absolute hidden text-gray-700 pt-1">
-                <li className={userRole == "admin" ? "" : "hidden"}>
+                <li className={userRole == "Admin" || userRole == "Manager" ? "" : "hidden"}>
                   <Link
                     href="/project/new-project"
                     className={
@@ -157,7 +157,7 @@ const Navbar = () => {
                     New Project
                   </Link>
                 </li>
-                <li className={userRole == "admin" ? "" : "hidden"}>
+                <li className={userRole == "Admin" || userRole == "Manager" ? "" : "hidden"}>
                   <Link
                     href="/project"
                     className={
@@ -169,7 +169,7 @@ const Navbar = () => {
                     Project Details
                   </Link>
                 </li>
-                <li className={userRole == "admin" ? "" : "hidden"}>
+                <li className={userRole == "Admin" || userRole == "Manager" ? "" : "hidden"}>
                   <Link
                     href="/project-assign"
                     className={
@@ -183,7 +183,7 @@ const Navbar = () => {
                 </li>
               </ul>
             </div>
-            <li className={(userRole == "admin" || userRole == "user") ? "" : "hidden"}>
+            <li className={(userRole == "Admin" || userRole == "user") ? "" : "hidden"}>
               <Link
                 href="/time-allocation"
                 className={
@@ -193,7 +193,7 @@ const Navbar = () => {
                 Daily Achievements
               </Link>
             </li>
-            <li className={(userRole == "admin") ? "" : "hidden"}>
+            <li className={(userRole == "Admin" || userRole == "Manager") ? "" : "hidden"}>
               <Link
                 href="/work-done-report"
                 className={
@@ -203,9 +203,9 @@ const Navbar = () => {
                 Progress Report
               </Link>
             </li>
-            {/* <li className={userRole == 'admin' ? "" : "hidden"}><Link href="/category" className={currentRoute === '/category' ? activeStyle : nonActiveStyle}>Category</Link></li> */}
-            {/* <li className={userRole == 'admin' ? "" : "hidden"}><Link href="/task" className={currentRoute === '/task' ? activeStyle : nonActiveStyle}>Task</Link></li> */}
-            {/* <li className={userRole == 'admin' ? "" : "hidden"}><Link href="/" className={currentRoute === '/' ? activeStyle : nonActiveStyle}>Report</Link></li> */}
+            {/* <li className={userRole == 'Admin' ? "" : "hidden"}><Link href="/category" className={currentRoute === '/category' ? activeStyle : nonActiveStyle}>Category</Link></li> */}
+            {/* <li className={userRole == 'Admin' ? "" : "hidden"}><Link href="/task" className={currentRoute === '/task' ? activeStyle : nonActiveStyle}>Task</Link></li> */}
+            {/* <li className={userRole == 'Admin' ? "" : "hidden"}><Link href="/" className={currentRoute === '/' ? activeStyle : nonActiveStyle}>Report</Link></li> */}
             <button onClick={handleSignOut} className={commonStyles}>
               Logout
             </button>

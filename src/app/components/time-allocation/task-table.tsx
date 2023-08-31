@@ -7,6 +7,8 @@ import { setsaved, setunsaved } from "@/store/saveSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { setDate } from "@/store/timeAllocDateSlice";
 import ConfirmAlertbox from "../common-comp/confirm-alertbox";
+import CheckBoxInputField from "../common-comp/input-fields/checkbox-input-fields";
+import { useRouter } from "next/navigation";
 
 export const PrjAssignTaskTimeAllocTable = ({
   taskHeaderObject,
@@ -24,6 +26,7 @@ export const PrjAssignTaskTimeAllocTable = ({
   toggleSaveFlag: () => void;
 }) => {
   let pathname: string = "";
+  const router = useRouter();
 
   try {
     pathname = window.location.href;
@@ -56,6 +59,8 @@ export const PrjAssignTaskTimeAllocTable = ({
   const [saveBtnActive, setSaveBtnActive] = useState(false);
   const [date, setDate1] = useState(new Date().toJSON().slice(0, 10));
   const [remark, setRemark] = useState(tmpRemark);
+  const [onactive, setOnactive] = useState(true);
+
   // console.log("taskHeaderObject", taskHeaderObject);
   //redux
   const save = useSelector((state: any) => state.saveReducer.saveState);
@@ -77,6 +82,15 @@ export const PrjAssignTaskTimeAllocTable = ({
     console.log("save5555555", save);
     setRemark(tmpRemark ?? "");
   }, [taskRowObjectsIn]);
+
+  useEffect(() => {
+    if (!onactive) {
+      console.log("not active");
+      toggleSaveFlag();
+    } else {
+      toggleSaveFlag();
+    }
+  }, [onactive]);
 
   const updateTableRows = (newVal: any) => {
     const updatedArray = taskRows.map((r) =>
@@ -205,11 +219,11 @@ export const PrjAssignTaskTimeAllocTable = ({
 
   const cancelEvent = () => {
     dispatch(setsaved());
-    // setSaveBtnActive(false);
+    setSaveBtnActive(false);
   };
   return (
-    <div className="md:px-2 py-2 w-full">
-      <div className={saveBtnActive ? "flex" : "hidden"}>
+    <div className="md:px-2 w-full">
+      <div className={saveBtnActive ? "flex" : "invisible"}>
         {/* <button
           onClick={saveEvent}
           className={saveBtnActive ? saveBtnStyle : "hidden"}
@@ -233,16 +247,10 @@ export const PrjAssignTaskTimeAllocTable = ({
             buttonColour="bg-gradient-to-r from-amber-500 to-amber-600 hover:bg-gradient-to-l hover:from-amber-500 hover:to-amber-600"
           />
         </div>
-        {/* <button
-          onClick={saveEvent}
-          className={saveBtnActive ? cancelBtnStyle : "hidden"}
-        >
-          Cancel
-        </button> */}
       </div>
 
       <div className="pb-4 flex w-full ">
-        <div className={projectid ? "mr-4" : "hidden"}>
+        <div className="mr-4">
           <label
             htmlFor="date"
             className="block text-sm font-medium leading-6 text-gray-900"
@@ -260,8 +268,21 @@ export const PrjAssignTaskTimeAllocTable = ({
               onChange={(e) => dateInputEvent(e.target.value)}
             />
           </div>
+          <div className="flex flex-row">
+            <div className="w-full pt-4 sm:w-1/5">
+              <CheckBoxInputField
+                label="Leave"
+                id="projectdescription"
+                name="projectdescription"
+                autoComplete=""
+                placeholder=""
+                value={onactive}
+                onChange={(e) => setOnactive(e.target.checked)}
+              />
+            </div>
+          </div>
         </div>
-        <div className={projectid ? "ml-4 w-full" : "hidden"}>
+        <div className="ml-4 w-full">
           <label
             htmlFor="remark"
             className="block text-sm font-medium leading-6 text-gray-900"
@@ -272,7 +293,7 @@ export const PrjAssignTaskTimeAllocTable = ({
             <textarea
               id="remark"
               name="remark"
-              rows={2}
+              rows={3}
               value={remark}
               onChange={(e) => remarkInputEvent(e.target.value)}
               className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"

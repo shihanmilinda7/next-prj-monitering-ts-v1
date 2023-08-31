@@ -1,31 +1,26 @@
-'use client'
+"use client";
 
-import { Provider } from "react-redux"
-import { AuthProvider } from "./providers"
-import { ToastContainer } from "react-toastify"
+import { Provider } from "react-redux";
+import { AuthProvider } from "./providers";
+import { ToastContainer } from "react-toastify";
 import { GlobalContextProvider } from "./globalContext/store";
- import store from "@/store/store";
+import store from "@/store/store";
 export default function LayoutClientComponent({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    
-     
-         <AuthProvider>
-           <GlobalContextProvider>
-             <Provider store={store}>
-               {children}
-               <ToastContainer />
-             </Provider>
-           </GlobalContextProvider>
-         </AuthProvider>
-
-    
-  )
+    <AuthProvider>
+      <GlobalContextProvider>
+        <Provider store={store}>
+          {children}
+          <ToastContainer />
+        </Provider>
+      </GlobalContextProvider>
+    </AuthProvider>
+  );
 }
-
 
 // "use client";
 
