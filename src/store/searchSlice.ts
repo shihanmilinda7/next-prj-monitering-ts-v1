@@ -2,12 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface searchState {
   staffname: any;
+  projectname: any;
   designation: any;
 }
 
 const initialState: searchState = {
   staffname: "",
   designation:"" ,
+  projectname:"",
 };
 
 const searchSlice: any = createSlice({
@@ -20,9 +22,12 @@ const searchSlice: any = createSlice({
     setSearchDesignation: (state, action) => {
       state.designation = action.payload;
     },
+    setSearchProjectName: (state, action) => {
+      state.projectname = action.payload;
+    },
   },
 });
 
-export const { setSearchStaffName,setSearchDesignation } = searchSlice.actions;
+export const { setSearchStaffName,setSearchDesignation,setSearchProjectName } = searchSlice.actions;
 
 export default searchSlice.reducer;

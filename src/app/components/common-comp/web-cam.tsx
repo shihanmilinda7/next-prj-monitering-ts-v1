@@ -1,6 +1,5 @@
 "use client"
 
-import { uploadFiles } from '@/app/utils/uploadthing';
 import { useState, useEffect, useRef } from 'react';
 import { CategoryDetailObj } from '../category/types';
 import { useRouter } from 'next/navigation';

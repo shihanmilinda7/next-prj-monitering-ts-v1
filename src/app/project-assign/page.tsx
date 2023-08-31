@@ -67,6 +67,9 @@ export default function ProjectAssign() {
   const rSearchDesigantion = useSelector(
     (state: any) => state.searchReducer.designation
   );
+  const rSearchProjactName = useSelector(
+    (state: any) => state.searchReducer.projectname
+  );
 
   const nextStaffTabel = () => {
     if (Math.ceil(totalStaffCount / 10) > staffTablePage) {
@@ -310,7 +313,7 @@ export default function ProjectAssign() {
       const reponse = await fetch(
         pathname +
           "/api/project?page-number=1&search-project-name=" +
-          searchProjectname
+          rSearchProjactName
       );
       const res = await reponse.json();
       console.log("res", res);
@@ -319,7 +322,7 @@ export default function ProjectAssign() {
     };
     // call the function
     fetchData().catch(console.error);
-  }, [searchProjectname]);
+  }, [rSearchProjactName]);
 
   //for task table pagination update                                                 TO DOOOOOOOOO
   useEffect(() => {
@@ -395,7 +398,7 @@ export default function ProjectAssign() {
           <h1 className="text-2xl   text-indigo-400 mr-auto">
             Project name - {projectname}
           </h1>
-          <div className="w-full px-2 mb-1">
+          {/* <div className="w-full px-2 mb-1">
             <input
               type="text"
               name="searchProjectname"
@@ -406,7 +409,7 @@ export default function ProjectAssign() {
               onChange={(e) => setSearchProjectname(e.target.value)}
               className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
             />
-          </div>
+          </div> */}
           <div>
             {projectRowObjects && (
               <PrjAssignProjectTable

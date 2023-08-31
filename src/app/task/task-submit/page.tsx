@@ -1,6 +1,5 @@
 "use client";
 
-import { OurFileRouter } from "@/app/api/uploadthing/core";
 import { CategoryDetailObj } from "@/app/components/category/types";
 import ConfirmAlertbox from "@/app/components/common-comp/confirm-alertbox";
 import WebcamComponent from "@/app/components/common-comp/web-cam";
@@ -8,7 +7,6 @@ import { WithRole } from "@/app/components/common-comp/withRole";
 import Navbar from "@/app/components/navbar/navbar";
 import Spinner from "@/app/dashboard/loading";
 import { ApiResult } from "@/app/types";
-import { UploadButton } from "@uploadthing/react";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";

@@ -5,6 +5,7 @@ import { PrjAssignTaskTableRow } from "./task-table-row";
 import { toast } from "react-toastify";
 import { setsaved, setunsaved } from "@/store/saveSlice";
 import { useSelector, useDispatch } from "react-redux";
+import ConfirmAlertbox from "../common-comp/confirm-alertbox";
 
 export const PrjAssignTaskTable = ({
   staffid,
@@ -42,8 +43,11 @@ export const PrjAssignTaskTable = ({
   //redux
   const save = useSelector((state: any) => state.saveReducer.saveState);
   const dispatch = useDispatch();
-  const btnStyle =
-    "mb-4 ml-auto flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600  hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500 ";
+  const saveBtnStyle =
+    "mb-4  flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600  hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500 ";
+  // const updateData = (
+  const cancelBtnStyle =
+    "mb-4  flex justify-center bg-gradient-to-r from-amber-500 to-amber-600  hover:bg-gradient-to-l hover:from-amber-500 hover:to-amber-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500 ";
   // const updateData = (
   //   e: React.ChangeEvent<HTMLInputElement>,
   //   newTaskObject: any[]
@@ -70,6 +74,12 @@ export const PrjAssignTaskTable = ({
     // setTaskRowObjects(updatedArray);
   };
 
+  const cancelEvent = () => {
+    dispatch(setsaved());
+    toggleSaveFlag();
+    setSaveBtnActive(false);
+  };
+  
   const saveEvent = async () => {
     console.log("staffid", staffid);
     console.log("projectid", projectid);
@@ -116,12 +126,36 @@ export const PrjAssignTaskTable = ({
   };
   return (
     <div className="md:px-2 py-2 w-full">
-      <button
-        onClick={saveEvent}
-        className={saveBtnActive ? btnStyle : "hidden"}
-      >
-        Save
-      </button>
+      <div className="flex">
+        {/* <button
+          onClick={cancelEvent}
+          className={
+            saveBtnActive
+              ? cancelBtnStyle + " ml-auto"
+              : cancelBtnStyle + " invisible"
+          }
+        >
+          Cancel
+        </button> */}
+        <div className="ml-auto">
+              <ConfirmAlertbox
+                buttonName="Cancel"
+                leftButtonAction={cancelEvent}
+                title="Are you sure?"
+                description="Do you want cancel ?"
+                buttonColour="bg-gradient-to-r from-amber-500 to-amber-600 hover:bg-gradient-to-l hover:from-amber-500 hover:to-amber-600"
+              />
+            </div>
+        <button
+          onClick={saveEvent}
+          className={
+            saveBtnActive ? saveBtnStyle + " ml-3" : saveBtnStyle + " invisible"
+          }
+        >
+          Save
+        </button>
+      </div>
+
       <div className="shadow rounded border-b border-gray-200 w-full">
         <table className="min-w-full bg-white">
           <thead className="border-b-2 text-black border-indigo-400">

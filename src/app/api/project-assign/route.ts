@@ -85,7 +85,7 @@ export async function POST(request: Request) {
       if (!isAnySelected) {
         await tx.projectassigns.delete({
           where: {
-            projectassignid: projectassignCount.projectassignid,
+            projectassignid: projectassignCount[0].projectassignid,
           },
         });
       }

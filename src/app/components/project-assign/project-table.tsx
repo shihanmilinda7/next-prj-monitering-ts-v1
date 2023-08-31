@@ -1,6 +1,8 @@
 "use client";
 
+import { setSearchProjectName } from "@/store/searchSlice";
 import { Suspense, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -18,6 +20,14 @@ export const PrjAssignProjectTable = ({
   const tableHeads = ["#", "Project Name"];
   const [selRow, setSetRow] = useState<any>();
   const save = useSelector((state: any) => state.saveReducer.saveState);
+  const [searchProjectname, setSearchProjectname] = useState("");
+
+  const dispatch = useDispatch();
+
+  const searchProjectName = (nameValue:any) =>{
+    setSearchProjectname(nameValue)
+    dispatch(setSearchProjectName(nameValue));
+  }
 
   const selectRow = (
     e: React.MouseEvent<HTMLTableRowElement>,
@@ -74,6 +84,21 @@ export const PrjAssignProjectTable = ({
               </tr>
             </thead>
             <tbody className="text-gray-700">
+              <tr className="even:bg-blue-gray-50/50">
+                <td className="text-left py-2 px-4">$</td>
+                <td className="text-left py-2 px-4 font-bold">
+                  <input
+                    type="text"
+                    name="searchProjectname"
+                    id="searchProjectname"
+                    placeholder="Search Name"
+                    autoComplete=""
+                    value={searchProjectname}
+                    onChange={(e) => searchProjectName(e.target.value)}
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  />
+                </td>
+              </tr>
               {projectRowObjects.map((tableRow: any, index: number) => (
                 <tr
                   onClick={(e) =>
