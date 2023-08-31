@@ -59,6 +59,10 @@ export default function TimeAllocation() {
 
   //redux
   const date = useSelector((state: any) => state.timeAllocDateReducer.date);
+  const rSearchProjactName = useSelector(
+    (state: any) => state.searchReducer.projectname
+  );
+
   const dispatch = useDispatch();
 
   const [staffid, setStaffid] = useState<any>(tmpUser?.staffid);
@@ -273,6 +277,7 @@ export default function TimeAllocation() {
                   projectRowObjects={projectRowObjects}
                   tablePagination={projectTablePage}
                   staffid={staffid}
+                  search = {false}
                 />
               )}
               <Pagination

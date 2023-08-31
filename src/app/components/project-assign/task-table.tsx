@@ -43,8 +43,7 @@ export const PrjAssignTaskTable = ({
   //redux
   const save = useSelector((state: any) => state.saveReducer.saveState);
   const dispatch = useDispatch();
-  const saveBtnStyle =
-    "mb-4  flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600  hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500 ";
+  const saveBtnStyle ="rounded-lg bg-gradient-to-r from-green-500 to-green-600  hover:bg-gradient-to-l hover:from-green-500 hover:to-green-600 py-3 px-8 text-center text-base font-semibold text-white outline-none";
   // const updateData = (
   const cancelBtnStyle =
     "mb-4  flex justify-center bg-gradient-to-r from-amber-500 to-amber-600  hover:bg-gradient-to-l hover:from-amber-500 hover:to-amber-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500 ";
@@ -79,7 +78,7 @@ export const PrjAssignTaskTable = ({
     toggleSaveFlag();
     setSaveBtnActive(false);
   };
-  
+
   const saveEvent = async () => {
     console.log("staffid", staffid);
     console.log("projectid", projectid);
@@ -126,7 +125,7 @@ export const PrjAssignTaskTable = ({
   };
   return (
     <div className="md:px-2 py-2 w-full">
-      <div className="flex">
+      <div className="flex mb-2">
         {/* <button
           onClick={cancelEvent}
           className={
@@ -137,15 +136,15 @@ export const PrjAssignTaskTable = ({
         >
           Cancel
         </button> */}
-        <div className="ml-auto">
-              <ConfirmAlertbox
-                buttonName="Cancel"
-                leftButtonAction={cancelEvent}
-                title="Are you sure?"
-                description="Do you want cancel ?"
-                buttonColour="bg-gradient-to-r from-amber-500 to-amber-600 hover:bg-gradient-to-l hover:from-amber-500 hover:to-amber-600"
-              />
-            </div>
+        <div className={saveBtnActive ? "ml-auto" : "hidden"}>
+          <ConfirmAlertbox
+            buttonName="Cancel"
+            leftButtonAction={cancelEvent}
+            title="Are you sure?"
+            description="Do you want cancel ?"
+            buttonColour="bg-gradient-to-r from-amber-500 to-amber-600 hover:bg-gradient-to-l hover:from-amber-500 hover:to-amber-600"
+          />
+        </div>
         <button
           onClick={saveEvent}
           className={

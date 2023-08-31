@@ -162,7 +162,7 @@ const Login = () => {
                     name="username"
                     type="text"
                     autoComplete=""
-                    placeholder=""
+                    placeholder="Enter your username"
                     onChange={(e) => setUsername(e.target.value)}
                   />
                 </div>

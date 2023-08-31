@@ -11,6 +11,8 @@ export async function GET(request: Request) {
 
   const tmpPageNumber: any = searchParams.get("page-number");
   const staffid: any = searchParams.get("staffid");
+  const searchProjectName: any = searchParams.get("search-project-name");
+
   const currentPage: any = parseInt(tmpPageNumber);
 
   const postsPerPage = 10; // Number of posts per page

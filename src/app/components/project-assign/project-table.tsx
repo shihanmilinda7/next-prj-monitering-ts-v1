@@ -11,11 +11,13 @@ export const PrjAssignProjectTable = ({
   projectRowObjects,
   tablePagination,
   staffid,
+  search,
 }: {
   projectTableClickEvent: (projectid: number, projectname: string) => void;
   projectRowObjects: any[];
   tablePagination: number;
   staffid?: number;
+  search?: boolean;
 }) => {
   const tableHeads = ["#", "Project Name"];
   const [selRow, setSetRow] = useState<any>();
@@ -84,7 +86,7 @@ export const PrjAssignProjectTable = ({
               </tr>
             </thead>
             <tbody className="text-gray-700">
-              <tr className="even:bg-blue-gray-50/50">
+              {search ? <tr className="even:bg-blue-gray-50/50">
                 <td className="text-left py-2 px-4">$</td>
                 <td className="text-left py-2 px-4 font-bold">
                   <input
@@ -98,7 +100,7 @@ export const PrjAssignProjectTable = ({
                     className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                   />
                 </td>
-              </tr>
+              </tr> : null}
               {projectRowObjects.map((tableRow: any, index: number) => (
                 <tr
                   onClick={(e) =>
