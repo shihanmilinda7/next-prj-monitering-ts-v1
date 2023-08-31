@@ -10,6 +10,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { WithRole } from "../components/common-comp/withRole";
 import Spinner from "../dashboard/loading";
+import Pagination from "../components/common-comp/pagination";
 
 export default function Staff() {
   const router = useRouter();
@@ -28,8 +29,23 @@ export default function Staff() {
     return null;
   }
 
-  const [staffRowData, setStaffRowData] = useState<StaffObj[]>([]);
+  const [staffRowData, setStaffRowData] = useState<any[]>([]);
   const [reloadTable, setReloadTable] = useState(false);
+
+  const [tablePagination, setTablePagination] = useState(1);
+  const [totalStaffCount, setTotalStaffCount] = useState(1);
+
+  const nextTabel = () => {
+    if (Math.ceil(totalStaffCount / 10) > tablePagination) {
+      setTablePagination((prv: number) => prv + 1);
+    }
+  };
+
+  const prvTabel = () => {
+    if (tablePagination > 1) {
+      setTablePagination((prv: number) => prv - 1);
+    }
+  };
 
   const toggleReloadTable = () => {
     setReloadTable((prv: boolean) => !prv);
@@ -39,15 +55,17 @@ export default function Staff() {
     // declare the data fetching function
     const fetchData = async () => {
       const columns = JSON.stringify({ staffid: true });
-      const staff_details = await fetch("api/staff");
+      const staff_details = await fetch("api/staff?page-number=" + tablePagination);
       const res = await staff_details.json();
       setStaffRowData(res.staff);
+      setTotalStaffCount(res.staffCount);
       console.log("res", res);
     };
 
     // call the function
     fetchData().catch(console.error);
-  }, [reloadTable]);
+  }, [reloadTable,tablePagination]);
+
   return (
     <WithRole roles={["admin"]}>
       <div>
@@ -69,6 +87,12 @@ export default function Staff() {
             />
           )}
         </div>
+        <Pagination
+          tablePagination={tablePagination}
+          totalProjectCount={totalStaffCount}
+          prvTabel={prvTabel}
+          nextTabel={nextTabel}
+        />
       </div>
     </WithRole>
   );

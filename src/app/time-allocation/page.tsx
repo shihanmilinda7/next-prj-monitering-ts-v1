@@ -23,6 +23,7 @@ import store from "@/store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { PrjAssignTaskTimeAllocTable } from "../components/time-allocation/task-table";
 import { setDate } from "@/store/timeAllocDateSlice";
+import CheckBoxInputField from "../components/common-comp/input-fields/checkbox-input-fields";
 
 export default function TimeAllocation() {
   //get pathname
@@ -42,12 +43,16 @@ export default function TimeAllocation() {
   const router = useRouter();
   const { data: session, status } = useSession();
 
-  if (status === 'loading') {
-    return <div><Spinner /></div>;
+  if (status === "loading") {
+    return (
+      <div>
+        <Spinner />
+      </div>
+    );
   }
 
   if (!session) {
-    router.push('/'); // Redirect to login page if not authenticated
+    router.push("/"); // Redirect to login page if not authenticated
     return null;
   }
   const tmpUser = session?.user;
@@ -82,6 +87,7 @@ export default function TimeAllocation() {
   const [totalTaskCount, setTotalTaskCount] = useState(1);
 
   const [saveFlag, setSaveFlag] = useState(false);
+  const [onactive, setOnactive] = useState(false);
 
   const toggleSaveFlag = () => {
     setSaveFlag((prv: boolean) => !prv);
@@ -187,7 +193,7 @@ export default function TimeAllocation() {
       // console.log("projectid", projectid);
       createTaskRowObject(projectid);
     }
-  }, [saveFlag,date]);
+  }, [saveFlag, date]);
 
   //for update time allocation data after save
   useEffect(() => {
@@ -243,7 +249,20 @@ export default function TimeAllocation() {
               Daily Achievements
             </h1>
           </div>
-          <div className="p-4">
+          <div className="flex flex-row">
+            <div className="w-full px-3 sm:w-1/5">
+              <CheckBoxInputField
+                label="Leave"
+                id="projectdescription"
+                name="projectdescription"
+                autoComplete=""
+                placeholder=""
+                value={onactive}
+                onChange={(e) => setOnactive(e.target.checked)}
+              />
+            </div>
+          </div>
+          <div className={`p-4 ${onactive ? "" : "pointer-events-none"}`}>
             <h1 className="text-2xl text-indigo-400 mr-auto">
               Project name - {projectname}
             </h1>
@@ -265,7 +284,12 @@ export default function TimeAllocation() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col w-2/3">
+        <div
+          className={`p-4 flex flex-col w-2/3 ${
+            onactive ? "" : "pointer-events-none"
+          }`}
+        >
+          {/* <div className="flex flex-col w-2/3"> */}
           <div className="p-4">
             {taskRowObjects && (
               <PrjAssignTaskTimeAllocTable

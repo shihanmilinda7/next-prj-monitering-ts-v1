@@ -4,15 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { signOut, useSession } from "next-auth/react";
-import { useDispatch } from "react-redux";
-import { setsaved } from "@/store/saveSlice";
 
 const Navbar = () => {
   const currentRoute = usePathname();
   const { data: session, status } = useSession();
   const userRole = session?.user?.role;
   console.log("userRole", userRole);
-  const dispatch = useDispatch();
 
   const handleSignOut = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -21,7 +18,6 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    dispatch(setsaved());
     const button = document.querySelector(
       "#menu-button"
     ) as HTMLButtonElement | null;
@@ -71,7 +67,7 @@ const Navbar = () => {
       >
         <div>
           <a href="#">
-            <h1 className="text-4xl text-red-100 italic">CeyInfo - ProTrack</h1>
+            <h1 className="text-4xl text-red-100 italic">CeyInfo  Solutions</h1>
           </a>
         </div>
 

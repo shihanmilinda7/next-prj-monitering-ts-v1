@@ -7,6 +7,7 @@ export type StaffObj = {
     userid?: number;
     username?: string;
     role?: string;
+    designation?: string;
     password?: string;
 }
 

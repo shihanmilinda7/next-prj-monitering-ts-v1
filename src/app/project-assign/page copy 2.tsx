@@ -59,14 +59,6 @@ export default function ProjectAssign() {
   const [staffname, setStaffname] = useState("Select from below...");
   const [staffTablePage, setStaffTablePage] = useState(1);
   const [totalStaffCount, setTotalStaffCount] = useState(1);
-  // const [searchStaffname, setSearchStaffname] = useState("");
-
-  const rSearchStaffName = useSelector(
-    (state: any) => state.searchReducer.staffname
-  );
-  const rSearchDesigantion = useSelector(
-    (state: any) => state.searchReducer.designation
-  );
 
   const nextStaffTabel = () => {
     if (Math.ceil(totalStaffCount / 10) > staffTablePage) {
@@ -113,7 +105,6 @@ export default function ProjectAssign() {
   const [projectname, setProjectname] = useState("Select from below...");
   const [projectTablePage, setProjectTablePage] = useState(1);
   const [totalProjectCount, setTotalProjectCount] = useState(1);
-  const [searchProjectname, setSearchProjectname] = useState("");
 
   const nextProjectTabel = () => {
     if (Math.ceil(totalProjectCount / 10) > projectTablePage) {
@@ -248,13 +239,7 @@ export default function ProjectAssign() {
     // declare the data fetching function
     const fetchData = async () => {
       const reponse = await fetch(
-        pathname +
-          "/api/staff/get-staff?page-number=" +
-          staffTablePage +
-          "&search-staff-name=" +
-          rSearchStaffName +
-          "&search-desigantion=" +
-          rSearchDesigantion
+        pathname + "/api/staff/get-staff?page-number=" + staffTablePage
       );
       const res = await reponse.json();
       setStaffRowObjects(res.staff);
@@ -264,35 +249,12 @@ export default function ProjectAssign() {
     fetchData().catch(console.error);
   }, [staffTablePage]);
 
-  //for staff table pagination update search
-  useEffect(() => {
-    // declare the data fetching function
-    const fetchData = async () => {
-      const reponse = await fetch(
-        pathname +
-          "/api/staff/get-staff?page-number=1&search-staff-name=" +
-          rSearchStaffName +
-          "&search-desigantion=" +
-          rSearchDesigantion
-      );
-      const res = await reponse.json();
-      setStaffRowObjects(res.staff);
-      setTotalStaffCount(res.totalStaffCount);
-      // call the function
-    };
-    fetchData().catch(console.error);
-  }, [rSearchStaffName, rSearchDesigantion]);
-
   //for project table pagination update
   useEffect(() => {
     // declare the data fetching function
     const fetchData = async () => {
       const reponse = await fetch(
-        pathname +
-          "/api/project?page-number=" +
-          projectTablePage +
-          "&search-project-name=" +
-          searchProjectname
+        pathname + "/api/project?page-number=" + projectTablePage
       );
       const res = await reponse.json();
       console.log("res", res);
@@ -302,24 +264,6 @@ export default function ProjectAssign() {
     // call the function
     fetchData().catch(console.error);
   }, [projectTablePage]);
-
-  //for project table pagination update search
-  useEffect(() => {
-    // declare the data fetching function
-    const fetchData = async () => {
-      const reponse = await fetch(
-        pathname +
-          "/api/project?page-number=1&search-project-name=" +
-          searchProjectname
-      );
-      const res = await reponse.json();
-      console.log("res", res);
-      setProjectRowObjects(res.project);
-      setTotalProjectCount(res.totalProjectCount);
-    };
-    // call the function
-    fetchData().catch(console.error);
-  }, [searchProjectname]);
 
   //for task table pagination update                                                 TO DOOOOOOOOO
   useEffect(() => {
@@ -351,7 +295,9 @@ export default function ProjectAssign() {
     <div>
       <Navbar />
       <div className="flex items-center justify-center p-4">
-        <h1 className="text-4xl text-indigo-600 mr-auto">Project assign</h1>
+        <h1 className="text-4xl text-indigo-600 mr-auto">
+          Project assign
+        </h1>
         {/* <button
           className="flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600  hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
         >
@@ -360,21 +306,9 @@ export default function ProjectAssign() {
       </div>
       <div className="flex">
         <div className="w-1/3 pl-4">
-          <h1 className="text-2xl text-indigo-400 mr-auto">
+          <h1 className="text-2xl   text-indigo-400 mr-auto">
             Staff name : {staffname}
           </h1>
-          {/* <div className="w-full px-2 mb-1">
-            <input
-              type="text"
-              name="searchStaffname"
-              id="searchStaffname"
-              placeholder="Search Name"
-              autoComplete=""
-              value={searchStaffname}
-              onChange={(e) => setSearchStaffname(e.target.value)}
-              className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-            />
-          </div> */}
           <div>
             {staffRowObjects && (
               <PrjAssignStaffTable
@@ -395,18 +329,6 @@ export default function ProjectAssign() {
           <h1 className="text-2xl   text-indigo-400 mr-auto">
             Project name - {projectname}
           </h1>
-          <div className="w-full px-2 mb-1">
-            <input
-              type="text"
-              name="searchProjectname"
-              id="searchProjectname"
-              placeholder="Search Name"
-              autoComplete=""
-              value={searchProjectname}
-              onChange={(e) => setSearchProjectname(e.target.value)}
-              className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-            />
-          </div>
           <div>
             {projectRowObjects && (
               <PrjAssignProjectTable

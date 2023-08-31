@@ -166,7 +166,7 @@ const NewProjectTask = ({
                   leftButtonAction={deleteAction}
                   title="Are you sure?"
                   description="Do you want to delete this record ?"
-                  buttonColour="bg-gradient-to-r from-red-500 to-red-600 hover:bg-gradient-to-l hover:from-red-500 hover:to-red-600"
+                  buttonColour="bg-gradient-to-r from-red-500 to-red-600 hover:bg-gradient-to-l hover:from-red-500 hover:to-red-600 ml-3"
                 />
               </div>
             </div>

@@ -31,7 +31,7 @@ export const ProjectTaskTable = ({
               {tableHeads.map((head) => (
                 <th
                   key={head}
-                  className="text-left py-5 px-4 uppercase text-sm font-bold"
+                  className="text-left py-5 px-4 uppercase text-sm font-semibold"
                 >
                   {head}
                 </th>

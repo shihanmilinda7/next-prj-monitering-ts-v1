@@ -59,7 +59,7 @@ export default function Dashboard() {
         <div>
             <Navbar />
             {/* <h1 className="text-2xl m-4 text-indigo-800 font-semibold">Insights at a Glance: Your Project Dashboard</h1> */}
-            <h1 className="text-2xl m-4 text-indigo-800 font-semibold">NextTask Dashboard: Your command center for tasks and goals. Elevate productivity today.</h1>
+            <h1 className="text-2xl m-4 text-indigo-800 font-semibold">Elevate productivity today.</h1>
 
             <div className="flex flex-wrap pt-4">
                 <div className="mt-4 w-full lg:w-6/12 xl:w-3/12 px-5 mb-4">

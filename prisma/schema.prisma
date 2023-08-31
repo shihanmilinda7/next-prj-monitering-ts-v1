@@ -25,6 +25,7 @@ model staff{
   contracttype String   
   contactno    String   
   nic String
+  designation String @default("user")
   createdAt DateTime @default(now())
 }
 

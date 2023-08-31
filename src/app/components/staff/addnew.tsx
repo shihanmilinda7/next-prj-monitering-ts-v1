@@ -29,6 +29,7 @@ const StaffAddNew = (params: ParamTypes) => {
   const [username, setUsername] = useState(params.selRowData?.username ?? "");
   const [contracttype, setContracttype] = useState(params.selRowData?.contracttype ?? "");
   const [contactno, setContactno] = useState(params.selRowData?.contactno ?? "");
+  const [designation, setDesignation] = useState(params.selRowData?.designation ?? "");
   const [nic, setNic] = useState(params.selRowData?.nic ?? "");
   const [password, setPassword] = useState(params.selRowData?.password ?? "");
   const [role, setRole] = useState(params.selRowData?.role ?? "");
@@ -53,13 +54,41 @@ const StaffAddNew = (params: ParamTypes) => {
       bottom: 'auto',
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
+      padding: '10px'
     }
   }
 
   const roleOptionValues = [
     { value: "", name: "Select role" },
-    { value: "admin", name: "Admin" },
-    { value: "user", name: "User" },
+    { value: "Admin", name: "Admin" },
+    { value: "Manager", name: "Manager" },
+    { value: "User", name: "User" },
+  ]
+
+  const contractTypeOptionValues = [
+    { value: "", name: "Select Contract Type" },
+    { value: "Training", name: "Training" },
+    { value: "Probation", name: "Probation" },
+    { value: "Permanent", name: "Permanent" },
+    { value: "Contract", name: "Contract" },
+    { value: "Assigment", name: "Assigment" },
+    { value: "Casual", name: "Casual" },
+  ]
+
+  const designationOptionValues = [
+    { value: "", name: "Select Designation" },
+    { value: "Software Engineer", name: "Software Engineer" },
+    { value: "Front-End Developer", name: "Front-End Developer" },
+    { value: "Back-End Developer", name: "Back-End Developer" },
+    { value: "Full-Stack Developer", name: "Full-Stack Developer" },
+    { value: "Software Architect", name: "Software Architect" },
+    { value: "Lead Developer", name: "Lead Developer" },
+    { value: "DevOps Engineer", name: "DevOps Engineer" },
+    { value: "Quality Assurance (QA) Engineer", name: "Quality Assurance (QA) Engineer" },
+    { value: "Product Manager", name: "Product Manager" },
+    { value: "UI/UX Designer", name: "UI/UX Designer" },
+    { value: "Data Engineer", name: "Data Engineer" },
+    { value: "Security Engineer ", name: "Security Engineer " },
   ]
 
   const submitButtonHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -85,7 +114,7 @@ const StaffAddNew = (params: ParamTypes) => {
 
   //add new staff action
   const addnew = async () => {
-    const validation = inputFieldValidation({ staffname, contracttype, contactno, nic, password, username, role });
+    const validation = inputFieldValidation({ staffname, contracttype, contactno, nic, password, username, role,designation });
     console.log("call addnew",)
     try {
       //check input field empty or not
@@ -123,7 +152,7 @@ const StaffAddNew = (params: ParamTypes) => {
               {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ staffname, contracttype, contactno, nic, password, username, role }),
+                body: JSON.stringify({ staffname, contracttype, contactno, nic, password, username, role,designation }),
               }
             );
             const res = await responseNewStaff.json();
@@ -162,7 +191,7 @@ const StaffAddNew = (params: ParamTypes) => {
   }
   //update staff action
   const update = async () => {
-    const validation = inputFieldValidation({ staffname, contracttype, contactno, nic, password, username, role });
+    const validation = inputFieldValidation({ staffname, contracttype, contactno, nic, password, username, role,designation });
 
     try {
       //check input field empty or not
@@ -200,7 +229,7 @@ const StaffAddNew = (params: ParamTypes) => {
               {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ userid, staffid, staffname, contracttype, contactno, nic, password, username, role }),
+                body: JSON.stringify({ userid, staffid, staffname, contracttype, contactno, nic, password, username, role,designation }),
               }
             );
             const res = await responseUpdateStaff.json();
@@ -237,141 +266,6 @@ const StaffAddNew = (params: ParamTypes) => {
       });
     }
   }
-
-  // const update = async () => {
-
-  //   try {
-  //     //check input field empty or not
-  //     if (!staffname || !username || !contracttype || !contactno || !nic || !password || !role) {
-  //       toast.info('Field cannot be empty', {
-  //         position: "top-right",
-  //         autoClose: 3000,
-  //         hideProgressBar: false,
-  //         closeOnClick: true,
-  //         pauseOnHover: false,
-  //         draggable: true,
-  //         progress: undefined,
-  //         theme: "colored",
-  //       });
-  //       return;
-  //     }
-
-  //     //username validation
-  //     const tmpUsernameValidation = await usernameValidation(username);
-  //     if (tmpUsernameValidation != 'FAIL') {
-  //       toast.info('Username already exists!', {
-  //         position: "top-right",
-  //         autoClose: 3000,
-  //         hideProgressBar: false,
-  //         closeOnClick: true,
-  //         pauseOnHover: false,
-  //         draggable: true,
-  //         progress: undefined,
-  //         theme: "colored",
-  //       });
-  //       return;
-  //     }
-
-  //     //password validation
-  //     if (password != confirmpassword) {
-  //       toast.info('Password does not match!', {
-  //         position: "top-right",
-  //         autoClose: 3000,
-  //         hideProgressBar: false,
-  //         closeOnClick: true,
-  //         pauseOnHover: false,
-  //         draggable: true,
-  //         progress: undefined,
-  //         theme: "colored",
-  //       });
-  //     }
-
-  //     //api call
-  //     const responseUpdateStaff = await fetch(
-  //       "api/staff",
-  //       {
-  //         method: "PUT",
-  //         headers: { "Content-Type": "application/json" },
-  //         body: JSON.stringify({ userid, staffid, staffname, contracttype, contactno, nic, password, username, role }),
-  //       }
-  //     );
-  //     const res = await responseUpdateStaff.json();
-
-  //     if (res == "SUCCESS") {
-  //       setIsOpen(false);
-  //       if (params.setReloadTable) {
-  //         params.setReloadTable();
-  //       }
-  //       toast.success('Staff updated successfully!', {
-  //         position: "top-right",
-  //         autoClose: 5000,
-  //         hideProgressBar: false,
-  //         closeOnClick: true,
-  //         pauseOnHover: true,
-  //         draggable: true,
-  //         progress: undefined,
-  //         theme: "light",
-  //       });
-  //       return;
-  //     }
-  //   } catch (error) {
-  //     toast.error('Error!', {
-  //       position: "top-right",
-  //       autoClose: 5000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: "colored",
-  //     });
-  //   }
-  // }
-
-  // const update = async () => {
-  //   if (password == confirmpassword) {
-  //     const responseUpdateStaff = await fetch(
-  //       "api/staff",
-  //       {
-  //         method: "PUT",
-  //         headers: { "Content-Type": "application/json" },
-  //         body: JSON.stringify({ userid, staffid, staffname, contracttype, contactno, nic, password, username }),
-  //       }
-  //     );
-
-  //     const res = await responseUpdateStaff.json();
-
-  //     if (res == "SUCCESS") {
-  //       setIsOpen(false);
-  //       if (params.setReloadTable) {
-  //         params.setReloadTable();
-  //       }
-  //       toast.success('Staff updated successfully!', {
-  //         position: "top-right",
-  //         autoClose: 5000,
-  //         hideProgressBar: false,
-  //         closeOnClick: true,
-  //         pauseOnHover: true,
-  //         draggable: true,
-  //         progress: undefined,
-  //         theme: "light",
-  //       });
-  //     } else {
-  //       toast.error('Error!', {
-  //         position: "top-right",
-  //         autoClose: 5000,
-  //         hideProgressBar: false,
-  //         closeOnClick: true,
-  //         pauseOnHover: true,
-  //         draggable: true,
-  //         progress: undefined,
-  //         theme: "light",
-  //       });
-  //     }
-
-  //     return res;
-  //   }
-  // };
 
   const deleteAction = async () => {
     if (staffid) {
@@ -430,8 +324,8 @@ const StaffAddNew = (params: ParamTypes) => {
         {params.buttonName}
       </button>
       <Modal isOpen={isOpen} onRequestClose={() => setIsOpen(false)} style={customStyles} ariaHideApp={false}>
-        <div className="pl-12 pb-1">
-          <h1 className="text-2xl uppercase text-indigo-800">Add New Staff Member</h1>
+        <div className="pl-12">
+          <h1 className="text-2xl uppercase text-indigo-800">{!staffid ? 'Add New Staff Member' : 'Edit Staff Member'}</h1>
         </div>
         <div className="flex items-center justify-center p-12">
           <div className="mx-auto w-full max-w-[550px]">
@@ -448,7 +342,13 @@ const StaffAddNew = (params: ParamTypes) => {
                 />
               </div>
               <div className="w-full px-3 sm:w-1/2">
-                <TextInputField
+              <SelectBoxInputField
+                  label="Contract Type"
+                  value={contracttype}
+                  options={contractTypeOptionValues}
+                  onSelect={(e) => setContracttype(e.target.value)}
+                />
+                {/* <TextInputField
                   label="Contract Type"
                   id="contracttype"
                   name="contracttype"
@@ -456,10 +356,9 @@ const StaffAddNew = (params: ParamTypes) => {
                   placeholder="Contract Type"
                   value={contracttype}
                   onChange={(e) => setContracttype(e.target.value)}
-                />
+                /> */}
               </div>
             </div>
-
             <div className="-mx-3 flex flex-wrap">
               <div className="w-full px-3 sm:w-1/2">
                 <TextInputField
@@ -479,6 +378,25 @@ const StaffAddNew = (params: ParamTypes) => {
                   options={roleOptionValues}
                   onSelect={(e) => setRole(e.target.value)}
                 />
+              </div>
+            </div>
+            <div className="-mx-3 flex flex-wrap">
+              <div className="w-full px-3">
+              <SelectBoxInputField
+                  label="Desigantion"
+                  value={designation}
+                  options={designationOptionValues}
+                  onSelect={(e) => setDesignation(e.target.value)}
+                />
+                {/* <TextInputField
+                  label="Desigantion"
+                  id="designation"
+                  name="designation"
+                  autoComplete=""
+                  placeholder="Desigantion"
+                  value={designation}
+                  onChange={(e) => setDesignation(e.target.value)}
+                /> */}
               </div>
             </div>
 

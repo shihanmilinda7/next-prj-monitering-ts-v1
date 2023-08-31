@@ -10,45 +10,22 @@ export async function GET(request: Request) {
   let res;
 
   const tmpPageNumber: any = searchParams.get("page-number");
-  const searchProjectName: any = searchParams.get("search-project-name");
   const currentPage: any = parseInt(tmpPageNumber);
 
   const postsPerPage = 10; // Number of posts per page
   const offset = (currentPage - 1) * postsPerPage;
 
-  let totalProjectCount;
-  let project: any;
-  if (searchProjectName) {
-    totalProjectCount = await prisma.projects.count({
-      where: {
-        projectname: {
-          contains: searchProjectName,
-        },
-      },
-    });
+  const totalProjectCount = await prisma.projects.count();
 
-    project = await prisma.projects.findMany({
-      where: {
-        projectname: {
-          contains: searchProjectName,
-        },
-      },
-      skip: offset,
-      take: postsPerPage,
-    });
-  } else {
-    totalProjectCount = await prisma.projects.count();
-
-    project = await prisma.projects.findMany({
-      skip: offset,
-      take: postsPerPage,
-    });
-  }
+  const project = await prisma.projects.findMany({
+    skip: offset,
+    take: postsPerPage,
+  });
 
   if (project.length > 0) {
     res = { message: "SUCCESS", project, totalProjectCount };
   } else {
-    res = { message: "FAIL" ,project:[],totalProjectCount:1};
+    res = { message: "FAIL" };
   }
   return NextResponse.json(res);
 }

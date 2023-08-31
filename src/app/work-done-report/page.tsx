@@ -62,7 +62,12 @@ export default function WorkDoneReport() {
   const [staffname, setStaffname] = useState("Select from below...");
   const [staffTablePage, setStaffTablePage] = useState(1);
   const [totalStaffCount, setTotalStaffCount] = useState(1);
-
+  const rSearchStaffName = useSelector(
+    (state: any) => state.searchReducer.staffname
+  );
+  const rSearchDesigantion = useSelector(
+    (state: any) => state.searchReducer.designation
+  );
   const [timeAllocSummaryObject, setTimeAllocSummaryObject] = useState<any[]>(
     []
   );
@@ -183,10 +188,17 @@ export default function WorkDoneReport() {
 
   //for staff table pagination update
   useEffect(() => {
+    console.log("rSearchStaffName", rSearchStaffName);
     // declare the data fetching function
     const fetchData = async () => {
       const reponse = await fetch(
-        pathname + "/api/staff/get-staff?page-number=" + staffTablePage
+        pathname +
+          "/api/staff/get-staff?page-number=" +
+          staffTablePage +
+          "search-staff-name=" +
+          rSearchStaffName +
+          "&search-desigantion=" +
+          rSearchDesigantion
       );
       const res = await reponse.json();
       setStaffRowObjects(res.staff);
@@ -195,7 +207,24 @@ export default function WorkDoneReport() {
     // call the function
     fetchData().catch(console.error);
   }, [staffTablePage]);
-
+  //for staff table pagination update search
+  useEffect(() => {
+    // declare the data fetching function
+    const fetchData = async () => {
+      const reponse = await fetch(
+        pathname +
+          "/api/staff/get-staff?page-number=1&search-staff-name=" +
+          rSearchStaffName +
+          "&search-desigantion=" +
+          rSearchDesigantion
+      );
+      const res = await reponse.json();
+      setStaffRowObjects(res.staff);
+      setTotalStaffCount(res.totalStaffCount);
+      // call the function
+    };
+    fetchData().catch(console.error);
+  }, [rSearchStaffName, rSearchDesigantion]);
   //for task table pagination update                                                 TO DOOOOOOOOO
   useEffect(() => {
     if (staffid) {
@@ -216,7 +245,6 @@ export default function WorkDoneReport() {
           <h1 className="text-4xl text-indigo-600">
             Monthly Achievements Summary
           </h1>
-          
         </div>
         <div className="mr-4">
           <YearMonthSelector />

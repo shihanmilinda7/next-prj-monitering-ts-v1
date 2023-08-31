@@ -50,11 +50,12 @@ export const PrjAssignTaskTableRow = ({
             onChange={(e) =>
               updateData({ ...tableRow, selected: e.target.checked })
             }
-            className="
-            form-checkbox h-5 w-5 text-gray-600"
+            className="appearance-none w-9 focus:outline-none h-5 rounded-full before:inline-block before:rounded-full before:h-4 before:w-4 checked:before:translate-x-full shadow-inner transition-all duration-300 before:ml-0.5 bg-gray-300 checked:bg-indigo-300 before:bg-indigo-500"
           />
         </div>
       </td>
     </tr>
   );
 };
+
+// form-checkbox h-5 w-5 text-gray-600

@@ -18,6 +18,7 @@ export const StaffTable = ({
     "Contract Type",
     "Role",
     "Contact No",
+    "Desigantion",
     "NIC",
     "",
   ];
@@ -46,6 +47,7 @@ export const StaffTable = ({
                 <td className="text-left py-3 px-4">{tableRow.contracttype}</td>
                 <td className="text-left py-3 px-4">{tableRow.role}</td>
                 <td className="text-left py-3 px-4">{tableRow.contactno}</td>
+                <td className="text-left py-3 px-4">{tableRow.designation}</td>
                 <td className="text-left py-3 px-4">{tableRow.nic}</td>
                 {/* <td className="p-4 cursor-pointer hover:text-amber-900 hover: " onClick={()=>selRow(tableRow)}>Edit</td> */}
                 <td className="text-left py-3 px-4 cursor-pointer hover:text-amber-900 hover: ">
