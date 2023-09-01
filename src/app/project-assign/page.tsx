@@ -21,6 +21,11 @@ import { PrjAssignProjectTable } from "../components/project-assign/project-tabl
 import { PrjAssignTaskTable } from "../components/project-assign/task-table";
 import store from "@/store/store";
 import { useSelector, useDispatch } from "react-redux";
+import {
+  setSearchDesignation,
+  setSearchProjectName,
+  setSearchStaffName,
+} from "@/store/searchSlice";
 
 export default function ProjectAssign() {
   //get pathname
@@ -40,16 +45,21 @@ export default function ProjectAssign() {
   }
 
   const router = useRouter();
-  // const { data: session, status } = useSession();
+  const { data: session, status } = useSession();
 
-  // if (status === 'loading') {
-  //   return <div><Spinner /></div>;
-  // }
+  if (status === "loading") {
+    return (
+      <div>
+        <Spinner />
+      </div>
+    );
+  }
 
-  // if (!session) {
-  //   router.push('/'); // Redirect to login page if not authenticated
-  //   return null;
-  // }
+  if (!session) {
+    router.push("/"); // Redirect to login page if not authenticated
+    return null;
+  }
+  const dispatch = useDispatch();
 
   //redux
   const save = useSelector((state: any) => state.saveReducer.saveState);
@@ -64,7 +74,7 @@ export default function ProjectAssign() {
   const rSearchStaffName = useSelector(
     (state: any) => state.searchReducer.staffname
   );
-  const rSearchDesigantion = useSelector(
+  const rSearchDesignation = useSelector(
     (state: any) => state.searchReducer.designation
   );
   const rSearchProjactName = useSelector(
@@ -248,6 +258,9 @@ export default function ProjectAssign() {
 
   //for staff table pagination update
   useEffect(() => {
+    dispatch(setSearchStaffName(""));
+    dispatch(setSearchDesignation(""));
+
     // declare the data fetching function
     const fetchData = async () => {
       const reponse = await fetch(
@@ -255,9 +268,9 @@ export default function ProjectAssign() {
           "/api/staff/get-staff?page-number=" +
           staffTablePage +
           "&search-staff-name=" +
-          rSearchStaffName +
-          "&search-desigantion=" +
-          rSearchDesigantion
+          rSearchStaffName ??
+          "-1" + "&search-designation=" + rSearchDesignation ??
+          "-1"
       );
       const res = await reponse.json();
       setStaffRowObjects(res.staff);
@@ -274,9 +287,9 @@ export default function ProjectAssign() {
       const reponse = await fetch(
         pathname +
           "/api/staff/get-staff?page-number=1&search-staff-name=" +
-          rSearchStaffName +
-          "&search-desigantion=" +
-          rSearchDesigantion
+          rSearchStaffName ??
+          "-1" + "&search-designation=" + rSearchDesignation ??
+          "-1"
       );
       const res = await reponse.json();
       setStaffRowObjects(res.staff);
@@ -284,10 +297,12 @@ export default function ProjectAssign() {
       // call the function
     };
     fetchData().catch(console.error);
-  }, [rSearchStaffName, rSearchDesigantion]);
+  }, [rSearchStaffName, rSearchDesignation]);
 
   //for project table pagination update
   useEffect(() => {
+    dispatch(setSearchProjectName(""));
+
     // declare the data fetching function
     const fetchData = async () => {
       const reponse = await fetch(
@@ -295,7 +310,7 @@ export default function ProjectAssign() {
           "/api/project?page-number=" +
           projectTablePage +
           "&search-project-name=" +
-          searchProjectname
+          searchProjectname ?? "-1"
       );
       const res = await reponse.json();
       console.log("res", res);
@@ -313,7 +328,7 @@ export default function ProjectAssign() {
       const reponse = await fetch(
         pathname +
           "/api/project?page-number=1&search-project-name=" +
-          rSearchProjactName
+          rSearchProjactName ?? "-1"
       );
       const res = await reponse.json();
       console.log("res", res);
@@ -349,24 +364,23 @@ export default function ProjectAssign() {
   }, [taskTablePage, staffid, saveFlag]);
 
   return (
-    // <WithRole roles={['admin']}>
-    // <Provider store={store}>
-    <div>
-      <Navbar />
-      <div className="flex items-center justify-center p-4">
-        <h1 className="text-4xl text-indigo-600 mr-auto">Project assign</h1>
-        {/* <button
+    <WithRole roles={["Admin", "Manager"]}>
+      <div>
+        <Navbar />
+        <div className="flex items-center justify-center p-4">
+          <h1 className="text-4xl text-indigo-600 mr-auto">Project assign</h1>
+          {/* <button
           className="flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600  hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
         >
           Save Not
         </button> */}
-      </div>
-      <div className="flex">
-        <div className="w-1/3 pl-4">
-          <h1 className="text-2xl text-indigo-400 mr-auto">
-            Staff name : {staffname}
-          </h1>
-          {/* <div className="w-full px-2 mb-1">
+        </div>
+        <div className="flex">
+          <div className="w-1/3 pl-4">
+            <h1 className="text-2xl text-indigo-400 mr-auto">
+              Staff name : {staffname}
+            </h1>
+            {/* <div className="w-full px-2 mb-1">
             <input
               type="text"
               name="searchStaffname"
@@ -378,27 +392,27 @@ export default function ProjectAssign() {
               className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
             />
           </div> */}
-          <div>
-            {staffRowObjects && (
-              <PrjAssignStaffTable
-                staffTableClickEvent={staffTableClickEvent}
-                staffRowObjects={staffRowObjects}
+            <div>
+              {staffRowObjects && (
+                <PrjAssignStaffTable
+                  staffTableClickEvent={staffTableClickEvent}
+                  staffRowObjects={staffRowObjects}
+                  tablePagination={staffTablePage}
+                />
+              )}
+              <Pagination
                 tablePagination={staffTablePage}
+                totalProjectCount={totalStaffCount}
+                prvTabel={prvStaffTabel}
+                nextTabel={nextStaffTabel}
               />
-            )}
-            <Pagination
-              tablePagination={staffTablePage}
-              totalProjectCount={totalStaffCount}
-              prvTabel={prvStaffTabel}
-              nextTabel={nextStaffTabel}
-            />
+            </div>
           </div>
-        </div>
-        <div className="w-1/3 pl-4">
-          <h1 className="text-2xl   text-indigo-400 mr-auto">
-            Project name - {projectname}
-          </h1>
-          {/* <div className="w-full px-2 mb-1">
+          <div className="w-1/3 pl-4">
+            <h1 className="text-2xl   text-indigo-400 mr-auto">
+              Project name - {projectname}
+            </h1>
+            {/* <div className="w-full px-2 mb-1">
             <input
               type="text"
               name="searchProjectname"
@@ -410,45 +424,46 @@ export default function ProjectAssign() {
               className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
             />
           </div> */}
-          <div>
-            {projectRowObjects && (
-              <PrjAssignProjectTable
-                projectTableClickEvent={projectTableClickEvent}
-                projectRowObjects={projectRowObjects}
+            <div>
+              {projectRowObjects && (
+                <PrjAssignProjectTable
+                  projectTableClickEvent={projectTableClickEvent}
+                  projectRowObjects={projectRowObjects}
+                  tablePagination={projectTablePage}
+                  staffid={staffid}
+                />
+              )}
+              <Pagination
                 tablePagination={projectTablePage}
-                staffid={staffid}
+                totalProjectCount={totalProjectCount}
+                prvTabel={prvProjectTabel}
+                nextTabel={nextProjectTabel}
               />
-            )}
-            <Pagination
-              tablePagination={projectTablePage}
-              totalProjectCount={totalProjectCount}
-              prvTabel={prvProjectTabel}
-              nextTabel={nextProjectTabel}
-            />
+            </div>
           </div>
-        </div>
-        <div className="w-1/3 pl-4">
-          <h1 className="text-2xl   text-indigo-400 mr-auto">Task list</h1>
-          <div>
-            {taskRowObjects && (
-              <PrjAssignTaskTable
-                staffid={staffid}
-                projectid={projectid}
-                taskRowObjectsIn={taskRowObjects}
+          <div className="w-1/3 pl-4">
+            <h1 className="text-2xl   text-indigo-400 mr-auto">Task list</h1>
+            <div>
+              {taskRowObjects && (
+                <PrjAssignTaskTable
+                  staffid={staffid}
+                  projectid={projectid}
+                  taskRowObjectsIn={taskRowObjects}
+                  tablePagination={taskTablePage}
+                  toggleSaveFlag={toggleSaveFlag}
+                />
+              )}
+              <Pagination
                 tablePagination={taskTablePage}
-                toggleSaveFlag={toggleSaveFlag}
+                totalProjectCount={totalTaskCount}
+                prvTabel={prvTaskTabel}
+                nextTabel={nextTaskTabel}
               />
-            )}
-            <Pagination
-              tablePagination={taskTablePage}
-              totalProjectCount={totalTaskCount}
-              prvTabel={prvTaskTabel}
-              nextTabel={nextTaskTabel}
-            />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </WithRole>
   );
 }
 

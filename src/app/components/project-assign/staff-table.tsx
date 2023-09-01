@@ -22,20 +22,19 @@ export const PrjAssignStaffTable = ({
   const [searchDesignation, setSearchDesigntion] = useState("");
 
   // const rSearchStaffName = useSelector((state: any) => state.saveReducer.staffname);
-  // const rSearchDesigantion = useSelector((state: any) => state.saveReducer.designation);
+  // const rSearchDesignation = useSelector((state: any) => state.saveReducer.designation);
 
-  
   const dispatch = useDispatch();
 
-  const searchStaffName = (nameValue:any) =>{
-    setSearchStaffname(nameValue)
+  const searchStaffName = (nameValue: any) => {
+    setSearchStaffname(nameValue);
     dispatch(setSearchStaffName(nameValue));
-  }
+  };
 
-  const searchDesigantion = (designationValue:any) =>{
-    setSearchDesigntion(designationValue)
+  const searchDesignationEvent = (designationValue: any) => {
+    setSearchDesigntion(designationValue);
     dispatch(setSearchDesignation(designationValue));
-  }
+  };
 
   const selectRow = (
     e: React.MouseEvent<HTMLTableRowElement>,
@@ -100,7 +99,7 @@ export const PrjAssignStaffTable = ({
                   placeholder="Search Designation"
                   autoComplete=""
                   value={searchDesignation}
-                  onChange={(e) => searchDesigantion(e.target.value)}
+                  onChange={(e) => searchDesignationEvent(e.target.value)}
                   className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
               </td>

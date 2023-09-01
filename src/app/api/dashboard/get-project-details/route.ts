@@ -11,7 +11,7 @@ export async function GET(request: Request) {
 
   // const tmpPageNumber: any = searchParams.get("page-number");
   // const searchStaffName: any = searchParams.get("search-staff-name");
-  // const searchDesignation: any = searchParams.get("search-desigantion");
+  // const searchDesignation: any = searchParams.get("search-designation");
   // const currentPage: any = parseInt(tmpPageNumber);
 
   // const postsPerPage = 10; // Number of posts per page

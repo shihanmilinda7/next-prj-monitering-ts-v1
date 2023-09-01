@@ -7,9 +7,9 @@ interface searchState {
 }
 
 const initialState: searchState = {
-  staffname: "",
-  designation:"" ,
-  projectname:"",
+  staffname: "-1",
+  designation: "-1",
+  projectname: "-1",
 };
 
 const searchSlice: any = createSlice({
@@ -28,6 +28,10 @@ const searchSlice: any = createSlice({
   },
 });
 
-export const { setSearchStaffName,setSearchDesignation,setSearchProjectName } = searchSlice.actions;
+export const {
+  setSearchStaffName,
+  setSearchDesignation,
+  setSearchProjectName,
+} = searchSlice.actions;
 
 export default searchSlice.reducer;

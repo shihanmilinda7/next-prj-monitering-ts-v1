@@ -18,7 +18,7 @@ export const StaffTable = ({
     "Contract Type",
     "Role",
     "Contact No",
-    "Desigantion",
+    "Designation",
     "NIC",
     "",
   ];

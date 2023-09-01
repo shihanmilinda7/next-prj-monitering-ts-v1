@@ -17,16 +17,16 @@ import Pagination from "../components/common-comp/pagination";
 
 export default function Project() {
   const router = useRouter();
-  // const { data: session, status } = useSession();
+  const { data: session, status } = useSession();
 
-  // if (status === 'loading') {
-  //   return <div><Spinner /></div>;
-  // }
+  if (status === 'loading') {
+    return <div><Spinner /></div>;
+  }
 
-  // if (!session) {
-  //   router.push('/'); // Redirect to login page if not authenticated
-  //   return null;
-  // }
+  if (!session) {
+    router.push('/'); // Redirect to login page if not authenticated
+    return null;
+  }
 
   //define state variables
   // const [reloadTable, setReloadTable] = useState(false);
@@ -68,33 +68,33 @@ export default function Project() {
   }, [tablePagination]);
 
   return (
-    <div>
-      <Navbar />
-      <div className="flex items-center justify-center p-4">
-        <h1 className="text-4xl text-indigo-600 mr-auto">
-          Projects
-        </h1>
-        <Link
-          href="/project/new-project"
-          className="flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
-        >
-          Create New Project
-        </Link>
-      </div>
+    <WithRole roles={["Admin", "Manager"]}>
       <div>
-        {projectRowObjects && (
-          <ProjectTable
-            projectRowObjects={projectRowObjects}
-            tablePagination={tablePagination}
-          />
-        )}
+        <Navbar />
+        <div className="flex items-center justify-center p-4">
+          <h1 className="text-4xl text-indigo-600 mr-auto">Projects</h1>
+          <Link
+            href="/project/new-project"
+            className="flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
+          >
+            Create New Project
+          </Link>
+        </div>
+        <div>
+          {projectRowObjects && (
+            <ProjectTable
+              projectRowObjects={projectRowObjects}
+              tablePagination={tablePagination}
+            />
+          )}
+        </div>
+        <Pagination
+          tablePagination={tablePagination}
+          totalProjectCount={totalProjectCount}
+          prvTabel={prvTabel}
+          nextTabel={nextTabel}
+        />
       </div>
-      <Pagination
-        tablePagination={tablePagination}
-        totalProjectCount={totalProjectCount}
-        prvTabel={prvTabel}
-        nextTabel={nextTabel}
-      />
-    </div>
+    </WithRole>
   );
 }

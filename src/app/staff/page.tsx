@@ -67,7 +67,7 @@ export default function Staff() {
   }, [reloadTable,tablePagination]);
 
   return (
-    <WithRole roles={["admin"]}>
+    <WithRole roles={["Admin","Manager"]}>
       <div>
         <Navbar />
         <div className="flex items-center justify-center p-4">

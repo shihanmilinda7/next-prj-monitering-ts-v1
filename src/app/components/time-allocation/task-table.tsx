@@ -269,7 +269,7 @@ export const PrjAssignTaskTimeAllocTable = ({
             />
           </div>
           <div className="flex flex-row">
-            <div className="w-full pt-4 sm:w-1/5">
+            {/* <div className="w-full pt-4 sm:w-1/5">
               <CheckBoxInputField
                 label="Leave"
                 id="projectdescription"
@@ -279,7 +279,7 @@ export const PrjAssignTaskTimeAllocTable = ({
                 value={onactive}
                 onChange={(e) => setOnactive(e.target.checked)}
               />
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="ml-4 w-full">
@@ -293,7 +293,7 @@ export const PrjAssignTaskTimeAllocTable = ({
             <textarea
               id="remark"
               name="remark"
-              rows={3}
+              rows={2}
               value={remark}
               onChange={(e) => remarkInputEvent(e.target.value)}
               className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"

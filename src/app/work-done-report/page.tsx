@@ -24,6 +24,7 @@ import { useSelector, useDispatch } from "react-redux";
 import YearMonthSelector from "../components/common-comp/year-month-picker";
 import { setsaved } from "@/store/saveSlice";
 import { WorkDoneMonthSummaryTable } from "../components/work-done-report/month-summary-table";
+import { setSearchDesignation, setSearchStaffName } from "@/store/searchSlice";
 
 export default function WorkDoneReport() {
   //get pathname
@@ -41,16 +42,20 @@ export default function WorkDoneReport() {
   }
 
   const router = useRouter();
-  // const { data: session, status } = useSession();
+  const { data: session, status } = useSession();
 
-  // if (status === 'loading') {
-  //   return <div><Spinner /></div>;
-  // }
+  if (status === "loading") {
+    return (
+      <div>
+        <Spinner />
+      </div>
+    );
+  }
 
-  // if (!session) {
-  //   router.push('/'); // Redirect to login page if not authenticated
-  //   return null;
-  // }
+  if (!session) {
+    router.push("/"); // Redirect to login page if not authenticated
+    return null;
+  }
 
   //redux
   const year = useSelector((state: any) => state.yearMonthPickerReducer.year);
@@ -65,7 +70,7 @@ export default function WorkDoneReport() {
   const rSearchStaffName = useSelector(
     (state: any) => state.searchReducer.staffname
   );
-  const rSearchDesigantion = useSelector(
+  const rSearchDesignation = useSelector(
     (state: any) => state.searchReducer.designation
   );
   const [timeAllocSummaryObject, setTimeAllocSummaryObject] = useState<any[]>(
@@ -188,7 +193,9 @@ export default function WorkDoneReport() {
 
   //for staff table pagination update
   useEffect(() => {
-    console.log("rSearchStaffName", rSearchStaffName);
+    console.log("rSearchDesignation1", rSearchDesignation);
+    dispatch(setSearchStaffName(""));
+    dispatch(setSearchDesignation(""));
     // declare the data fetching function
     const fetchData = async () => {
       const reponse = await fetch(
@@ -197,8 +204,8 @@ export default function WorkDoneReport() {
           staffTablePage +
           "search-staff-name=" +
           rSearchStaffName +
-          "&search-desigantion=" +
-          rSearchDesigantion
+          "&search-designation=" +
+          rSearchDesignation ?? "-1"
       );
       const res = await reponse.json();
       setStaffRowObjects(res.staff);
@@ -209,14 +216,15 @@ export default function WorkDoneReport() {
   }, [staffTablePage]);
   //for staff table pagination update search
   useEffect(() => {
+    console.log("rSearchDesignation2", rSearchDesignation);
     // declare the data fetching function
     const fetchData = async () => {
       const reponse = await fetch(
         pathname +
           "/api/staff/get-staff?page-number=1&search-staff-name=" +
           rSearchStaffName +
-          "&search-desigantion=" +
-          rSearchDesigantion
+          "&search-designation=" +
+          rSearchDesignation
       );
       const res = await reponse.json();
       setStaffRowObjects(res.staff);
@@ -224,7 +232,7 @@ export default function WorkDoneReport() {
       // call the function
     };
     fetchData().catch(console.error);
-  }, [rSearchStaffName, rSearchDesigantion]);
+  }, [rSearchStaffName, rSearchDesignation]);
   //for task table pagination update                                                 TO DOOOOOOOOO
   useEffect(() => {
     if (staffid) {
@@ -236,67 +244,67 @@ export default function WorkDoneReport() {
   }, [year, month]);
 
   return (
-    // <WithRole roles={['admin']}>
-    // <Provider store={store}>
-    <div>
-      <Navbar />
-      <div className="flex items-center justify-center p-4">
-        <div className=" mr-auto">
-          <h1 className="text-4xl text-indigo-600">
-            Monthly Achievements Summary
-          </h1>
+    <WithRole roles={["Admin", "Manager"]}>
+      <div>
+        <Navbar />
+        <div className="flex items-center justify-center p-4">
+          <div className=" mr-auto">
+            <h1 className="text-4xl text-indigo-600">
+              Monthly Achievements Summary
+            </h1>
+          </div>
+          <div className="mr-4">
+            <YearMonthSelector />
+          </div>
         </div>
-        <div className="mr-4">
-          <YearMonthSelector />
-        </div>
-      </div>
 
-      <div className="flex">
-        <div className="w-1/3 pl-4">
-          <div className="flex overflow-hidden">
-            <h1 className="text-2xl text-indigo-400 mr-auto overflow-hidden">
-              Staff name : {staffname}
-            </h1>
-          </div>
-          <div>
-            {staffRowObjects && (
-              <PrjAssignStaffTable
-                staffTableClickEvent={staffTableClickEvent}
-                staffRowObjects={staffRowObjects}
+        <div className="flex">
+          <div className="w-1/3 pl-4">
+            <div className="flex overflow-hidden">
+              <h1 className="text-2xl text-indigo-400 mr-auto overflow-hidden">
+                Staff name : {staffname}
+              </h1>
+            </div>
+            <div>
+              {staffRowObjects && (
+                <PrjAssignStaffTable
+                  staffTableClickEvent={staffTableClickEvent}
+                  staffRowObjects={staffRowObjects}
+                  tablePagination={staffTablePage}
+                />
+              )}
+              <Pagination
                 tablePagination={staffTablePage}
+                totalProjectCount={totalStaffCount}
+                prvTabel={prvStaffTabel}
+                nextTabel={nextStaffTabel}
               />
-            )}
-            <Pagination
-              tablePagination={staffTablePage}
-              totalProjectCount={totalStaffCount}
-              prvTabel={prvStaffTabel}
-              nextTabel={nextStaffTabel}
-            />
+            </div>
           </div>
-        </div>
-        <div className="ml-4 w-2/3 pl-4">
-          <div className="flex overflow-hidden">
-            <h1 className="text-2xl text-indigo-400 mr-auto overflow-hidden">
-              Month Summary
-            </h1>
-          </div>
-          <div className="h-7">
-            {timeAllocSummaryObject && (
-              <WorkDoneMonthSummaryTable
-                rowObjectIn={timeAllocSummaryObject}
-                // tablePagination={timeAllocSummaryTablePage}
-              />
-            )}
-            {/* <Pagination
+          <div className="ml-4 w-2/3 pl-4">
+            <div className="flex overflow-hidden">
+              <h1 className="text-2xl text-indigo-400 mr-auto overflow-hidden">
+                Month Summary
+              </h1>
+            </div>
+            <div className="h-7">
+              {timeAllocSummaryObject && (
+                <WorkDoneMonthSummaryTable
+                  rowObjectIn={timeAllocSummaryObject}
+                  // tablePagination={timeAllocSummaryTablePage}
+                />
+              )}
+              {/* <Pagination
               tablePagination={timeAllocSummaryTablePage}
               totalProjectCount={totalTimeAllocSummaryCount}
               prvTabel={prvTimeAllocSummaryTabel}
               nextTabel={nextTimeAllocSummaryTabel}
             /> */}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </WithRole>
   );
 }
 
