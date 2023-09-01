@@ -34,7 +34,7 @@
 //   } catch (error) {}
 
 //   if (pathname) {
-//     const r: number = pathname.indexOf("/", 7);
+//     const r: number = pathname.indexOf("/", 9);
 //     if (r !== -1) {
 //       pathname = pathname.substring(0, r);
 //     }
