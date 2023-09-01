@@ -193,9 +193,8 @@ export default function WorkDoneReport() {
 
   //for staff table pagination update
   useEffect(() => {
-    console.log("rSearchDesignation1", rSearchDesignation);
-    dispatch(setSearchStaffName(""));
-    dispatch(setSearchDesignation(""));
+    const tmpStaffName = rSearchStaffName ?? "-1";
+    const tmpDesignation = rSearchDesignation ?? "-1";
     // declare the data fetching function
     const fetchData = async () => {
       const reponse = await fetch(
@@ -203,9 +202,9 @@ export default function WorkDoneReport() {
           "/api/staff/get-staff?page-number=" +
           staffTablePage +
           "search-staff-name=" +
-          rSearchStaffName +
+          (rSearchStaffName ?? "-1") +
           "&search-designation=" +
-          rSearchDesignation ?? "-1"
+          (rSearchDesignation ?? "-1")
       );
       const res = await reponse.json();
       setStaffRowObjects(res.staff);
@@ -216,15 +215,15 @@ export default function WorkDoneReport() {
   }, [staffTablePage]);
   //for staff table pagination update search
   useEffect(() => {
-    console.log("rSearchDesignation2", rSearchDesignation);
+    // console.log("rSearchDesignation2", rSearchDesignation);
     // declare the data fetching function
     const fetchData = async () => {
       const reponse = await fetch(
         pathname +
           "/api/staff/get-staff?page-number=1&search-staff-name=" +
-          rSearchStaffName +
+          (rSearchStaffName ?? "-1") +
           "&search-designation=" +
-          rSearchDesignation
+          (rSearchDesignation ?? "-1")
       );
       const res = await reponse.json();
       setStaffRowObjects(res.staff);
@@ -249,7 +248,7 @@ export default function WorkDoneReport() {
         <Navbar />
         <div className="flex items-center justify-center p-4">
           <div className=" mr-auto">
-            <h1 className="text-4xl text-indigo-600">
+            <h1 className="text-4xl text-purple-600">
               Monthly Achievements Summary
             </h1>
           </div>
@@ -261,7 +260,7 @@ export default function WorkDoneReport() {
         <div className="flex">
           <div className="w-1/3 pl-4">
             <div className="flex overflow-hidden">
-              <h1 className="text-2xl text-indigo-400 mr-auto overflow-hidden">
+              <h1 className="text-2xl text-purple-400 mr-auto overflow-hidden">
                 Staff name : {staffname}
               </h1>
             </div>
@@ -283,7 +282,7 @@ export default function WorkDoneReport() {
           </div>
           <div className="ml-4 w-2/3 pl-4">
             <div className="flex overflow-hidden">
-              <h1 className="text-2xl text-indigo-400 mr-auto overflow-hidden">
+              <h1 className="text-2xl text-purple-400 mr-auto overflow-hidden">
                 Month Summary
               </h1>
             </div>

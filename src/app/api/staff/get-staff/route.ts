@@ -10,8 +10,8 @@ export async function GET(request: Request) {
   let res;
 
   const tmpPageNumber: any = searchParams.get("page-number");
-  const searchStaffName: any = searchParams.get("search-staff-name");
-  const searchDesignation: any = searchParams.get("search-designation");
+  const tmpSearchStaffName: any = searchParams.get("search-staff-name");
+  const tmpSearchDesignation: any = searchParams.get("search-designation");
   const currentPage: any = parseInt(tmpPageNumber);
 
   const postsPerPage = 10; // Number of posts per page
@@ -19,15 +19,25 @@ export async function GET(request: Request) {
 
   let totalStaffCount: any;
   let staff: any;
+  let searchStaffName: any;
+  let searchDesignation: any;
 
-  if (searchStaffName == null) {
-    console.log("searchStaffName null");
-  } else {
-    console.log("searchStaffName not null");
-  }
+  console.log("tmpSearchStaffName", tmpSearchStaffName);
+  console.log("tmpSearchDesignation", tmpSearchDesignation);
+
   console.log("searchStaffName", searchStaffName);
-  console.log("searchDesignation", searchDesignation);
   try {
+    if (tmpSearchStaffName == "-1") {
+      searchStaffName = "";
+    } else {
+      searchStaffName = tmpSearchStaffName;
+    }
+
+    if (tmpSearchDesignation == "-1") {
+      searchDesignation = "";
+    } else {
+      searchDesignation = tmpSearchDesignation;
+    }
     // console.log("searchStaffName",searchStaffName,)
     await prisma.$transaction(async (tx) => {
       totalStaffCount = await tx.staff.count({

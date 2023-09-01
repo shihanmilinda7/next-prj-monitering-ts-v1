@@ -55,7 +55,9 @@ export default function Staff() {
     // declare the data fetching function
     const fetchData = async () => {
       const columns = JSON.stringify({ staffid: true });
-      const staff_details = await fetch("api/staff?page-number=" + tablePagination);
+      const staff_details = await fetch(
+        "api/staff?page-number=" + tablePagination
+      );
       const res = await staff_details.json();
       setStaffRowData(res.staff);
       setTotalStaffCount(res.staffCount);
@@ -64,14 +66,14 @@ export default function Staff() {
 
     // call the function
     fetchData().catch(console.error);
-  }, [reloadTable,tablePagination]);
+  }, [reloadTable, tablePagination]);
 
   return (
-    <WithRole roles={["Admin","Manager"]}>
+    <WithRole roles={["Admin", "Manager"]}>
       <div>
         <Navbar />
         <div className="flex items-center justify-center p-4">
-          <h1 className="text-4xl   uppercase text-indigo-600 mr-auto">
+          <h1 className="text-4xl   uppercase text-purple-600 mr-auto">
             Staff
           </h1>
           <StaffAddNew

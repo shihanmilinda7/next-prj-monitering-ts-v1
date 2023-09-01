@@ -12,13 +12,12 @@ const YearMonthSelector = () => {
 
   const [selectedYear, setSelectedYear] = useState(year);
   const [selectedMonth, setSelectedMonth] = useState(month);
-//   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-//   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
+  //   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  //   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
 
   const handleYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedYear(parseInt(event.target.value));
     dispatch(setYear(event.target.value));
-
   };
 
   const handleMonthChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -46,7 +45,7 @@ const YearMonthSelector = () => {
 
   return (
     <div className="">
-      <h2 className="text-xl text-indigo-600">Select Year and Month</h2>
+      <h2 className="text-xl text-purple-600">Select Year and Month</h2>
       <div className="flex">
         <select
           className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"

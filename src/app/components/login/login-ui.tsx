@@ -110,7 +110,7 @@ const Login = () => {
     <div className="relative min-h-screen flex">
       <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0 bg-white">
         <div className="sm:w-1/2 xl:w-3/5 h-full hidden md:flex flex-auto items-center justify-center p-10 overflow-hidden bg-purple-900 text-white bg-no-repeat bg-cover relative">
-          <div className="absolute bg-gradient-to-b from-indigo-600 to-blue-500 opacity-75 inset-0 z-0"></div>
+          <div className="absolute bg-gradient-to-b from-purple-600 to-purple-500 opacity-75 inset-0 z-0"></div>
           <div className="w-full  max-w-md z-10">
             <div className="sm:text-4xl xl:text-5xl font-bold leading-tight mb-6">
               Next Generation Project Monitering{" "}
@@ -142,7 +142,7 @@ const Login = () => {
         <div className="md:flex md:items-center md:justify-center w-full sm:w-auto md:h-full w-2/5 xl:w-2/5 p-8  md:p-10 lg:p-14 sm:rounded-lg md:rounded-none bg-white">
           <div className="max-w-md w-full space-y-8">
             <div className="text-center">
-              <h2 className="mt-6 text-3xl font-bold italic text-indigo-700">
+              <h2 className="mt-6 text-3xl font-bold italic text-purple-700">
                 ProTrack
               </h2>
               <h2 className="mt-6 text-3xl font-bold text-gray-900">
@@ -159,7 +159,7 @@ const Login = () => {
                     Username
                   </label>
                   <input
-                    className=" w-full text-base px-4 py-2 border-b border-gray-300 focus:outline-none rounded-2xl focus:border-indigo-500"
+                    className=" w-full text-base px-4 py-2 border-b border-gray-300 focus:outline-none rounded-2xl focus:border-purple-500"
                     value={username}
                     id="username"
                     name="username"
@@ -174,7 +174,7 @@ const Login = () => {
                     Password
                   </label>
                   <input
-                    className="z-50 w-full content-center text-base px-4 py-2 border-b rounded-2xl border-gray-300 focus:outline-none focus:border-indigo-500"
+                    className="z-50 w-full content-center text-base px-4 py-2 border-b rounded-2xl border-gray-300 focus:outline-none focus:border-purple-500"
                     id="password"
                     name="password"
                     type="password"
@@ -186,7 +186,10 @@ const Login = () => {
                 </div>
                 <div className="flex items-center justify-between mt-10 mb-8">
                   <div className="text-sm">
-                    <a href="#" className="text-indigo-400 hover:text-blue-500">
+                    <a
+                      href="#"
+                      className="text-purple-400 hover:text-purple-500"
+                    >
                       Forgot your password?
                     </a>
                   </div>
@@ -195,7 +198,7 @@ const Login = () => {
                   <button
                     type="button"
                     onClick={login}
-                    className="z-50 w-full flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600  hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-4  rounded-full tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
+                    className="z-50 w-full flex justify-center bg-gradient-to-r from-purple-500 to-purple-600  hover:bg-gradient-to-l hover:from-purple-500 hover:to-purple-600 text-gray-100 p-4  rounded-full tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
                   >
                     Sign in
                   </button>

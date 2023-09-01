@@ -14,7 +14,7 @@ export default function Pagination({
       <div className="lg:w-3/5 w-full  flex items-center justify-between border-t border-gray-200">
         <div
           onClick={prvTabel}
-          className="flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer"
+          className="flex items-center pt-3 text-gray-600 hover:text-purple-700 cursor-pointer"
         >
           <svg
             width="14"
@@ -48,13 +48,13 @@ export default function Pagination({
           <p className="text-sm ml-3 font-medium leading-none ">Previous</p>
         </div>
         <div className="sm:flex hidden">
-          <p className="text-sm font-medium leading-none cursor-pointer text-gray-600 hover:text-indigo-700 border-t border-transparent hover:border-indigo-400 pt-3 mr-4 px-2">
+          <p className="text-sm font-medium leading-none cursor-pointer text-gray-600 hover:text-purple-700 border-t border-transparent hover:border-purple-400 pt-3 mr-4 px-2">
             {tablePagination}/{Math.ceil(totalProjectCount / 10)}
           </p>
         </div>
         <div
           onClick={nextTabel}
-          className="flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer"
+          className="flex items-center pt-3 text-gray-600 hover:text-purple-700 cursor-pointer"
         >
           <p className="text-sm font-medium leading-none mr-3">Next</p>
           <svg

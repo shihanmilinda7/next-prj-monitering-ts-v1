@@ -369,7 +369,7 @@ const StaffAddNew = (params: ParamTypes) => {
     <div>
       <button
         onClick={() => setIsOpen(true)}
-        className="flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
+        className="flex justify-center bg-gradient-to-r from-purple-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-purple-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
       >
         {params.buttonName}
       </button>
@@ -380,7 +380,7 @@ const StaffAddNew = (params: ParamTypes) => {
         ariaHideApp={false}
       >
         <div className="pl-12">
-          <h1 className="text-2xl uppercase text-indigo-800">
+          <h1 className="text-2xl uppercase text-purple-800">
             {!staffid ? "Add New Staff Member" : "Edit Staff Member"}
           </h1>
         </div>

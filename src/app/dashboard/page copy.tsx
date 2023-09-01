@@ -35,7 +35,6 @@
 //     const [taskData, setTaskData] = useState<TaskDashBoardObj[]>([]);
 //     const [staffid, setStaffid] = useState(tmpUser?.staffid)
 
-
 //     useEffect(() => {
 //         // declare the data fetching function
 //         const fetchData = async () => {
@@ -58,8 +57,8 @@
 //     return (
 //         <div>
 //             <Navbar />
-//             {/* <h1 className="text-2xl m-4 text-indigo-800 font-semibold">Insights at a Glance: Your Project Dashboard</h1> */}
-//             <h1 className="text-2xl m-4 text-indigo-800 font-semibold">Elevate productivity today.</h1>
+//             {/* <h1 className="text-2xl m-4 text-purple-800 font-semibold">Insights at a Glance: Your Project Dashboard</h1> */}
+//             <h1 className="text-2xl m-4 text-purple-800 font-semibold">Elevate productivity today.</h1>
 
 //             <div className="flex flex-wrap pt-4">
 //                 <div className="mt-4 w-full lg:w-6/12 xl:w-3/12 px-5 mb-4">
@@ -67,10 +66,10 @@
 //                         <div className="flex-auto p-4">
 //                             <div className="flex flex-wrap">
 //                                 <div className="relative w-full pr-4 max-w-full flex-grow flex-1 flex-col">
-//                                     <h4 className="text-indigo-900 uppercase text-2xl mb-4">Assigned Tasks</h4>
+//                                     <h4 className="text-purple-900 uppercase text-2xl mb-4">Assigned Tasks</h4>
 //                                     <div className="flex flex-col">
 //                                         {taskData?.map((task, index) => (
-//                                             <div key={task.taskid} className=" border-b-2 cursor-pointer border-indigo-700" onClick={() => taskClickEvent(task)}>
+//                                             <div key={task.taskid} className=" border-b-2 cursor-pointer border-purple-700" onClick={() => taskClickEvent(task)}>
 //                                                 <h5 className="font-semibold text-xl text-blueGray-700">{task["clientname"]}</h5>
 //                                                 <h5 className="font-semibold text-sm text-blueGray-700">{task["location"]}</h5>
 //                                             </div>

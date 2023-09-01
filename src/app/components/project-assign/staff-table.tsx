@@ -18,21 +18,21 @@ export const PrjAssignStaffTable = ({
   const tableHeads = ["#", "Staff Name", "Designation"];
   const [selRow, setSetRow] = useState<any>();
   const save = useSelector((state: any) => state.saveReducer.saveState);
-  const [searchStaffname, setSearchStaffname] = useState("");
-  const [searchDesignation, setSearchDesigntion] = useState("");
+  const [searchStaffname1, setSearchStaffname1] = useState("");
+  const [searchDesignation1, setSearchDesignation1] = useState("");
 
   // const rSearchStaffName = useSelector((state: any) => state.saveReducer.staffname);
   // const rSearchDesignation = useSelector((state: any) => state.saveReducer.designation);
 
   const dispatch = useDispatch();
 
-  const searchStaffName = (nameValue: any) => {
-    setSearchStaffname(nameValue);
+  const searchStaffNameEvent = (nameValue: any) => {
+    setSearchStaffname1(nameValue);
     dispatch(setSearchStaffName(nameValue));
   };
 
   const searchDesignationEvent = (designationValue: any) => {
-    setSearchDesigntion(designationValue);
+    setSearchDesignation1(designationValue);
     dispatch(setSearchDesignation(designationValue));
   };
 
@@ -64,7 +64,7 @@ export const PrjAssignStaffTable = ({
     <div className="md:px-2 py-2 w-full">
       <div className="shadow rounded border-b border-gray-200 w-full">
         <table className="min-w-full bg-white">
-          <thead className="border-b-2 text-black border-indigo-400">
+          <thead className="border-b-2 text-black border-purple-400">
             <tr>
               {tableHeads.map((head) => (
                 <th
@@ -77,7 +77,7 @@ export const PrjAssignStaffTable = ({
             </tr>
           </thead>
           <tbody className="text-gray-700">
-            <tr className="even:bg-blue-gray-50/50">
+            <tr className="even:bg-purple-gray-50/50">
               <td className="text-left py-2 px-4">$</td>
               <td className="text-left py-2 px-4 font-bold">
                 <input
@@ -86,8 +86,8 @@ export const PrjAssignStaffTable = ({
                   id="searchStaffname"
                   placeholder="Search Name"
                   autoComplete=""
-                  value={searchStaffname}
-                  onChange={(e) => searchStaffName(e.target.value)}
+                  value={searchStaffname1}
+                  onChange={(e) => searchStaffNameEvent(e.target.value)}
                   className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
               </td>
@@ -98,7 +98,7 @@ export const PrjAssignStaffTable = ({
                   id="searchDesignation"
                   placeholder="Search Designation"
                   autoComplete=""
-                  value={searchDesignation}
+                  value={searchDesignation1}
                   onChange={(e) => searchDesignationEvent(e.target.value)}
                   className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
@@ -112,8 +112,8 @@ export const PrjAssignStaffTable = ({
                 }
                 className={
                   tableRow.staffid != selRow
-                    ? "bg-blue-gray-50/5 cursor-pointer transition ease-in hover:bg-gray-300"
-                    : "bg-indigo-400 cursor-pointer transition ease-in duration-500"
+                    ? "bg-purple-gray-50/5 cursor-pointer transition ease-in hover:bg-gray-300"
+                    : "bg-purple-400 cursor-pointer transition ease-in duration-500"
                 }
                 key={tableRow.staffid}
               >
@@ -130,7 +130,7 @@ export const PrjAssignStaffTable = ({
                     onClick={(e) =>
                       selectRow(e, index, tableRow.staffid, tableRow.staffname)
                     }
-                    className="flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600  hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
+                    className="flex justify-center bg-gradient-to-r from-purple-500 to-purple-600  hover:bg-gradient-to-l hover:from-purple-500 hover:to-purple-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
                   >
                     Select
                   </button>

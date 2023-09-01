@@ -335,11 +335,11 @@ export default function NewProject() {
   //   // fetchData().catch(console.error);
   // }, []);
   return (
-    <WithRole roles={["Admin","Manager"]}>
+    <WithRole roles={["Admin", "Manager"]}>
       <div>
         <Navbar />
         <div className="flex items-center justify-center p-4">
-          <h1 className="text-4xl text-indigo-600 mr-auto">
+          <h1 className="text-4xl text-purple-600 mr-auto">
             {!projectid ? "New Project" : "Project - " + projectname}
           </h1>
         </div>
@@ -399,7 +399,7 @@ export default function NewProject() {
               />
             </div>
             <div className="flex px-3 w-full">
-              <h1 className="text-xl text-indigo-600 mr-auto">Task List</h1>
+              <h1 className="text-xl text-purple-600 mr-auto">Task List</h1>
               <div className="ml-auto">
                 <NewProjectTask
                   arrayUpdateFuntion={updateTaskRowObjectArray}

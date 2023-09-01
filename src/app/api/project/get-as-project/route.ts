@@ -44,6 +44,12 @@ export async function POST(request: Request) {
     taskRowObjects,
   } = await request.json();
   let message: string = "SUCCESS";
+  console.log("sss",projectname,
+  projectdescription,
+  startdate,
+  enddate,
+  projectstatus,
+  taskRowObjects,)
   try {
     await prisma.$transaction(async (tx) => {
       // 1. addnew project .

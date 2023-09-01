@@ -51,7 +51,7 @@ export default function Task() {
       <div>
         <Navbar />
         <div className="flex items-center justify-center p-4">
-          <h1 className="text-4xl   uppercase text-indigo-600 mr-auto">
+          <h1 className="text-4xl   uppercase text-purple-600 mr-auto">
             Tasks
           </h1>
           <TaskAddNew buttonName="Add New" setReloadTable={toggleReloadTable} />

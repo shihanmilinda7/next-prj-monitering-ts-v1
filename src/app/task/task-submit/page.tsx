@@ -184,12 +184,12 @@ export default function Task() {
       <div>
         <Navbar />
         <div className="flex items-center justify-center p-4">
-          <h1 className="text-xl md:text-2xl lg:text-base xl:text-4xl   uppercase text-indigo-600 mr-auto">
+          <h1 className="text-xl md:text-2xl lg:text-base xl:text-4xl   uppercase text-purple-600 mr-auto">
             Task Submission
           </h1>
         </div>
         <div className="flex flex-wrap pt-4">
-          <div className="ml-5 mr-5 w-full border-b-2 border-t-2 cursor-pointer border-indigo-700">
+          <div className="ml-5 mr-5 w-full border-b-2 border-t-2 cursor-pointer border-purple-700">
             {/* <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">
             Prev
           </button> */}

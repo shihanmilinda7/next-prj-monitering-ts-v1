@@ -43,7 +43,8 @@ export const PrjAssignTaskTable = ({
   //redux
   const save = useSelector((state: any) => state.saveReducer.saveState);
   const dispatch = useDispatch();
-  const saveBtnStyle ="rounded-lg bg-gradient-to-r from-green-500 to-green-600  hover:bg-gradient-to-l hover:from-green-500 hover:to-green-600 py-3 px-8 text-center text-base font-semibold text-white outline-none";
+  const saveBtnStyle =
+    "rounded-lg bg-gradient-to-r from-green-500 to-green-600  hover:bg-gradient-to-l hover:from-green-500 hover:to-green-600 py-3 px-8 text-center text-base font-semibold text-white outline-none";
   // const updateData = (
   const cancelBtnStyle =
     "mb-4  flex justify-center bg-gradient-to-r from-amber-500 to-amber-600  hover:bg-gradient-to-l hover:from-amber-500 hover:to-amber-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500 ";
@@ -157,7 +158,7 @@ export const PrjAssignTaskTable = ({
 
       <div className="shadow rounded border-b border-gray-200 w-full">
         <table className="min-w-full bg-white">
-          <thead className="border-b-2 text-black border-indigo-400">
+          <thead className="border-b-2 text-black border-purple-400">
             <tr>
               {tableHeads.map((head) => (
                 <th
@@ -178,7 +179,7 @@ export const PrjAssignTaskTable = ({
                 tablePagination={tablePagination}
                 updateTableRows={updateTableRows}
               />
-              //       <tr className="even:bg-blue-gray-50/50" key={tableRow.taskid}>
+              //       <tr className="even:bg-purple-gray-50/50" key={tableRow.taskid}>
               //         <td className="text-left py-3 px-4 font-bold">
               //           {(tablePagination - 1) * 10 + (index + 1)}
               //         </td>
@@ -194,7 +195,7 @@ export const PrjAssignTaskTable = ({
               //               }
               //               className="
               //     appearance-none h-6 w-6 bg-gray-400 rounded-full
-              //     checked:bg-indigo-800 checked:scale-75
+              //     checked:bg-purple-800 checked:scale-75
               //     transition-all duration-200 peer
               // "
               //             />

@@ -26,10 +26,10 @@ export const PrjAssignProjectTable = ({
 
   const dispatch = useDispatch();
 
-  const searchProjectName = (nameValue:any) =>{
-    setSearchProjectname(nameValue)
+  const searchProjectName = (nameValue: any) => {
+    setSearchProjectname(nameValue);
     dispatch(setSearchProjectName(nameValue));
-  }
+  };
 
   const selectRow = (
     e: React.MouseEvent<HTMLTableRowElement>,
@@ -73,7 +73,7 @@ export const PrjAssignProjectTable = ({
       <div className="shadow rounded border-b border-gray-200 w-full">
         <Suspense fallback={<AlbumsGlimmer />}>
           <table className="min-w-full bg-white">
-            <thead className="border-b-2 text-black border-indigo-400">
+            <thead className="border-b-2 text-black border-purple-400">
               <tr>
                 {tableHeads.map((head) => (
                   <th
@@ -86,21 +86,23 @@ export const PrjAssignProjectTable = ({
               </tr>
             </thead>
             <tbody className="text-gray-700">
-              {search ? <tr className="even:bg-blue-gray-50/50">
-                <td className="text-left py-2 px-4">$</td>
-                <td className="text-left py-2 px-4 font-bold">
-                  <input
-                    type="text"
-                    name="searchProjectname"
-                    id="searchProjectname"
-                    placeholder="Search Name"
-                    autoComplete=""
-                    value={searchProjectname}
-                    onChange={(e) => searchProjectName(e.target.value)}
-                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                  />
-                </td>
-              </tr> : null}
+              {search ? (
+                <tr className="even:bg-purple-gray-50/50">
+                  <td className="text-left py-2 px-4">$</td>
+                  <td className="text-left py-2 px-4 font-bold">
+                    <input
+                      type="text"
+                      name="searchProjectname"
+                      id="searchProjectname"
+                      placeholder="Search Name"
+                      autoComplete=""
+                      value={searchProjectname}
+                      onChange={(e) => searchProjectName(e.target.value)}
+                      className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                    />
+                  </td>
+                </tr>
+              ) : null}
               {projectRowObjects.map((tableRow: any, index: number) => (
                 <tr
                   onClick={(e) =>
@@ -108,8 +110,8 @@ export const PrjAssignProjectTable = ({
                   }
                   className={
                     tableRow.projectid != selRow
-                      ? "bg-blue-gray-50/5 cursor-pointer transition ease-in hover:bg-gray-300"
-                      : "bg-indigo-400  cursor-pointer transition ease-in duration-500"
+                      ? "bg-purple-gray-50/5 cursor-pointer transition ease-in hover:bg-gray-300"
+                      : "bg-purple-400  cursor-pointer transition ease-in duration-500"
                   }
                   key={tableRow.projectid}
                 >

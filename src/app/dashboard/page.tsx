@@ -36,7 +36,7 @@ export default function Dashboard() {
   }
   const tmpUser = session?.user;
   const userRole = session?.user?.role;
-// console.log("userRole",userRole,)
+  // console.log("userRole",userRole,)
   //   const [taskData, setTaskData] = useState<TaskDashBoardObj[]>([]);
   //   const [staffid, setStaffid] = useState(tmpUser?.staffid);
 
@@ -88,8 +88,8 @@ export default function Dashboard() {
   return (
     <div>
       <Navbar />
-      {/* <h1 className="text-2xl m-4 text-indigo-800 font-semibold">Insights at a Glance: Your Project Dashboard</h1> */}
-      <h1 className="text-2xl m-4 text-indigo-800 font-semibold">
+      {/* <h1 className="text-2xl m-4 text-purple-800 font-semibold">Insights at a Glance: Your Project Dashboard</h1> */}
+      <h1 className="text-2xl m-4 text-purple-800 font-semibold">
         Elevate productivity today.
       </h1>
 
@@ -99,7 +99,7 @@ export default function Dashboard() {
             <div className="flex-auto p-4">
               <div className="flex flex-wrap">
                 <div className="relative w-full pr-4 max-w-full flex-grow flex-1 flex-col">
-                  <h4 className="text-indigo-900 text-2xl mb-4">
+                  <h4 className="text-purple-900 text-2xl mb-4">
                     Staff Details
                   </h4>
                 </div>
@@ -111,15 +111,21 @@ export default function Dashboard() {
           </div>
         </div> */}
 
-        <div className={userRole == "Admin" || userRole == "Manager" ? "mt-4 w-full lg:w-6/12 xl:w-6/12 px-5 mb-4 max-h-48 overflow-auto" : "hidden"}>
+        <div
+          className={
+            userRole == "Admin" || userRole == "Manager"
+              ? "mt-4 w-full lg:w-6/12 xl:w-6/12 px-5 mb-4 max-h-48 overflow-auto"
+              : "hidden"
+          }
+        >
           <div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-3 xl:mb-0 shadow-lg">
             <div className="flex-auto p-4">
               <div className="flex flex-wrap">
                 <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
-                  <h4 className="font-semibold text-indigo-900 text-2xl text-blueGray-700">
+                  <h4 className="font-semibold text-purple-900 text-2xl text-blueGray-700">
                     Staff Details
                   </h4>
-                  <h4 className="font-semibold text-xl text-indigo-700 text-2xl text-blueGray-700">
+                  <h4 className="font-semibold text-xl text-purple-700 text-2xl text-blueGray-700">
                     Staff Count - {staffCount}
                   </h4>
                 </div>
@@ -132,7 +138,7 @@ export default function Dashboard() {
               <p className="text-sm text-blueGray-400 mt-4"></p>
               <Link
                 href="/staff"
-                className="ml-auto flex justify-center w-1/4 bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
+                className="ml-auto flex justify-center w-1/4 bg-gradient-to-r from-purple-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-purple-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
               >
                 View
               </Link>
@@ -140,15 +146,21 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className={userRole == "Admin" || userRole == "Manager" ? "mt-4 w-full lg:w-6/12 xl:w-6/12 px-5 mb-4 max-h-48 overflow-auto" : "hidden"}>
+        <div
+          className={
+            userRole == "Admin" || userRole == "Manager"
+              ? "mt-4 w-full lg:w-6/12 xl:w-6/12 px-5 mb-4 max-h-48 overflow-auto"
+              : "hidden"
+          }
+        >
           <div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-3 xl:mb-0 shadow-lg">
             <div className="flex-auto p-4">
               <div className="flex flex-wrap">
                 <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
-                  <h4 className="font-semibold text-indigo-900 text-2xl text-blueGray-700">
+                  <h4 className="font-semibold text-purple-900 text-2xl text-blueGray-700">
                     Project Details
                   </h4>
-                  <h4 className="font-semibold text-xl text-indigo-700 text-2xl text-blueGray-700">
+                  <h4 className="font-semibold text-xl text-purple-700 text-2xl text-blueGray-700">
                     Project Count - {projectCount}
                   </h4>
                 </div>
@@ -161,7 +173,7 @@ export default function Dashboard() {
               <p className="text-sm text-blueGray-400 mt-4"></p>
               <Link
                 href="/project"
-                className="ml-auto flex justify-center w-1/4 bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
+                className="ml-auto flex justify-center w-1/4 bg-gradient-to-r from-purple-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-purple-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
               >
                 View
               </Link>
@@ -169,19 +181,25 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className={userRole == "User" || userRole == "Manager" ? "mt-4 w-full lg:w-6/12 xl:w-6/12 px-5 mb-4 max-h-48 overflow-auto" : "hidden"}>
+        <div
+          className={
+            userRole == "User" || userRole == "Manager"
+              ? "mt-4 w-full lg:w-6/12 xl:w-6/12 px-5 mb-4 max-h-48 overflow-auto"
+              : "hidden"
+          }
+        >
           <div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-3 xl:mb-0 shadow-lg">
             <div className="flex-auto p-4">
               <div className="flex flex-wrap">
                 <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
-                  <h4 className="font-semibold text-indigo-900 text-2xl text-blueGray-700">
+                  <h4 className="font-semibold text-purple-900 text-2xl text-blueGray-700">
                     Project Details
                   </h4>
                   <div className="flex flex-col">
                     {projectObject?.map((p, index) => (
                       <div
                         key={p.projectid}
-                        className="cursor-pointer border-indigo-700 mt-1"
+                        className="cursor-pointer border-purple-700 mt-1"
                       >
                         <h5 className="font-semibold text-xl text-blueGray-700">
                           {p.projectname}
@@ -199,7 +217,7 @@ export default function Dashboard() {
               <p className="text-sm text-blueGray-400 mt-4"></p>
               <Link
                 href="/time-allocation"
-                className="ml-auto flex justify-center w-1/4 bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
+                className="ml-auto flex justify-center w-1/4 bg-gradient-to-r from-purple-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-purple-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
               >
                 View
               </Link>

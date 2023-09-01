@@ -6,6 +6,11 @@ import { useEffect } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
 import { setsaved } from "@/store/saveSlice";
+import {
+  setSearchDesignation,
+  setSearchProjectName,
+  setSearchStaffName,
+} from "@/store/searchSlice";
 
 const Navbar = () => {
   const currentRoute = usePathname();
@@ -22,6 +27,10 @@ const Navbar = () => {
 
   useEffect(() => {
     dispatch(setsaved());
+    dispatch(setSearchStaffName("-1"));
+    dispatch(setSearchDesignation("-1"));
+    dispatch(setSearchProjectName("-1"));
+
     const button = document.querySelector(
       "#menu-button"
     ) as HTMLButtonElement | null;
@@ -43,17 +52,17 @@ const Navbar = () => {
 
   // styles for all links
   const commonStyles =
-    "text-xl md:p-4 py-2 block hover:text-indigo-900 text-white";
+    "text-xl md:p-4 py-2 block hover:text-purple-900 text-white";
   const activeStyle =
-    // commonStyles + " rounded-t-lg bg-indigo-500 text-indigo-900";
+    // commonStyles + " rounded-t-lg bg-purple-500 text-purple-900";
     commonStyles + " overline";
   const nonActiveStyle = commonStyles + " text-white";
 
   //style for dropdown
   const dropCommonStyle =
     "hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap ";
-  const dropActiveStyle = dropCommonStyle + "bg-indigo-400";
-  const dropNonActiveStyle = dropCommonStyle + "bg-indigo-300";
+  const dropActiveStyle = dropCommonStyle + "bg-purple-400";
+  const dropNonActiveStyle = dropCommonStyle + "bg-purple-300";
   return (
     <header>
       <nav
@@ -66,7 +75,7 @@ const Navbar = () => {
           md:py-0
           px-4
           text-lg text-gray-700
-          bg-gradient-to-b from-indigo-600 to-blue-500
+          bg-gradient-to-b from-purple-600 to-purple-500
         "
       >
         <div>
@@ -113,7 +122,11 @@ const Navbar = () => {
                 Dashboard
               </Link>
             </li>
-            <li className={userRole == "Admin" || userRole == "Manager" ? "" : "hidden"}>
+            <li
+              className={
+                userRole == "Admin" || userRole == "Manager" ? "" : "hidden"
+              }
+            >
               <Link
                 href="/staff"
                 className={
@@ -133,7 +146,13 @@ const Navbar = () => {
                 Project
               </Link>
             </li> */}
-            <div className={userRole == "Admin" || userRole == "Manager" ? "dropdown inline-block relative rounded-lg z-50" : "hidden"}>
+            <div
+              className={
+                userRole == "Admin" || userRole == "Manager"
+                  ? "dropdown inline-block relative rounded-lg z-50"
+                  : "hidden"
+              }
+            >
               <button className={nonActiveStyle + " inline-flex"}>
                 <span className="mr-1">Project</span>
                 <svg
@@ -145,7 +164,11 @@ const Navbar = () => {
                 </svg>
               </button>
               <ul className="dropdown-menu absolute hidden text-gray-700 pt-1">
-                <li className={userRole == "Admin" || userRole == "Manager" ? "" : "hidden"}>
+                <li
+                  className={
+                    userRole == "Admin" || userRole == "Manager" ? "" : "hidden"
+                  }
+                >
                   <Link
                     href="/project/new-project"
                     className={
@@ -157,7 +180,11 @@ const Navbar = () => {
                     New Project
                   </Link>
                 </li>
-                <li className={userRole == "Admin" || userRole == "Manager" ? "" : "hidden"}>
+                <li
+                  className={
+                    userRole == "Admin" || userRole == "Manager" ? "" : "hidden"
+                  }
+                >
                   <Link
                     href="/project"
                     className={
@@ -169,7 +196,11 @@ const Navbar = () => {
                     Project Details
                   </Link>
                 </li>
-                <li className={userRole == "Admin" || userRole == "Manager" ? "" : "hidden"}>
+                <li
+                  className={
+                    userRole == "Admin" || userRole == "Manager" ? "" : "hidden"
+                  }
+                >
                   <Link
                     href="/project-assign"
                     className={
@@ -183,21 +214,33 @@ const Navbar = () => {
                 </li>
               </ul>
             </div>
-            <li className={(userRole == "Admin" || userRole == "user") ? "" : "hidden"}>
+            <li
+              className={
+                userRole == "Admin" || userRole == "user" ? "" : "hidden"
+              }
+            >
               <Link
                 href="/time-allocation"
                 className={
-                  currentRoute === "/time-allocation" ? activeStyle : nonActiveStyle
+                  currentRoute === "/time-allocation"
+                    ? activeStyle
+                    : nonActiveStyle
                 }
               >
                 Daily Achievements
               </Link>
             </li>
-            <li className={(userRole == "Admin" || userRole == "Manager") ? "" : "hidden"}>
+            <li
+              className={
+                userRole == "Admin" || userRole == "Manager" ? "" : "hidden"
+              }
+            >
               <Link
                 href="/work-done-report"
                 className={
-                  currentRoute === "/work-done-report" ? activeStyle : nonActiveStyle
+                  currentRoute === "/work-done-report"
+                    ? activeStyle
+                    : nonActiveStyle
                 }
               >
                 Progress Report

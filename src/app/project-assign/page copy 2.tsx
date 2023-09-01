@@ -295,18 +295,18 @@
 //     <div>
 //       <Navbar />
 //       <div className="flex items-center justify-center p-4">
-//         <h1 className="text-4xl text-indigo-600 mr-auto">
+//         <h1 className="text-4xl text-purple-600 mr-auto">
 //           Project assign
 //         </h1>
 //         {/* <button
-//           className="flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600  hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
+//           className="flex justify-center bg-gradient-to-r from-purple-500 to-purple-600  hover:bg-gradient-to-l hover:from-purple-500 hover:to-purple-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
 //         >
 //           Save Not
 //         </button> */}
 //       </div>
 //       <div className="flex">
 //         <div className="w-1/3 pl-4">
-//           <h1 className="text-2xl   text-indigo-400 mr-auto">
+//           <h1 className="text-2xl   text-purple-400 mr-auto">
 //             Staff name : {staffname}
 //           </h1>
 //           <div>
@@ -326,7 +326,7 @@
 //           </div>
 //         </div>
 //         <div className="w-1/3 pl-4">
-//           <h1 className="text-2xl   text-indigo-400 mr-auto">
+//           <h1 className="text-2xl   text-purple-400 mr-auto">
 //             Project name - {projectname}
 //           </h1>
 //           <div>
@@ -347,7 +347,7 @@
 //           </div>
 //         </div>
 //         <div className="w-1/3 pl-4">
-//           <h1 className="text-2xl   text-indigo-400 mr-auto">Task list</h1>
+//           <h1 className="text-2xl   text-purple-400 mr-auto">Task list</h1>
 //           <div>
 //             {taskRowObjects && (
 //               <PrjAssignTaskTable

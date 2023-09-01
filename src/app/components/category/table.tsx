@@ -15,7 +15,7 @@ export const CategoryTable = ({
     <div className="md:px-2 py-2 w-full">
       <div className="shadow overflow-y-scroll rounded border-b border-gray-200 w-full">
         <table className="min-w-full bg-white">
-          <thead className="border-b-2 text-black border-indigo-400">
+          <thead className="border-b-2 text-black border-purple-400">
             <tr>
               {tableHeads.map((head) => (
                 <th
@@ -29,7 +29,10 @@ export const CategoryTable = ({
           </thead>
           <tbody className="text-gray-700">
             {categoryRowData.map((tableRow: CategoryObj, index: number) => (
-              <tr className="even:bg-blue-gray-50/50" key={tableRow.categoryid}>
+              <tr
+                className="even:bg-purple-gray-50/50"
+                key={tableRow.categoryid}
+              >
                 <td className="text-left py-3 px-4 font-bold">{index + 1}</td>
                 <td className="text-left py-3 px-4">{tableRow.categoryname}</td>
                 <td className="text-left py-3 px-4">

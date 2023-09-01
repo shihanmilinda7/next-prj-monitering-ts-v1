@@ -86,7 +86,7 @@ const NewProjectTask = ({
     <div>
       <button
         onClick={() => setIsOpen(true)}
-        className="flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600  hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
+        className="flex justify-center bg-gradient-to-r from-purple-500 to-purple-600  hover:bg-gradient-to-l hover:from-purple-500 hover:to-purple-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
       >
         {buttonName}
       </button>
@@ -97,7 +97,7 @@ const NewProjectTask = ({
         ariaHideApp={false}
       >
         <div className="pl-12 pb-1">
-          <h1 className="text-2xl uppercase text-indigo-800">{buttonName}</h1>
+          <h1 className="text-2xl uppercase text-purple-800">{buttonName}</h1>
         </div>
         <div className="flex items-center justify-center p-12">
           <div className="mx-auto w-full max-w-[550px]">

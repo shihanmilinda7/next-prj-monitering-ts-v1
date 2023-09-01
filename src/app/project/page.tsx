@@ -19,12 +19,16 @@ export default function Project() {
   const router = useRouter();
   const { data: session, status } = useSession();
 
-  if (status === 'loading') {
-    return <div><Spinner /></div>;
+  if (status === "loading") {
+    return (
+      <div>
+        <Spinner />
+      </div>
+    );
   }
 
   if (!session) {
-    router.push('/'); // Redirect to login page if not authenticated
+    router.push("/"); // Redirect to login page if not authenticated
     return null;
   }
 
@@ -56,7 +60,9 @@ export default function Project() {
   useEffect(() => {
     // declare the data fetching function
     const fetchData = async () => {
-      const reponse = await fetch("api/project?page-number=" + tablePagination);
+      const reponse = await fetch(
+        "api/project?page-number=" + tablePagination + "&search-project-name=-1"
+      );
       const res = await reponse.json();
       setProjectRowObjects(res.project);
       setTotalProjectCount(res.totalProjectCount);
@@ -72,10 +78,10 @@ export default function Project() {
       <div>
         <Navbar />
         <div className="flex items-center justify-center p-4">
-          <h1 className="text-4xl text-indigo-600 mr-auto">Projects</h1>
+          <h1 className="text-4xl text-purple-600 mr-auto">Projects</h1>
           <Link
             href="/project/new-project"
-            className="flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
+            className="flex justify-center bg-gradient-to-r from-purple-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-purple-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
           >
             Create New Project
           </Link>

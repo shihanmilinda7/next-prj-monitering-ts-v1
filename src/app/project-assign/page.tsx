@@ -126,7 +126,7 @@ export default function ProjectAssign() {
   const [projectname, setProjectname] = useState("Select from below...");
   const [projectTablePage, setProjectTablePage] = useState(1);
   const [totalProjectCount, setTotalProjectCount] = useState(1);
-  const [searchProjectname, setSearchProjectname] = useState("");
+  // const [searchProjectname, setSearchProjectname] = useState(rSearchProjactName);
 
   const nextProjectTabel = () => {
     if (Math.ceil(totalProjectCount / 10) > projectTablePage) {
@@ -258,19 +258,22 @@ export default function ProjectAssign() {
 
   //for staff table pagination update
   useEffect(() => {
-    dispatch(setSearchStaffName(""));
-    dispatch(setSearchDesignation(""));
+    // dispatch(setSearchStaffName(""));
+    // dispatch(setSearchDesignation(""));
 
     // declare the data fetching function
+
+    const tmpStaffName = rSearchStaffName ?? "-1";
+    const tmpDesignation = rSearchDesignation ?? "-1";
     const fetchData = async () => {
       const reponse = await fetch(
         pathname +
           "/api/staff/get-staff?page-number=" +
           staffTablePage +
           "&search-staff-name=" +
-          rSearchStaffName ??
-          "-1" + "&search-designation=" + rSearchDesignation ??
-          "-1"
+          tmpStaffName +
+          "&search-designation=" +
+          tmpDesignation
       );
       const res = await reponse.json();
       setStaffRowObjects(res.staff);
@@ -282,14 +285,16 @@ export default function ProjectAssign() {
 
   //for staff table pagination update search
   useEffect(() => {
+    const tmpStaffName = rSearchStaffName ?? "-1";
+    const tmpDesignation = rSearchDesignation ?? "-1";
     // declare the data fetching function
     const fetchData = async () => {
       const reponse = await fetch(
         pathname +
           "/api/staff/get-staff?page-number=1&search-staff-name=" +
-          rSearchStaffName ??
-          "-1" + "&search-designation=" + rSearchDesignation ??
-          "-1"
+          tmpStaffName +
+          "&search-designation=" +
+          tmpDesignation
       );
       const res = await reponse.json();
       setStaffRowObjects(res.staff);
@@ -301,7 +306,7 @@ export default function ProjectAssign() {
 
   //for project table pagination update
   useEffect(() => {
-    dispatch(setSearchProjectName(""));
+    // dispatch(setSearchProjectName(""));
 
     // declare the data fetching function
     const fetchData = async () => {
@@ -310,7 +315,7 @@ export default function ProjectAssign() {
           "/api/project?page-number=" +
           projectTablePage +
           "&search-project-name=" +
-          searchProjectname ?? "-1"
+          rSearchProjactName ?? "-1"
       );
       const res = await reponse.json();
       console.log("res", res);
@@ -368,16 +373,16 @@ export default function ProjectAssign() {
       <div>
         <Navbar />
         <div className="flex items-center justify-center p-4">
-          <h1 className="text-4xl text-indigo-600 mr-auto">Project assign</h1>
+          <h1 className="text-4xl text-purple-600 mr-auto">Project assign</h1>
           {/* <button
-          className="flex justify-center bg-gradient-to-r from-indigo-500 to-blue-600  hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
+          className="flex justify-center bg-gradient-to-r from-purple-500 to-purple-600  hover:bg-gradient-to-l hover:from-purple-500 hover:to-purple-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
         >
           Save Not
         </button> */}
         </div>
         <div className="flex">
           <div className="w-1/3 pl-4">
-            <h1 className="text-2xl text-indigo-400 mr-auto">
+            <h1 className="text-2xl text-purple-400 mr-auto">
               Staff name : {staffname}
             </h1>
             {/* <div className="w-full px-2 mb-1">
@@ -409,7 +414,7 @@ export default function ProjectAssign() {
             </div>
           </div>
           <div className="w-1/3 pl-4">
-            <h1 className="text-2xl   text-indigo-400 mr-auto">
+            <h1 className="text-2xl   text-purple-400 mr-auto">
               Project name - {projectname}
             </h1>
             {/* <div className="w-full px-2 mb-1">
@@ -431,6 +436,7 @@ export default function ProjectAssign() {
                   projectRowObjects={projectRowObjects}
                   tablePagination={projectTablePage}
                   staffid={staffid}
+                  search={true}
                 />
               )}
               <Pagination
@@ -442,7 +448,7 @@ export default function ProjectAssign() {
             </div>
           </div>
           <div className="w-1/3 pl-4">
-            <h1 className="text-2xl   text-indigo-400 mr-auto">Task list</h1>
+            <h1 className="text-2xl   text-purple-400 mr-auto">Task list</h1>
             <div>
               {taskRowObjects && (
                 <PrjAssignTaskTable

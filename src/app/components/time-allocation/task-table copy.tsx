@@ -66,9 +66,9 @@
 //   const dispatch = useDispatch();
 
 //   // const saveBtnStyle =
-//   //   "mb-4 ml-auto bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500 ";
+//   //   "mb-4 ml-auto bg-gradient-to-r from-purple-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-purple-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500 ";
 //   // const cancelBtnStyle =
-//   //   "mb-4 ml-auto bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500 ";
+//   //   "mb-4 ml-auto bg-gradient-to-r from-purple-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-purple-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500 ";
 
 //   useEffect(() => {
 //     const q = [...taskRowObjectsIn];
@@ -255,7 +255,7 @@
 //               name="date"
 //               type="date"
 //               autoComplete="{autocomplete}"
-//               className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+//               className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6"
 //               value={date}
 //               onChange={(e) => dateInputEvent(e.target.value)}
 //             />
@@ -275,17 +275,17 @@
 //               rows={2}
 //               value={remark}
 //               onChange={(e) => remarkInputEvent(e.target.value)}
-//               className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+//               className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6"
 //             />
 //           </div>
 //         </div>
 //       </div>
 //       <div className="pt-4 pb-2">
-//         <h1 className="text-2xl text-indigo-400 mr-auto">Task list</h1>
+//         <h1 className="text-2xl text-purple-400 mr-auto">Task list</h1>
 //       </div>
 //       <div className="shadow rounded border-b border-gray-200 w-full">
 //         <table className="min-w-full bg-white">
-//           <thead className="border-b-2 text-black border-indigo-400">
+//           <thead className="border-b-2 text-black border-purple-400">
 //             <tr>
 //               {tableHeads.map((head) => (
 //                 <th
