@@ -36,19 +36,7 @@ export default function NewProject() {
 
   const router = useRouter();
   const { data: session, status } = useSession();
-
-  if (status === "loading") {
-    return (
-      <div>
-        <Spinner />
-      </div>
-    );
-  }
-
-  if (!session) {
-    router.push("/"); // Redirect to login page if not authenticated
-    return null;
-  }
+  const userRole = session?.user?.role;
 
   //define state variables
   // const [reloadTable, setReloadTable] = useState(false);
@@ -334,29 +322,42 @@ export default function NewProject() {
   //   // // call the function
   //   // fetchData().catch(console.error);
   // }, []);
+  if (status === "loading") {
+    return (
+      <div>
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (!session) {
+    router.push("/"); // Redirect to login page if not authenticated
+    return null;
+  }
   return (
-    <WithRole roles={["Admin", "Manager"]}>
+    <WithRole roles={["Admin", "Manager", "User"]}>
       <div>
         <Navbar />
-        <div className="flex items-center justify-center p-4">
-          <h1 className="text-4xl text-purple-600 mr-auto">
-            {!projectid ? "New Project" : "Project - " + projectname}
-          </h1>
-        </div>
-        <div className="flex items-center justify-center p-2">
-          <div className="mx-auto w-full flex flex-wrap">
-            <div className="w-full px-3 sm:w-1/5">
-              <TextInputField
-                label="Project Name"
-                id="projectname"
-                name="projectname"
-                autoComplete=""
-                placeholder="Project Name"
-                value={projectname}
-                onChange={(e) => setProjectname(e.target.value)}
-              />
-            </div>
-            <div className="w-full px-3 sm:w-1/5">
+        <div className={userRole == "User" ? "pointer-events-none" : ""}>
+          <div className="flex items-center justify-center p-4">
+            <h1 className="text-4xl text-purple-600 mr-auto">
+              {!projectid ? "New Project" : "Project - " + projectname}
+            </h1>
+          </div>
+          <div className="flex items-center justify-center p-2">
+            <div className="mx-auto w-full flex flex-wrap">
+              <div className="w-full px-3 sm:w-1/4">
+                <TextInputField
+                  label="Project Name"
+                  id="projectname"
+                  name="projectname"
+                  autoComplete=""
+                  placeholder="Project Name"
+                  value={projectname}
+                  onChange={(e) => setProjectname(e.target.value)}
+                />
+              </div>
+              {/* <div className="w-full px-3 sm:w-1/5">
               <TextInputField
                 label="Project Description"
                 id="projectdescription"
@@ -366,83 +367,95 @@ export default function NewProject() {
                 value={projectdescription}
                 onChange={(e) => setProjectdescription(e.target.value)}
               />
-            </div>
+            </div> */}
 
-            <div className="w-full px-3 sm:w-1/5">
-              <DateInputField
-                label="Start Date"
-                id="startdate"
-                name="startdate"
-                autoComplete=""
-                placeholder="Start Date"
-                value={startdate}
-                onChange={(e) => setStartdate(e.target.value)}
-              />
-            </div>
-            <div className="w-full px-3 sm:w-1/5">
-              <DateInputField
-                label="End Date"
-                id="enddate"
-                name="enddate"
-                autoComplete=""
-                placeholder="End Date"
-                value={enddate}
-                onChange={(e) => setEnddate(e.target.value)}
-              />
-            </div>
-            <div className="w-full px-3 sm:w-1/5">
-              <SelectBoxInputField
-                label="Project Status"
-                value={projectstatus}
-                options={statusOptionValues}
-                onSelect={(e) => setProjectstatus(e.target.value)}
-              />
-            </div>
-            <div className="flex px-3 w-full">
-              <h1 className="text-xl text-purple-600 mr-auto">Task List</h1>
-              <div className="ml-auto">
-                <NewProjectTask
-                  arrayUpdateFuntion={updateTaskRowObjectArray}
-                  buttonName="New Task"
+              <div className="w-full px-3 sm:w-1/4">
+                <DateInputField
+                  label="Start Date"
+                  id="startdate"
+                  name="startdate"
+                  autoComplete=""
+                  placeholder="Start Date"
+                  value={startdate}
+                  onChange={(e) => setStartdate(e.target.value)}
                 />
               </div>
-            </div>
-            <div className="w-full">
-              <ProjectTaskTable
-                taskRowObjects={taskRowObjects}
-                arrayUpdateFuntion={updateTaskRowObjectArray}
-              />
-            </div>
-            {/* <div className="w-full">
-            <Pagination
-              tablePagination={tablePagination}
-              totalProjectCount={taskRowObjects.length }
-              prvTabel={prvTabel}
-              nextTabel={nextTabel}
-            />
-          </div> */}
-            <div className="flex px-3 w-full">
-              <div className="ml-auto">
-                <ConfirmAlertbox
-                  buttonName="Cancel"
-                  leftButtonAction={cancelButton}
-                  title="Are you sure?"
-                  description="Do you want cancel ?"
-                  buttonColour="bg-gradient-to-r from-amber-500 to-amber-600 hover:bg-gradient-to-l hover:from-amber-500 hover:to-amber-600"
+              <div className="w-full px-3 sm:w-1/4">
+                <DateInputField
+                  label="End Date"
+                  id="enddate"
+                  name="enddate"
+                  autoComplete=""
+                  placeholder="End Date"
+                  value={enddate}
+                  onChange={(e) => setEnddate(e.target.value)}
                 />
               </div>
-              <div className="ml-3">
-                <button
-                  onClick={submitButtonHandler}
-                  className="rounded-lg bg-gradient-to-r from-green-500 to-green-600  hover:bg-gradient-to-l hover:from-green-500 hover:to-green-600 py-3 px-8 text-center text-base font-semibold text-white outline-none"
+              <div className="w-full px-3 sm:w-1/4">
+                <SelectBoxInputField
+                  label="Project Status"
+                  value={projectstatus}
+                  options={statusOptionValues}
+                  onSelect={(e) => setProjectstatus(e.target.value)}
+                />
+              </div>
+              <div className="px-3 mb-4 w-full">
+                <label
+                  htmlFor="projectdescription"
+                  className="mb-3 block text-base font-medium text-[#07074D]"
                 >
-                  Submit
-                </button>
+                  Project Description
+                </label>
+                <div className="mt-2 sm:w-5/5">
+                  <textarea
+                    id="projectdescription"
+                    name="projectdescription"
+                    rows={2}
+                    // cols={40}
+                    value={projectdescription}
+                    onChange={(e) => setProjectdescription(e.target.value)}
+                    className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
               </div>
+              <div className="flex px-3 w-full">
+                <h1 className="text-xl text-purple-600 mr-auto">Task List</h1>
+                <div className="ml-auto">
+                  <NewProjectTask
+                    arrayUpdateFuntion={updateTaskRowObjectArray}
+                    buttonName="New Task"
+                  />
+                </div>
+              </div>
+              <div className="w-full">
+                <ProjectTaskTable
+                  taskRowObjects={taskRowObjects}
+                  arrayUpdateFuntion={updateTaskRowObjectArray}
+                />
+              </div>
+              <div className="flex px-3 w-full">
+                <div className="ml-auto">
+                  <ConfirmAlertbox
+                    buttonName="Cancel"
+                    leftButtonAction={cancelButton}
+                    title="Are you sure?"
+                    description="Do you want cancel ?"
+                    buttonColour="bg-gradient-to-r from-amber-500 to-amber-600 hover:bg-gradient-to-l hover:from-amber-500 hover:to-amber-600"
+                  />
+                </div>
+                <div className="ml-3">
+                  <button
+                    onClick={submitButtonHandler}
+                    className="rounded-lg bg-gradient-to-r from-green-500 to-green-600  hover:bg-gradient-to-l hover:from-green-500 hover:to-green-600 py-3 px-8 text-center text-base font-semibold text-white outline-none"
+                  >
+                    Submit
+                  </button>
+                </div>
 
-              {/* <div className={showDelButton ? "flex ml-auto" : "flex ml-auto hidden"}>
+                {/* <div className={showDelButton ? "flex ml-auto" : "flex ml-auto hidden"}>
                 <ConfirmAlertbox buttonName="Delete" leftButtonAction={deleteAction} title="Are you sure?" description="Do you want to delete this record ?" />
               </div> */}
+              </div>
             </div>
           </div>
         </div>

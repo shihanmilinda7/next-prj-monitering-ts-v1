@@ -47,18 +47,7 @@ export default function ProjectAssign() {
   const router = useRouter();
   const { data: session, status } = useSession();
 
-  if (status === "loading") {
-    return (
-      <div>
-        <Spinner />
-      </div>
-    );
-  }
 
-  if (!session) {
-    router.push("/"); // Redirect to login page if not authenticated
-    return null;
-  }
   const dispatch = useDispatch();
 
   //redux
@@ -368,6 +357,18 @@ export default function ProjectAssign() {
     }
   }, [taskTablePage, staffid, saveFlag]);
 
+  if (status === "loading") {
+    return (
+      <div>
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (!session) {
+    router.push("/"); // Redirect to login page if not authenticated
+    return null;
+  }
   return (
     <WithRole roles={["Admin", "Manager"]}>
       <div>

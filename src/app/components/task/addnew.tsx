@@ -63,6 +63,7 @@ const TaskAddNew = (params: ParamTypes) => {
 
   const customStyles = {
     overlay: {
+      zIndex: 50,
       backgroundColor: "rgba(0, 0, 0, 0.6)",
     },
     content: {

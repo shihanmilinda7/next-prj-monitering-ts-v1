@@ -22,18 +22,6 @@ export default function Dashboard() {
   const router = useRouter();
   const { data: session, status } = useSession();
 
-  if (status === "loading") {
-    return (
-      <div>
-        <Spinner />
-      </div>
-    );
-  }
-
-  if (!session) {
-    router.push("/"); // Redirect to login page if not authenticated
-    return null;
-  }
   const tmpUser = session?.user;
   const userRole = session?.user?.role;
   // console.log("userRole",userRole,)
@@ -84,7 +72,18 @@ export default function Dashboard() {
     getProjectDetails();
     getAssignedProjectDetails();
   }, []);
+  if (status === "loading") {
+    return (
+      <div>
+        <Spinner />
+      </div>
+    );
+  }
 
+  if (!session) {
+    router.push("/"); // Redirect to login page if not authenticated
+    return null;
+  }
   return (
     <div>
       <Navbar />
@@ -93,7 +92,7 @@ export default function Dashboard() {
         Elevate productivity today.
       </h1>
 
-      <div className="flex flex-wrap pt-4">
+      <div className="flex flex-wrap pt-4 z-48">
         {/* <div className="mt-4 w-full lg:w-6/12 xl:w-3/12 px-5 mb-4">
           <div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-3 xl:mb-0 shadow-lg">
             <div className="flex-auto p-4">
@@ -114,7 +113,7 @@ export default function Dashboard() {
         <div
           className={
             userRole == "Admin" || userRole == "Manager"
-              ? "mt-4 w-full lg:w-6/12 xl:w-6/12 px-5 mb-4 max-h-48 overflow-auto"
+              ? "mt-4 w-full lg:w-6/12 xl:w-6/12 px-5 mb-4 max-h-48 overflow-auto z-0"
               : "hidden"
           }
         >
@@ -149,11 +148,11 @@ export default function Dashboard() {
         <div
           className={
             userRole == "Admin" || userRole == "Manager"
-              ? "mt-4 w-full lg:w-6/12 xl:w-6/12 px-5 mb-4 max-h-48 overflow-auto"
+              ? "mt-4 w-full lg:w-6/12 xl:w-6/12 px-5 mb-4 max-h-48 overflow-auto  z-48"
               : "hidden"
           }
         >
-          <div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-3 xl:mb-0 shadow-lg">
+          <div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-3 xl:mb-0 shadow-lg ">
             <div className="flex-auto p-4">
               <div className="flex flex-wrap">
                 <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
@@ -184,7 +183,7 @@ export default function Dashboard() {
         <div
           className={
             userRole == "User" || userRole == "Manager"
-              ? "mt-4 w-full lg:w-6/12 xl:w-6/12 px-5 mb-4 max-h-48 overflow-auto"
+              ? "mt-4 w-full lg:w-6/12 xl:w-6/12 px-5 mb-4 max-h-48 overflow-auto  z-48"
               : "hidden"
           }
         >

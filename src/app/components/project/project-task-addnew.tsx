@@ -39,6 +39,7 @@ const NewProjectTask = ({
   const customStyles = {
     overlay: {
       backgroundColor: "rgba(0, 0, 0, 0.6)",
+      zIndex: 50,
     },
     content: {
       top: "50%",
@@ -51,6 +52,7 @@ const NewProjectTask = ({
   };
 
   const addnewOrupdate = () => {
+    setIsOpen(false);
     const validation = inputFieldValidation({
       taskname,
       taskdescription,
@@ -73,10 +75,10 @@ const NewProjectTask = ({
     setIsOpen(false);
     const deleteTask: boolean | undefined = true;
     if (!taskid) {
-      console.log("no task id");
+      // console.log("no task id");
       arrayUpdateFuntion({}, index, { deleteTask });
     } else {
-      console.log("taskid", taskid);
+      // console.log("taskid", taskid);
       const deltaskid: any = taskid;
       arrayUpdateFuntion({}, index, { deleteTask, deltaskid });
     }

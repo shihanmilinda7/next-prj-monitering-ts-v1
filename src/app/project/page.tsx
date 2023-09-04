@@ -18,19 +18,7 @@ import Pagination from "../components/common-comp/pagination";
 export default function Project() {
   const router = useRouter();
   const { data: session, status } = useSession();
-
-  if (status === "loading") {
-    return (
-      <div>
-        <Spinner />
-      </div>
-    );
-  }
-
-  if (!session) {
-    router.push("/"); // Redirect to login page if not authenticated
-    return null;
-  }
+  const userRole = session?.user?.role;
 
   //define state variables
   // const [reloadTable, setReloadTable] = useState(false);
@@ -73,18 +61,33 @@ export default function Project() {
     fetchData().catch(console.error);
   }, [tablePagination]);
 
+  if (status === "loading") {
+    return (
+      <div>
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (!session) {
+    router.push("/"); // Redirect to login page if not authenticated
+    return null;
+  }
   return (
-    <WithRole roles={["Admin", "Manager"]}>
+    <WithRole roles={["Admin", "Manager","User"]}>
       <div>
         <Navbar />
         <div className="flex items-center justify-center p-4">
           <h1 className="text-4xl text-purple-600 mr-auto">Projects</h1>
-          <Link
-            href="/project/new-project"
-            className="flex justify-center bg-gradient-to-r from-purple-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-purple-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
-          >
-            Create New Project
-          </Link>
+
+          {userRole == "User" ? null : (
+            <Link
+              href="/project/new-project"
+              className="flex justify-center bg-gradient-to-r from-purple-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-purple-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
+            >
+              Create New Project
+            </Link>
+          )}
         </div>
         <div>
           {projectRowObjects && (
