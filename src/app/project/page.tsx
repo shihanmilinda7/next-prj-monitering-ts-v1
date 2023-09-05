@@ -64,7 +64,7 @@ export default function Project() {
     const fetchData = async () => {
       const reponse = await fetch(
         "api/time-allocation/get-assign-projects?page-number=1&staffid=" +
-          staffid
+          staffid+"&columns=all"
       );
       const res = await reponse.json();
       setProjectRowObjects(res.project);

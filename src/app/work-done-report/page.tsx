@@ -189,35 +189,39 @@ export default function WorkDoneReport() {
           "/api/staff/get-staff?page-number=" +
           staffTablePage +
           "search-staff-name=" +
-          (rSearchStaffName ?? "-1") +
+          tmpStaffName +
           "&search-designation=" +
-          (rSearchDesignation ?? "-1")
+          tmpDesignation
       );
       const res = await reponse.json();
       setStaffRowObjects(res.staff);
       setTotalStaffCount(res.totalStaffCount);
     };
     // call the function
-    fetchData().catch(console.error);
+    if (tmpStaffName != null || tmpDesignation != null) {
+      fetchData().catch(console.error);
+    }
   }, [staffTablePage]);
   //for staff table pagination update search
   useEffect(() => {
-    // console.log("rSearchDesignation2", rSearchDesignation);
-    // declare the data fetching function
+    const tmpStaffName = rSearchStaffName ?? "-1";
+    const tmpDesignation = rSearchDesignation ?? "-1";
     const fetchData = async () => {
       const reponse = await fetch(
         pathname +
           "/api/staff/get-staff?page-number=1&search-staff-name=" +
-          (rSearchStaffName ?? "-1") +
+          tmpStaffName +
           "&search-designation=" +
-          (rSearchDesignation ?? "-1")
+          tmpDesignation
       );
       const res = await reponse.json();
       setStaffRowObjects(res.staff);
       setTotalStaffCount(res.totalStaffCount);
       // call the function
     };
-    fetchData().catch(console.error);
+    if (tmpStaffName != null || tmpDesignation != null) {
+      fetchData().catch(console.error);
+    }
   }, [rSearchStaffName, rSearchDesignation]);
   //for task table pagination update                                                 TO DOOOOOOOOO
   useEffect(() => {

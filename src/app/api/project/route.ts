@@ -26,7 +26,7 @@ export async function GET(request: Request) {
   }
   try {
     await prisma.$transaction(async (tx) => {
-      totalProjectCount = await prisma.projects.count({
+      totalProjectCount = await tx.projects.count({
         where: {
           projectname: {
             contains: searchProjectName,
@@ -34,7 +34,7 @@ export async function GET(request: Request) {
         },
       });
   
-      project = await prisma.projects.findMany({
+      project = await tx.projects.findMany({
         where: {
           projectname: {
             contains: searchProjectName,

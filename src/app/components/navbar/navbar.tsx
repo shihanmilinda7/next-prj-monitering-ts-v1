@@ -112,10 +112,12 @@ const Navbar = () => {
   const nonActiveStyle = commonStyles;
 
   //style for dropdown
-  const dropCommonStyle =
-    "hover:font-bold py-2 px-4 block whitespace-no-wrap ";
-  const dropActiveStyle = dropCommonStyle + "bg-white text-xs p-4 border border-gray-100 shadow-md font-bold text-xs";
-  const dropNonActiveStyle = dropCommonStyle + "bg-white text-xs p-4 border border-gray-100 shadow-md";
+  const dropCommonStyle = "hover:font-bold py-2 px-4 block whitespace-no-wrap ";
+  const dropActiveStyle =
+    dropCommonStyle +
+    "bg-white text-xs p-4 border border-gray-100 shadow-md font-bold text-xs";
+  const dropNonActiveStyle =
+    dropCommonStyle + "bg-white text-xs p-4 border border-gray-100 shadow-md";
   return (
     <header>
       <nav
@@ -391,7 +393,29 @@ const Navbar = () => {
                 </g>
               </svg>
             </div>
-            <div className="dropdown inline-block relative rounded-lg z-48">
+            <div className="dropdown inline-block relative rounded-lg z-40">
+              <button className={nonActiveStyle + " inline-flex"}>
+                <span className="mr-1">{userName}</span>
+              </button>
+              <ul className="dropdown-menu absolute hidden text-gray-700 pt-1">
+                <li
+                  className={
+                    userRole == "Admin" || userRole == "Manager" ? "" : "hidden"
+                  }
+                >
+                  <button
+                    onClick={() => navButtonHandler("sign-out")}
+                    className={dropNonActiveStyle}
+                  >
+                    Logout
+                  </button>
+                </li>
+                <li>
+                  <UpdatePassword />
+                </li>
+              </ul>
+            </div>
+            {/* <div className="dropdown inline-block relative rounded-lg z-48">
               <button className="md:pt-4 md:pb-4 md:pl-2 block text-indigo-800 hover:font-bold inline-flex">
                 <span className="mr-1">{userName}</span>
               </button>
@@ -412,7 +436,7 @@ const Navbar = () => {
                   <UpdatePassword />
                 </li>
               </ul>
-            </div>
+            </div> */}
           </ul>
         </div>
       </nav>

@@ -11,6 +11,7 @@ export async function GET(request: Request) {
 
   const tmpPageNumber: any = searchParams.get("page-number");
   const staffid: any = searchParams.get("staffid");
+  const columns: any = searchParams.get("columns");
   const searchProjectName: any = searchParams.get("search-project-name");
 
   const currentPage: any = parseInt(tmpPageNumber);
@@ -25,8 +26,15 @@ export async function GET(request: Request) {
     },
   });
 
-  const rawQuery = Prisma.sql`select pa.projectid,p.projectname from projectassigns as pa join projects as p on pa.projectid = p.projectid where staffid = ${staffid}`;
-  const project: any = await prisma.$queryRaw(rawQuery);
+  let project: any;
+
+  if (columns == "all") {
+    const rawQuery = Prisma.sql`select p.* from projectassigns as pa join projects as p on pa.projectid = p.projectid where staffid = ${staffid}`;
+    project = await prisma.$queryRaw(rawQuery);
+  } else {
+    const rawQuery = Prisma.sql`select pa.projectid,p.projectname from projectassigns as pa join projects as p on pa.projectid = p.projectid where staffid = ${staffid}`;
+    project = await prisma.$queryRaw(rawQuery);
+  }
 
   // const project = await prisma.projectassigns.findMany({
   //   skip: offset,
