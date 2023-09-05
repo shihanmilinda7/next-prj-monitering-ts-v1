@@ -198,7 +198,7 @@ export default function WorkDoneReport() {
       setTotalStaffCount(res.totalStaffCount);
     };
     // call the function
-    if (tmpStaffName != null || tmpDesignation != null) {
+    if (rSearchStaffName != null || rSearchDesignation != null) {
       fetchData().catch(console.error);
     }
   }, [staffTablePage]);
@@ -219,7 +219,7 @@ export default function WorkDoneReport() {
       setTotalStaffCount(res.totalStaffCount);
       // call the function
     };
-    if (tmpStaffName != null || tmpDesignation != null) {
+    if (rSearchStaffName != null || rSearchDesignation != null) {
       fetchData().catch(console.error);
     }
   }, [rSearchStaffName, rSearchDesignation]);

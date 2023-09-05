@@ -131,7 +131,7 @@ const UpdatePassword = () => {
     <div>
       <button
         onClick={() => setIsOpen(true)}
-        className="hover:font-bold py-2 px-4 block whitespace-no-wrap bg-white text-xs p-4 border border-gray-100 shadow-md absolute right-0"
+        // className="hover:font-bold py-2 px-4 block whitespace-no-wrap bg-white text-xs p-4 border border-gray-100 shadow-md absolute right-0"
       >
         Setting
       </button>

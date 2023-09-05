@@ -8,6 +8,7 @@ import DateInputField from "../common-comp/input-fields/date-input-fields";
 import { TaskObjectTypes } from "./types";
 import ConfirmAlertbox from "../common-comp/confirm-alertbox";
 import { inputFieldValidation } from "@/app/utils/utils";
+import { AiFillEdit } from "react-icons/ai";
 
 const NewProjectTask = ({
   arrayUpdateFuntion,
@@ -86,12 +87,17 @@ const NewProjectTask = ({
 
   return (
     <div>
+      {buttonName == "Edit Task" ? (
+        <span className="text-gray-500 pr-2">
+          <AiFillEdit className="inline-block h-5 w-5" onClick={() => setIsOpen(true)}/>
+        </span>
+      ) :(
       <button
         onClick={() => setIsOpen(true)}
         className="flex justify-center bg-gradient-to-r from-purple-500 to-purple-600  hover:bg-gradient-to-l hover:from-purple-500 hover:to-purple-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
       >
         {buttonName}
-      </button>
+      </button>)}
       <Modal
         isOpen={isOpen}
         onRequestClose={() => setIsOpen(false)}

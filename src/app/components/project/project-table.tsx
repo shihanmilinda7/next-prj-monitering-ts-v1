@@ -3,6 +3,10 @@
 import Link from "next/link";
 import NewProjectTask from "./project-task-addnew";
 import { ProjectObjectTypes, TaskObjectTypes } from "./types";
+import { AiFillEdit } from "react-icons/ai";
+import { HiViewList } from "react-icons/Hi";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export const ProjectTable = ({
   projectRowObjects,
@@ -11,6 +15,10 @@ export const ProjectTable = ({
   projectRowObjects: ProjectObjectTypes[];
   tablePagination: number;
 }) => {
+  const router = useRouter();
+  const { data: session, status } = useSession();
+  const userRole = session?.user?.role;
+
   const tableHeads = [
     "#",
     "Name",
@@ -20,6 +28,10 @@ export const ProjectTable = ({
     "Status",
     " ",
   ];
+
+  const iconCallBack = (projectid: any) => {
+    router.push("/project/new-project?projectid=" + projectid);
+  };
   return (
     <div className="md:px-2 py-2 w-full">
       <div className="shadow overflow-y-scroll rounded border-b border-gray-200 w-full">
@@ -58,14 +70,29 @@ export const ProjectTable = ({
                     {tableRow.projectstatus}
                   </td>
                   <div className="flex items-center justify-center p-4">
-                    <Link
+                    {userRole == "User" ? (
+                      <span className="text-gray-500 pr-2">
+                        <HiViewList
+                          className="inline-block h-5 w-5 cursor-pointer"
+                          onClick={() => iconCallBack(tableRow.projectid)}
+                        />
+                      </span>
+                    ) : (
+                      <span className="text-gray-500 pr-2">
+                        <AiFillEdit
+                          className="inline-block h-5 w-5 cursor-pointer"
+                          onClick={() => iconCallBack(tableRow.projectid)}
+                        />
+                      </span>
+                    )}
+                    {/* <Link
                       href={
                         "/project/new-project?projectid=" + tableRow.projectid
                       }
                       className="flex justify-center bg-gradient-to-r from-green-500 to-green-600 hover:bg-gradient-to-l hover:from-green-500 hover:to-green-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
                     >
                       View More..
-                    </Link>
+                    </Link> */}
                   </div>
                 </tr>
               )

@@ -7,6 +7,8 @@ import { useEffect } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
 import { setsaved } from "@/store/saveSlice";
+import { AiFillSetting, AiOutlineLogout } from "react-icons/ai";
+
 import {
   setSearchDesignation,
   setSearchProjectName,
@@ -398,20 +400,26 @@ const Navbar = () => {
                 <span className="mr-1">{userName}</span>
               </button>
               <ul className="dropdown-menu absolute hidden text-gray-700 pt-1">
-                <li
-                  className={
-                    userRole == "Admin" || userRole == "Manager" ? "" : "hidden"
-                  }
-                >
-                  <button
-                    onClick={() => navButtonHandler("sign-out")}
-                    className={dropNonActiveStyle}
-                  >
-                    Logout
-                  </button>
+                <li>
+                  <div className={dropNonActiveStyle + " flex"}>
+                    <span className="text-gray-500 pr-2">
+                      <AiOutlineLogout className="inline-block h-5 w-5" />
+                    </span>
+                    <button
+                      onClick={() => navButtonHandler("sign-out")}
+                      // className={dropNonActiveStyle}
+                    >
+                      Logout
+                    </button>
+                  </div>
                 </li>
                 <li>
-                  <UpdatePassword />
+                  <div className={dropNonActiveStyle + " flex"}>
+                    <span className="text-gray-500 pr-2">
+                      <AiFillSetting className="inline-block h-5 w-5" />
+                    </span>
+                    <UpdatePassword />
+                  </div>
                 </li>
               </ul>
             </div>

@@ -1,7 +1,9 @@
 "use client";
 
+import IconConfirmAlertbox from "../common-comp/icon-confirm-alertbox";
 import StaffAddNew from "./addnew";
 import { StaffObj } from "./types";
+import { RiDeleteBin6Fill } from "react-icons/Ri";
 
 export const StaffTable = ({
   staffRowData,
@@ -23,7 +25,7 @@ export const StaffTable = ({
     "NIC",
     "",
   ];
-  console.log("ddd", staffRowData);
+
   return (
     <div className="md:px-2 py-2 w-full">
       <div className="shadow overflow-y-scroll rounded border-b border-gray-200 w-full">

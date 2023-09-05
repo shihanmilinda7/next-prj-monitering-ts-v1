@@ -10,6 +10,7 @@ import Toast from "../common-comp/toast";
 import { toast } from "react-toastify";
 import SelectBoxInputField from "../common-comp/input-fields/select-input-field";
 import { inputFieldValidation } from "@/app/utils/utils";
+import { AiFillEdit, AiFillSetting, AiOutlineLogout } from "react-icons/ai";
 
 type ParamTypes = {
   buttonName: string;
@@ -368,12 +369,18 @@ const StaffAddNew = (params: ParamTypes) => {
 
   return (
     <div>
-      <button
-        onClick={() => setIsOpen(true)}
-        className="flex justify-center bg-gradient-to-r from-purple-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-purple-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
-      >
-        {params.buttonName}
-      </button>
+      {params.buttonName == "Edit | Delete" ? (
+        <span className="text-gray-500 pr-2">
+          <AiFillEdit className="inline-block h-5 w-5" onClick={() => setIsOpen(true)}/>
+        </span>
+      ) : (
+        <button
+          onClick={() => setIsOpen(true)}
+          className="flex justify-center bg-gradient-to-r from-purple-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-purple-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
+        >
+          {params.buttonName}
+        </button>
+      )}
       <Modal
         isOpen={isOpen}
         onRequestClose={() => setIsOpen(false)}
