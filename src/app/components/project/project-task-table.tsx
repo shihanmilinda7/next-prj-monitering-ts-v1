@@ -1,5 +1,6 @@
 "use client";
 
+import { useSession } from "next-auth/react";
 import NewProjectTask from "./project-task-addnew";
 import { TaskObjectTypes } from "./types";
 
@@ -14,6 +15,9 @@ export const ProjectTaskTable = ({
     options?: { deleteTask?: boolean; deltaskid?: number }
   ) => void;
 }) => {
+  const { data: session, status } = useSession();
+  const userRole = session?.user?.role;
+
   const tableHeads = [
     "#",
     "Task Name",
@@ -49,7 +53,14 @@ export const ProjectTaskTable = ({
                   </td>
                   <td className="text-left py-3 px-4">{tableRow.startdate}</td>
                   <td className="text-left py-3 px-4">{tableRow.enddate}</td>
-                  <td className="text-left py-3 px-4 cursor-pointer hover:text-amber-900 hover: ">
+                  {/* <td className="text-left py-3 px-4 cursor-pointer hover:text-amber-900 hover: "> */}
+                  <td
+                    className={
+                      userRole == "User"
+                        ? "hidden"
+                        : "text-left py-3 px-4 cursor-pointer hover:text-amber-900"
+                    }
+                  >
                     <NewProjectTask
                       arrayUpdateFuntion={arrayUpdateFuntion}
                       selRowObject={tableRow}

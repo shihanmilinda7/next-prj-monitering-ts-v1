@@ -71,7 +71,7 @@ export default function Staff() {
       <div>
         <Navbar />
         <div className="flex items-center justify-center p-4">
-          <h1 className="text-4xl   uppercase text-purple-600 mr-auto">
+          <h1 className="text-2xl text-purple-600 mr-auto">
             Staff
           </h1>
           <StaffAddNew

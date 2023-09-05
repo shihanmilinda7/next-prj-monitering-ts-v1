@@ -19,7 +19,7 @@ export default function Project() {
   const router = useRouter();
   const { data: session, status } = useSession();
   const userRole = session?.user?.role;
-
+  const staffid = session?.user.staffid;
   //define state variables
   // const [reloadTable, setReloadTable] = useState(false);
   const [projectRowObjects, setProjectRowObjects] = useState<
@@ -45,7 +45,7 @@ export default function Project() {
   //   setReloadTable((prv: boolean) => !prv)
   // }
 
-  useEffect(() => {
+  const getAllProjectDetails = async () => {
     // declare the data fetching function
     const fetchData = async () => {
       const reponse = await fetch(
@@ -54,11 +54,33 @@ export default function Project() {
       const res = await reponse.json();
       setProjectRowObjects(res.project);
       setTotalProjectCount(res.totalProjectCount);
-      console.log("res", res.project);
     };
 
     // call the function
     fetchData().catch(console.error);
+  };
+
+  const getAssignedProjectDetails = async () => {
+    const fetchData = async () => {
+      const reponse = await fetch(
+        "api/time-allocation/get-assign-projects?page-number=1&staffid=" +
+          staffid
+      );
+      const res = await reponse.json();
+      setProjectRowObjects(res.project);
+      setTotalProjectCount(res.totalProjectCount);
+    };
+    // call the function
+    if (staffid) {
+      fetchData().catch(console.error);
+    }
+  };
+  useEffect(() => {
+    if (userRole == "Admin" || userRole == "Manager") {
+      getAllProjectDetails();
+    } else {
+      getAssignedProjectDetails();
+    }
   }, [tablePagination]);
 
   if (status === "loading") {
@@ -74,11 +96,11 @@ export default function Project() {
     return null;
   }
   return (
-    <WithRole roles={["Admin", "Manager","User"]}>
+    <WithRole roles={["Admin", "Manager", "User"]}>
       <div>
         <Navbar />
         <div className="flex items-center justify-center p-4">
-          <h1 className="text-4xl text-purple-600 mr-auto">Projects</h1>
+          <h1 className="text-2xl text-purple-600 mr-auto">Projects</h1>
 
           {userRole == "User" ? null : (
             <Link

@@ -24,6 +24,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { PrjAssignTaskTimeAllocTable } from "../components/time-allocation/task-table";
 import { setDate } from "@/store/timeAllocDateSlice";
 import CheckBoxInputField from "../components/common-comp/input-fields/checkbox-input-fields";
+import { setStaffId } from "@/store/userDetailSlice";
 
 export default function TimeAllocation() {
   //get pathname
@@ -50,8 +51,10 @@ export default function TimeAllocation() {
 
   const dispatch = useDispatch();
 
-  const [staffid, setStaffid] = useState<any>(tmpUser?.staffid);
-
+  // const [staffid, setStaffid] = useState<any>(tmpUser?.staffid);
+  dispatch(setStaffId(tmpUser?.staffid));
+  const staffid = useSelector((state: any) => state.userDetailReducer.staffid);
+  console.log("staffid-redux", staffid);
   const [projectRowObjects, setProjectRowObjects] = useState<any[]>([]);
   const [projectid, setProjectid] = useState<any>();
   const [projectname, setProjectname] = useState("Select from below...");
@@ -160,29 +163,16 @@ export default function TimeAllocation() {
     setProjectid(projectid);
     setProjectname(projectname);
     await createTaskRowObject(projectid);
-    // const { headerData, detailData } = await getTimeAllocData(
-    //   projectid,
-    //   staffid
-    // );
-    // if (headerData.length == 0) {
-    //   const assignTasks = await getAssignTasks(projectid, staffid);
-
-    //   setTaskHeaderObject("");
-    //   setTaskRowObjects(assignTasks);
-    // } else {
-    //   setTaskHeaderObject(headerData);
-    //   setTaskRowObjects(detailData);
-    // }
   };
 
   //for project table pagination update
   useEffect(() => {
     // console.log("date",date,)
-    if (projectid) {
+    if (projectid && staffid) {
       // console.log("projectid", projectid);
       createTaskRowObject(projectid);
     }
-  }, [saveFlag, date]);
+  }, [saveFlag, date, staffid]);
 
   //for update time allocation data after save
   useEffect(() => {
@@ -201,30 +191,11 @@ export default function TimeAllocation() {
       setTotalProjectCount(res.totalAssignProjectCount);
     };
     // call the function
-    fetchData().catch(console.error);
-  }, [projectTablePage]);
+    if (staffid) {
+      fetchData().catch(console.error);
+    }
+  }, [projectTablePage,staffid]);
 
-  //for task table pagination update                                                 TO DOOOOOOOOO
-  // useEffect(() => {
-  //   if (projectid) {
-  //     if (!save) {
-  //       toast.error("Please Save changes!", {
-  //         position: "top-right",
-  //         autoClose: 5000,
-  //         hideProgressBar: false,
-  //         closeOnClick: true,
-  //         pauseOnHover: true,
-  //         draggable: true,
-  //         progress: undefined,
-  //         theme: "colored",
-  //       });
-  //     } else {
-  //       const assignTasks: any = getAssignTasks(projectid, staffid);
-  //       const projectTasks = getProjectTasks(projectid);
-  //       createTaskRowObj(assignTasks, projectTasks);
-  //     }
-  //   }
-  // }, [taskTablePage, staffid, saveFlag]);
   if (status === "loading") {
     return (
       <div>
@@ -238,32 +209,18 @@ export default function TimeAllocation() {
     return null;
   }
   return (
-    // <WithRole roles={['admin']}>
     <div>
       <Navbar />
       <div className="flex">
         <div className="flex flex-col w-1/3">
           <div className="flex items-center justify-center p-4">
-            <h1 className="text-4xl text-purple-600 mr-auto">
+            <h1 className="text-2xl text-purple-600 mr-auto">
               Daily Achievements
             </h1>
           </div>
-          <div className="flex flex-row">
-            {/* <div className="w-full px-3 sm:w-1/5">
-              <CheckBoxInputField
-                label="Leave"
-                id="projectdescription"
-                name="projectdescription"
-                autoComplete=""
-                placeholder=""
-                value={onactive}
-                onChange={(e) => setOnactive(e.target.checked)}
-              />
-            </div> */}
-          </div>
-          {/* <div className={`p-4 ${onactive ? "" : "pointer-events-none"}`}> */}
-          <h1 className="text-2xl text-purple-400 mr-auto">
-            Project name - {projectname}
+          <div className="flex flex-row"></div>
+          <h1 className="text-2xl text-purple-400 pl-4 mr-auto">
+            Project name : <span className="italic text-base text-purple-800">{projectname}</span>
           </h1>
           <div>
             {projectRowObjects && (
@@ -298,8 +255,4 @@ export default function TimeAllocation() {
       </div>
     </div>
   );
-}
-
-{
-  /* </Provider> </WithRole>*/
 }

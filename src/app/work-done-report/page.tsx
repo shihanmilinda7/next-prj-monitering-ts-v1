@@ -246,7 +246,7 @@ export default function WorkDoneReport() {
         <Navbar />
         <div className="flex items-center justify-center p-4">
           <div className=" mr-auto">
-            <h1 className="text-4xl text-purple-600">
+            <h1 className="text-2xl text-purple-600">
               Monthly Achievements Summary
             </h1>
           </div>
@@ -259,7 +259,10 @@ export default function WorkDoneReport() {
           <div className="w-1/3 pl-4">
             <div className="flex overflow-hidden">
               <h1 className="text-2xl text-purple-400 mr-auto overflow-hidden">
-                Staff name : {staffname}
+                Name :{" "}
+                <span className="italic text-base text-purple-800">
+                  {staffname}
+                </span>
               </h1>
             </div>
             <div>

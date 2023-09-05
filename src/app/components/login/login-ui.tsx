@@ -112,7 +112,7 @@ const Login = () => {
         <div className="sm:w-1/2 xl:w-3/5 h-full hidden md:flex flex-auto items-center justify-center p-10 overflow-hidden bg-purple-900 text-white bg-no-repeat bg-cover relative">
           <div className="absolute bg-gradient-to-b from-purple-600 to-purple-500 opacity-75 inset-0 z-0"></div>
           <div className="w-full  max-w-md z-10">
-            <div className="sm:text-4xl xl:text-5xl font-bold leading-tight mb-6">
+            <div className="sm:text-2xl xl:text-5xl font-bold leading-tight mb-6">
               Next Generation Project Monitering{" "}
             </div>
             <div className="sm:text-sm xl:text-md text-gray-200 font-normal">

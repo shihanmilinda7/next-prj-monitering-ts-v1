@@ -149,7 +149,7 @@ const NewProjectTask = ({
                   onClick={addnewOrupdate}
                   className="rounded-lg bg-gradient-to-r from-green-500 to-green-600  hover:bg-gradient-to-l hover:from-green-500 hover:to-green-600 py-3 px-8 text-center text-base font-semibold text-white outline-none"
                 >
-                  Submit
+                  Add to List
                 </button>
               </div>
               <div>

@@ -47,7 +47,6 @@ export default function ProjectAssign() {
   const router = useRouter();
   const { data: session, status } = useSession();
 
-
   const dispatch = useDispatch();
 
   //redux
@@ -374,30 +373,13 @@ export default function ProjectAssign() {
       <div>
         <Navbar />
         <div className="flex items-center justify-center p-4">
-          <h1 className="text-4xl text-purple-600 mr-auto">Project assign</h1>
-          {/* <button
-          className="flex justify-center bg-gradient-to-r from-purple-500 to-purple-600  hover:bg-gradient-to-l hover:from-purple-500 hover:to-purple-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
-        >
-          Save Not
-        </button> */}
+          <h1 className="text-2xl text-purple-600 mr-auto">Project Assign</h1>
         </div>
         <div className="flex">
           <div className="w-1/3 pl-4">
             <h1 className="text-2xl text-purple-400 mr-auto">
-              Staff name : {staffname}
+              Name : <span className="italic text-base text-purple-800">{staffname}</span>
             </h1>
-            {/* <div className="w-full px-2 mb-1">
-            <input
-              type="text"
-              name="searchStaffname"
-              id="searchStaffname"
-              placeholder="Search Name"
-              autoComplete=""
-              value={searchStaffname}
-              onChange={(e) => setSearchStaffname(e.target.value)}
-              className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-            />
-          </div> */}
             <div>
               {staffRowObjects && (
                 <PrjAssignStaffTable
@@ -416,20 +398,8 @@ export default function ProjectAssign() {
           </div>
           <div className="w-1/3 pl-4">
             <h1 className="text-2xl   text-purple-400 mr-auto">
-              Project name - {projectname}
+              Project name : <span className="italic text-base text-purple-800">{projectname}</span>
             </h1>
-            {/* <div className="w-full px-2 mb-1">
-            <input
-              type="text"
-              name="searchProjectname"
-              id="searchProjectname"
-              placeholder="Search Name"
-              autoComplete=""
-              value={searchProjectname}
-              onChange={(e) => setSearchProjectname(e.target.value)}
-              className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-            />
-          </div> */}
             <div>
               {projectRowObjects && (
                 <PrjAssignProjectTable
@@ -472,8 +442,4 @@ export default function ProjectAssign() {
       </div>
     </WithRole>
   );
-}
-
-{
-  /* </Provider> </WithRole>*/
 }

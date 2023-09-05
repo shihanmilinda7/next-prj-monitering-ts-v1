@@ -184,7 +184,7 @@ export default function Task() {
       <div>
         <Navbar />
         <div className="flex items-center justify-center p-4">
-          <h1 className="text-xl md:text-2xl lg:text-base xl:text-4xl   uppercase text-purple-600 mr-auto">
+          <h1 className="text-xl md:text-2xl lg:text-base xl:text-2xl   uppercase text-purple-600 mr-auto">
             Task Submission
           </h1>
         </div>

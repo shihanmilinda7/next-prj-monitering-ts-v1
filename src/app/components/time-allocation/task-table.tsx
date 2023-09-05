@@ -3,12 +3,14 @@
 import { Suspense, useEffect, useState } from "react";
 import { PrjAssignTaskTimeAllocTableRow } from "./task-table-row";
 import { toast } from "react-toastify";
-import { setsaved, setunsaved } from "@/store/saveSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { setDate } from "@/store/timeAllocDateSlice";
 import ConfirmAlertbox from "../common-comp/confirm-alertbox";
-import CheckBoxInputField from "../common-comp/input-fields/checkbox-input-fields";
 import { useRouter } from "next/navigation";
+import {
+  setTimeAllocationSaved,
+  setTimeAllocationUnsaved,
+} from "@/store/timeAllocationSaveSlice";
 
 export const PrjAssignTaskTimeAllocTable = ({
   taskHeaderObject,
@@ -63,23 +65,19 @@ export const PrjAssignTaskTimeAllocTable = ({
 
   // console.log("taskHeaderObject", taskHeaderObject);
   //redux
-  const save = useSelector((state: any) => state.saveReducer.saveState);
-  const reduxDate = useSelector(
-    (state: any) => state.timeAllocDateReducer.date
+  const timeAllocationSave = useSelector(
+    (state: any) => state.timeAllocationSaveReducer.timeAllocationSaveState
   );
+  // const reduxDate = useSelector(
+  //   (state: any) => state.timeAllocDateReducer.date
+  // );
 
   const dispatch = useDispatch();
-
-  // const saveBtnStyle =
-  //   "mb-4 ml-auto bg-gradient-to-r from-purple-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-purple-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500 ";
-  // const cancelBtnStyle =
-  //   "mb-4 ml-auto bg-gradient-to-r from-purple-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-purple-600 text-gray-100 p-2  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500 ";
 
   useEffect(() => {
     const q = [...taskRowObjectsIn];
     setTaskRows(q);
     console.log("q", q);
-    console.log("save5555555", save);
     setRemark(tmpRemark ?? "");
   }, [taskRowObjectsIn]);
 
@@ -126,7 +124,7 @@ export const PrjAssignTaskTimeAllocTable = ({
           theme: "colored",
         });
       }
-      dispatch(setsaved());
+      dispatch(setTimeAllocationSaved());
       toggleSaveFlag();
       setSaveBtnActive(false);
     } catch (error) {
@@ -167,7 +165,7 @@ export const PrjAssignTaskTimeAllocTable = ({
           theme: "colored",
         });
       }
-      dispatch(setsaved());
+      dispatch(setTimeAllocationSaved());
       toggleSaveFlag();
       setSaveBtnActive(false);
     } catch (error) {
@@ -185,7 +183,7 @@ export const PrjAssignTaskTimeAllocTable = ({
   };
 
   const saveEvent = async () => {
-    dispatch(setsaved());
+    // dispatch(setTimeAllocationSaved());
     if (timeAllocHeaderId) {
       await update();
     } else {
@@ -194,7 +192,7 @@ export const PrjAssignTaskTimeAllocTable = ({
   };
 
   const dateInputEvent = (dateValue: string) => {
-    if (save) {
+    if (timeAllocationSave) {
       setDate1(dateValue);
       dispatch(setDate(dateValue));
     } else {
@@ -214,11 +212,11 @@ export const PrjAssignTaskTimeAllocTable = ({
   const remarkInputEvent = (remarkValue: string) => {
     setRemark(remarkValue);
     setSaveBtnActive(true);
-    dispatch(setunsaved());
+    dispatch(setTimeAllocationUnsaved());
   };
 
   const cancelEvent = () => {
-    dispatch(setsaved());
+    dispatch(setTimeAllocationSaved());
     setSaveBtnActive(false);
   };
   return (

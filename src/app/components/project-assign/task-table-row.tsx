@@ -1,8 +1,9 @@
 "use client";
 
-import { setsaved, setunsaved } from "@/store/saveSlice";
+import { setProjectAssignUnsaved } from "@/store/projectAssignSaveSlice";
+// import { setsaved, setunsaved } from "@/store/saveSlice";
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export const PrjAssignTaskTableRow = ({
   key,
@@ -18,9 +19,7 @@ export const PrjAssignTaskTableRow = ({
   updateTableRows: (taskRow: any) => void;
 }) => {
   const [tableRow, setTableRow] = useState(tableRowIn);
-  const save = useSelector((state: any) => state.saveReducer.saveState);
   const dispatch = useDispatch();
-  // console.log("save",save,)
 
   useEffect(() => {
     const q = { ...tableRowIn };
@@ -30,7 +29,7 @@ export const PrjAssignTaskTableRow = ({
   const updateData = (newObject: any) => {
     setTableRow(newObject);
     updateTableRows(newObject);
-    dispatch(setunsaved());
+    dispatch(setProjectAssignUnsaved());
     // console.log("save",save,)
   };
 

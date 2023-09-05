@@ -207,7 +207,7 @@
 //     <div>
 //       <Navbar />
 //       <div className="flex items-center justify-center p-4">
-//         <h1 className="text-4xl   uppercase text-purple-600 mr-auto">
+//         <h1 className="text-2xl   uppercase text-purple-600 mr-auto">
 //           Project assign
 //         </h1>
 //         <button

@@ -1,8 +1,8 @@
 "use client";
 
-import { setsaved, setunsaved } from "@/store/saveSlice";
+import { setTimeAllocationUnsaved } from "@/store/timeAllocationSaveSlice";
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export const PrjAssignTaskTimeAllocTableRow = ({
   key,
@@ -18,7 +18,6 @@ export const PrjAssignTaskTimeAllocTableRow = ({
   updateTableRows: (taskRow: any) => void;
 }) => {
   const [tableRow, setTableRow] = useState(tableRowIn);
-  const save = useSelector((state: any) => state.saveReducer.saveState);
   const dispatch = useDispatch();
   // console.log("save",save,)
 
@@ -30,7 +29,7 @@ export const PrjAssignTaskTimeAllocTableRow = ({
   const updateData = (newObject: any) => {
     setTableRow(newObject);
     updateTableRows(newObject);
-    dispatch(setunsaved());
+    dispatch(setTimeAllocationUnsaved());
     // console.log("save",save,)
   };
 

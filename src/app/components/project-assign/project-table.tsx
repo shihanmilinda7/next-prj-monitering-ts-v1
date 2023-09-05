@@ -1,6 +1,7 @@
 "use client";
 
 import { setSearchProjectName } from "@/store/searchSlice";
+import { usePathname } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -21,10 +22,28 @@ export const PrjAssignProjectTable = ({
 }) => {
   const tableHeads = ["#", "Project Name"];
   const [selRow, setSetRow] = useState<any>();
-  const save = useSelector((state: any) => state.saveReducer.saveState);
   const [searchProjectname, setSearchProjectname] = useState("");
 
   const dispatch = useDispatch();
+  const currentRoute = usePathname();
+
+  console.log("currentRoute", currentRoute);
+  //redux state for project assign
+  const projectAssignSave = useSelector(
+    (state: any) => state.projectAssignSaveReducer.projectAssignSaveState
+  );
+
+  //redux state for time allocation
+  const timeAllocationSave = useSelector(
+    (state: any) => state.timeAllocationSaveReducer.timeAllocationSaveState
+  );
+
+  // let rootSave;
+  // if (currentRoute === "/project-assign") {
+  //   rootSave = useSelector(
+  //     (state: any) => state.projectAssignSaveReducer.projectAssignSaveState
+  //   );
+  // }
 
   const searchProjectName = (nameValue: any) => {
     setSearchProjectname(nameValue);
@@ -37,7 +56,7 @@ export const PrjAssignProjectTable = ({
     projectname: string
   ) => {
     if (staffid) {
-      if (save) {
+      if (projectAssignSave) {
         setSetRow(projectid);
         projectTableClickEvent(projectid, projectname);
       } else {
@@ -94,7 +113,7 @@ export const PrjAssignProjectTable = ({
                       type="text"
                       name="searchProjectname"
                       id="searchProjectname"
-                      placeholder="Search Name"
+                      placeholder="Name"
                       autoComplete=""
                       value={searchProjectname}
                       onChange={(e) => searchProjectName(e.target.value)}

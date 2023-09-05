@@ -246,7 +246,7 @@
 //       <div className="flex">
 //         <div className="flex flex-col w-1/3">
 //           <div className="flex items-center justify-center p-4">
-//             <h1 className="text-4xl text-purple-600 mr-auto">
+//             <h1 className="text-2xl text-purple-600 mr-auto">
 //               Daily Achievements
 //             </h1>
 //           </div>

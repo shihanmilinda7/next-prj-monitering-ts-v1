@@ -24,7 +24,6 @@ export default function Dashboard() {
 
   const tmpUser = session?.user;
   const userRole = session?.user?.role;
-  // console.log("userRole",userRole,)
   //   const [taskData, setTaskData] = useState<TaskDashBoardObj[]>([]);
   //   const [staffid, setStaffid] = useState(tmpUser?.staffid);
 
@@ -60,18 +59,19 @@ export default function Dashboard() {
           staffid
       );
       const res = await reponse.json();
-      console.log("res", res);
       setProjectbject(res.project);
       //   setTotalProjectCount(res.totalAssignProjectCount);
     };
     // call the function
-    fetchData().catch(console.error);
+    if (staffid) {
+      fetchData().catch(console.error);
+    }
   };
   useEffect(() => {
     getStaffDetails();
     getProjectDetails();
     getAssignedProjectDetails();
-  }, []);
+  }, [staffid]);
   if (status === "loading") {
     return (
       <div>
@@ -121,10 +121,10 @@ export default function Dashboard() {
             <div className="flex-auto p-4">
               <div className="flex flex-wrap">
                 <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
-                  <h4 className="font-semibold text-purple-900 text-2xl text-blueGray-700">
+                  <h4 className="font-semibold text-purple-900 text-lg text-blueGray-700">
                     Staff Details
                   </h4>
-                  <h4 className="font-semibold text-xl text-purple-700 text-2xl text-blueGray-700">
+                  <h4 className="font-semibold text-purple-700 text-base text-blueGray-700">
                     Staff Count - {staffCount}
                   </h4>
                 </div>
@@ -156,10 +156,10 @@ export default function Dashboard() {
             <div className="flex-auto p-4">
               <div className="flex flex-wrap">
                 <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
-                  <h4 className="font-semibold text-purple-900 text-2xl text-blueGray-700">
+                  <h4 className="font-semibold text-purple-900 text-lg text-blueGray-700">
                     Project Details
                   </h4>
-                  <h4 className="font-semibold text-xl text-purple-700 text-2xl text-blueGray-700">
+                  <h4 className="font-semibold text-purple-700 text-base text-blueGray-700">
                     Project Count - {projectCount}
                   </h4>
                 </div>
@@ -191,7 +191,7 @@ export default function Dashboard() {
             <div className="flex-auto p-4">
               <div className="flex flex-wrap">
                 <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
-                  <h4 className="font-semibold text-purple-900 text-2xl text-blueGray-700">
+                  <h4 className="font-semibold text-purple-900 text-lg text-blueGray-700">
                     Project Details
                   </h4>
                   <div className="flex flex-col">
@@ -200,9 +200,15 @@ export default function Dashboard() {
                         key={p.projectid}
                         className="cursor-pointer border-purple-700 mt-1"
                       >
-                        <h5 className="font-semibold text-xl text-blueGray-700">
-                          {p.projectname}
-                        </h5>
+                        {/* <h5 className="font-semibold text-base text-blueGray-700">
+                          {index + 1}. {p.projectname}
+                        </h5> */}
+                        <Link
+                          href={"/project/new-project?projectid=" + p.projectid}
+                          className="font-semibold text-base text-blueGray-700  hover:font-bold"
+                        >
+                          {index + 1}. {p.projectname}
+                        </Link>
                       </div>
                     ))}
                   </div>

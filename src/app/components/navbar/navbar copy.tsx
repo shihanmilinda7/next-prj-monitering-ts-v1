@@ -67,7 +67,7 @@ const Navbar = () => {
       >
         <div>
           <a href="#">
-            <h1 className="text-4xl text-red-100 italic">CeyInfo Solutions</h1>
+            <h1 className="text-2xl text-red-100 italic">CeyInfo Solutions</h1>
           </a>
         </div>
 

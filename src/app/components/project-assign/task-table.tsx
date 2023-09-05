@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { PrjAssignTaskTableRow } from "./task-table-row";
 import { toast } from "react-toastify";
-import { setsaved, setunsaved } from "@/store/saveSlice";
 import { useSelector, useDispatch } from "react-redux";
 import ConfirmAlertbox from "../common-comp/confirm-alertbox";
+import { setProjectAssignSaved } from "@/store/projectAssignSaveSlice";
 
 export const PrjAssignTaskTable = ({
   staffid,
@@ -41,7 +41,6 @@ export const PrjAssignTaskTable = ({
   const [saveBtnActive, setSaveBtnActive] = useState(false);
 
   //redux
-  const save = useSelector((state: any) => state.saveReducer.saveState);
   const dispatch = useDispatch();
   const saveBtnStyle =
     "rounded-lg bg-gradient-to-r from-green-500 to-green-600  hover:bg-gradient-to-l hover:from-green-500 hover:to-green-600 py-3 px-8 text-center text-base font-semibold text-white outline-none";
@@ -58,11 +57,7 @@ export const PrjAssignTaskTable = ({
   useEffect(() => {
     const q = [...taskRowObjectsIn];
     setTaskRows(q);
-    // console.log("saddddddddd", q);
-    console.log("save", save);
-    // if(!save){
-    //   setSaveBtnActive(false);
-    // }
+
   }, [taskRowObjectsIn]);
 
   const updateTableRows = (newVal: any) => {
@@ -75,15 +70,12 @@ export const PrjAssignTaskTable = ({
   };
 
   const cancelEvent = () => {
-    dispatch(setsaved());
+    dispatch(setProjectAssignSaved());
     toggleSaveFlag();
     setSaveBtnActive(false);
   };
 
   const saveEvent = async () => {
-    console.log("staffid", staffid);
-    console.log("projectid", projectid);
-    console.log("taskRowObjects", taskRows);
     try {
       const response = await fetch(pathname + "/api/project-assign", {
         method: "POST",
@@ -107,8 +99,7 @@ export const PrjAssignTaskTable = ({
           theme: "colored",
         });
       }
-      console.log("save-befor", save);
-      dispatch(setsaved());
+      dispatch(setProjectAssignSaved());
       toggleSaveFlag();
       setSaveBtnActive(false);
     } catch (error) {
@@ -127,16 +118,6 @@ export const PrjAssignTaskTable = ({
   return (
     <div className="md:px-2 py-2 w-full">
       <div className="flex mb-2">
-        {/* <button
-          onClick={cancelEvent}
-          className={
-            saveBtnActive
-              ? cancelBtnStyle + " ml-auto"
-              : cancelBtnStyle + " invisible"
-          }
-        >
-          Cancel
-        </button> */}
         <div className={saveBtnActive ? "ml-auto" : "hidden"}>
           <ConfirmAlertbox
             buttonName="Cancel"

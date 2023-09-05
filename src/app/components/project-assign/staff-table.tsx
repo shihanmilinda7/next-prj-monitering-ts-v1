@@ -17,12 +17,16 @@ export const PrjAssignStaffTable = ({
 }) => {
   const tableHeads = ["#", "Staff Name", "Designation"];
   const [selRow, setSetRow] = useState<any>();
-  const save = useSelector((state: any) => state.saveReducer.saveState);
   const [searchStaffname1, setSearchStaffname1] = useState("");
   const [searchDesignation1, setSearchDesignation1] = useState("");
 
   // const rSearchStaffName = useSelector((state: any) => state.saveReducer.staffname);
   // const rSearchDesignation = useSelector((state: any) => state.saveReducer.designation);
+
+  //redux state for project assign
+  const projectAssignSave = useSelector(
+    (state: any) => state.projectAssignSaveReducer.projectAssignSaveState
+  );
 
   const dispatch = useDispatch();
 
@@ -41,13 +45,13 @@ export const PrjAssignStaffTable = ({
     staffid: number,
     staffname: string
   ) => {
-    if (save) {
+    if (projectAssignSave) {
       setSetRow(staffid);
       staffTableClickEvent(staffid, staffname);
     } else {
       toast.error("Please Save changes!", {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -84,7 +88,7 @@ export const PrjAssignStaffTable = ({
                   type="text"
                   name="searchStaffname"
                   id="searchStaffname"
-                  placeholder="Search Name"
+                  placeholder="Name"
                   autoComplete=""
                   value={searchStaffname1}
                   onChange={(e) => searchStaffNameEvent(e.target.value)}
@@ -96,7 +100,7 @@ export const PrjAssignStaffTable = ({
                   type="text"
                   name="searchDesignation"
                   id="searchDesignation"
-                  placeholder="Search Designation"
+                  placeholder="Designation"
                   autoComplete=""
                   value={searchDesignation1}
                   onChange={(e) => searchDesignationEvent(e.target.value)}

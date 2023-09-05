@@ -1,8 +1,7 @@
 "use client";
 
-import { toast } from "react-toastify";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
@@ -12,8 +11,6 @@ import {
   setSearchProjectName,
   setSearchStaffName,
 } from "@/store/searchSlice";
-import { useSelector } from "react-redux";
-import UpdatePassword from "../common-comp/update-password";
 
 const Navbar = () => {
   const currentRoute = usePathname();
@@ -22,7 +19,7 @@ const Navbar = () => {
   const userName = session?.user?.username;
 
   const dispatch = useDispatch();
-  const router = useRouter();
+
   const handleSignOut = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     await signOut();
@@ -30,6 +27,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    dispatch(setsaved());
     dispatch(setSearchStaffName("-1"));
     dispatch(setSearchDesignation("-1"));
     dispatch(setSearchProjectName("-1"));
@@ -53,57 +51,6 @@ const Navbar = () => {
     }
   }, []);
 
-  const projectAssignSave = useSelector(
-    (state: any) => state.projectAssignSaveReducer.projectAssignSaveState
-  );
-  const timeAllocationSave = useSelector(
-    (state: any) => state.timeAllocationSaveReducer.timeAllocationSaveState
-  );
-  const navButtonHandler = async (btn: string) => {
-    if (!projectAssignSave || !timeAllocationSave) {
-      toast.error("Please Save changes!", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-    } else {
-      switch (btn) {
-        case "dashboard":
-          router.push("/dashboard");
-          break;
-        case "staff":
-          router.push("/staff");
-          break;
-        case "new-project":
-          router.push("/project/new-project");
-          break;
-        case "project":
-          router.push("/project");
-          break;
-        case "project-assign":
-          router.push("/project-assign");
-          break;
-        case "time-allocation":
-          router.push("/time-allocation");
-          break;
-        case "work-done-report":
-          router.push("/work-done-report");
-          break;
-        case "sign-out":
-          await signOut();
-          window.location.href = "/";
-          break;
-        default:
-          window.location.href = "/";
-      }
-    }
-  };
-
   // styles for all links
   const commonStyles = "md:p-4 py-2 block hover:font-bold text-indigo-800";
   const activeStyle =
@@ -113,9 +60,9 @@ const Navbar = () => {
 
   //style for dropdown
   const dropCommonStyle =
-    "hover:font-bold py-2 px-4 block whitespace-no-wrap ";
-  const dropActiveStyle = dropCommonStyle + "bg-white text-xs p-4 border border-gray-100 shadow-md font-bold text-xs";
-  const dropNonActiveStyle = dropCommonStyle + "bg-white text-xs p-4 border border-gray-100 shadow-md";
+    "hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap ";
+  const dropActiveStyle = dropCommonStyle + "bg-purple-400";
+  const dropNonActiveStyle = dropCommonStyle + "bg-purple-300";
   return (
     <header>
       <nav
@@ -183,29 +130,39 @@ const Navbar = () => {
               md:pt-0"
           >
             <li>
-              <button
-                onClick={() => navButtonHandler("dashboard")}
+              <Link
+                href="/dashboard"
                 className={
                   currentRoute === "/dashboard" ? activeStyle : nonActiveStyle
                 }
               >
                 Dashboard
-              </button>
+              </Link>
             </li>
             <li
               className={
                 userRole == "Admin" || userRole == "Manager" ? "" : "hidden"
               }
             >
-              <button
-                onClick={() => navButtonHandler("staff")}
+              <Link
+                href="/staff"
                 className={
                   currentRoute === "/staff" ? activeStyle : nonActiveStyle
                 }
               >
                 Staff
-              </button>
+              </Link>
             </li>
+            {/* <li className={userRole == "Admin" ? "" : "hidden"}>
+              <Link
+                href="/project"
+                className={
+                  currentRoute === "/project" ? activeStyle : nonActiveStyle
+                }
+              >
+                Project
+              </Link>
+            </li> */}
             <div
               className={
                 userRole == "Admin" ||
@@ -217,6 +174,13 @@ const Navbar = () => {
             >
               <button className={nonActiveStyle + " inline-flex"}>
                 <span className="mr-1">Project</span>
+                {/* <svg
+                  className="fill-current h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />{" "}
+                </svg> */}
               </button>
               <ul className="dropdown-menu absolute hidden text-gray-700 pt-1">
                 <li
@@ -224,8 +188,8 @@ const Navbar = () => {
                     userRole == "Admin" || userRole == "Manager" ? "" : "hidden"
                   }
                 >
-                  <button
-                    onClick={() => navButtonHandler("new-project")}
+                  <Link
+                    href="/project/new-project"
                     className={
                       currentRoute === "/project/new-project"
                         ? dropActiveStyle
@@ -233,7 +197,7 @@ const Navbar = () => {
                     }
                   >
                     New Project
-                  </button>
+                  </Link>
                 </li>
                 <li
                   className={
@@ -244,8 +208,8 @@ const Navbar = () => {
                       : "hidden"
                   }
                 >
-                  <button
-                    onClick={() => navButtonHandler("project")}
+                  <Link
+                    href="/project"
                     className={
                       currentRoute === "/project"
                         ? dropActiveStyle
@@ -253,15 +217,15 @@ const Navbar = () => {
                     }
                   >
                     Project Details
-                  </button>
+                  </Link>
                 </li>
                 <li
                   className={
                     userRole == "Admin" || userRole == "Manager" ? "" : "hidden"
                   }
                 >
-                  <button
-                    onClick={() => navButtonHandler("project-assign")}
+                  <Link
+                    href="/project-assign"
                     className={
                       currentRoute === "/project-assign"
                         ? dropActiveStyle
@@ -269,7 +233,7 @@ const Navbar = () => {
                     }
                   >
                     Project Assign
-                  </button>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -278,8 +242,8 @@ const Navbar = () => {
                 userRole == "Admin" || userRole == "User" ? "" : "hidden"
               }
             >
-              <button
-                onClick={() => navButtonHandler("time-allocation")}
+              <Link
+                href="/time-allocation"
                 className={
                   currentRoute === "/time-allocation"
                     ? activeStyle
@@ -287,15 +251,15 @@ const Navbar = () => {
                 }
               >
                 Daily Achievements
-              </button>
+              </Link>
             </li>
             <li
               className={
                 userRole == "Admin" || userRole == "Manager" ? "" : "hidden"
               }
             >
-              <button
-                onClick={() => navButtonHandler("work-done-report")}
+              <Link
+                href="/work-done-report"
                 className={
                   currentRoute === "/work-done-report"
                     ? activeStyle
@@ -303,7 +267,7 @@ const Navbar = () => {
                 }
               >
                 Progress Report
-              </button>
+              </Link>
             </li>
 
             <div className="flex items-center justify-center">
@@ -394,25 +358,28 @@ const Navbar = () => {
             <div className="dropdown inline-block relative rounded-lg z-48">
               <button className="md:pt-4 md:pb-4 md:pl-2 block text-indigo-800 hover:font-bold inline-flex">
                 <span className="mr-1">{userName}</span>
+                {/* <svg
+                  className="fill-current h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg> */}
               </button>
               <ul className="dropdown-menu absolute hidden text-gray-700 pt-1">
                 <li>
                   <button
-                    onClick={() => navButtonHandler("sign-out")}
-                    className={
-                      currentRoute === "/project-assign"
-                        ? dropActiveStyle + " absolute right-0"
-                        : dropNonActiveStyle
-                    }
+                    onClick={handleSignOut}
+                    className="z-50 w-full flex justify-center text-gray-700 bg-white p-4 border border-gray-200 shadow-md hover:font-bold p-4  rounded-lg tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500"
                   >
                     Logout
                   </button>
                 </li>
-                <li>
-                  <UpdatePassword />
-                </li>
               </ul>
             </div>
+            {/* <button onClick={handleSignOut} className={commonStyles}>
+              Logout
+            </button> */}
           </ul>
         </div>
       </nav>

@@ -15,6 +15,7 @@ export const StaffTable = ({
   const tableHeads = [
     "#",
     "Name",
+    "Username",
     "Contract Type",
     "Role",
     "Contact No",
@@ -44,6 +45,7 @@ export const StaffTable = ({
               <tr className="even:bg-purple-gray-50/50" key={tableRow.staffid}>
                 <td className="text-left py-3 px-4 font-bold">{index + 1}</td>
                 <td className="text-left py-3 px-4">{tableRow.staffname}</td>
+                <td className="text-left py-3 px-4">{tableRow.username}</td>
                 <td className="text-left py-3 px-4">{tableRow.contracttype}</td>
                 <td className="text-left py-3 px-4">{tableRow.role}</td>
                 <td className="text-left py-3 px-4">{tableRow.contactno}</td>
