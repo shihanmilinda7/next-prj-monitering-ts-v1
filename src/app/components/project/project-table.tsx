@@ -4,7 +4,7 @@ import Link from "next/link";
 import NewProjectTask from "./project-task-addnew";
 import { ProjectObjectTypes, TaskObjectTypes } from "./types";
 import { AiFillEdit } from "react-icons/ai";
-import { FcViewDetails } from "react-icons/Fc";
+import { FcViewDetails } from "react-icons/fc";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 

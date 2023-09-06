@@ -3,7 +3,7 @@
 import IconConfirmAlertbox from "../common-comp/icon-confirm-alertbox";
 import StaffAddNew from "./addnew";
 import { StaffObj } from "./types";
-import { RiDeleteBin6Fill } from "react-icons/Ri";
+import { RiDeleteBin6Fill } from "react-icons/ri";
 
 export const StaffTable = ({
   staffRowData,
