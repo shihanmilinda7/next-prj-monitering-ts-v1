@@ -4,7 +4,7 @@ import Link from "next/link";
 import NewProjectTask from "./project-task-addnew";
 import { ProjectObjectTypes, TaskObjectTypes } from "./types";
 import { AiFillEdit } from "react-icons/ai";
-import { HiViewList } from "react-icons/Hi";
+import { FcViewDetails } from "react-icons/Fc";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
@@ -72,7 +72,7 @@ export const ProjectTable = ({
                   <div className="flex items-center justify-center p-4">
                     {userRole == "User" ? (
                       <span className="text-gray-500 pr-2">
-                        <HiViewList
+                        <FcViewDetails
                           className="inline-block h-5 w-5 cursor-pointer"
                           onClick={() => iconCallBack(tableRow.projectid)}
                         />
