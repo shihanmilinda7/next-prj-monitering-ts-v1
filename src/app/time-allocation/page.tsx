@@ -14,7 +14,7 @@ import Spinner from "@/app/dashboard/loading";
 import { inputFieldValidation } from "@/app/utils/utils";
 import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { PrjAssignStaffTable } from "../components/project-assign/staff-table";
 import { PrjAssignProjectTable } from "../components/project-assign/project-table";
@@ -194,7 +194,7 @@ export default function TimeAllocation() {
     if (staffid) {
       fetchData().catch(console.error);
     }
-  }, [projectTablePage,staffid]);
+  }, [projectTablePage, staffid]);
 
   if (status === "loading") {
     return (
@@ -220,7 +220,10 @@ export default function TimeAllocation() {
           </div>
           <div className="flex flex-row"></div>
           <h1 className="text-2xl text-purple-400 pl-4 mr-auto">
-            Project name : <span className="italic text-base text-purple-800">{projectname}</span>
+            Project name :{" "}
+            <span className="italic text-base text-purple-800">
+              {projectname}
+            </span>
           </h1>
           <div>
             {projectRowObjects && (
@@ -242,17 +245,28 @@ export default function TimeAllocation() {
         </div>
         <div className="p-4 w-2/3">
           {taskRowObjects && (
-            <PrjAssignTaskTimeAllocTable
-              taskHeaderObject={taskHeaderObject}
-              staffid={staffid}
-              projectid={projectid}
-              taskRowObjectsIn={taskRowObjects}
-              tablePagination={taskTablePage}
-              toggleSaveFlag={toggleSaveFlag}
-            />
+            <Suspense fallback={<AlbumsGlimmer />}>
+              <PrjAssignTaskTimeAllocTable
+                taskHeaderObject={taskHeaderObject}
+                staffid={staffid}
+                projectid={projectid}
+                taskRowObjectsIn={taskRowObjects}
+                tablePagination={taskTablePage}
+                toggleSaveFlag={toggleSaveFlag}
+              />
+            </Suspense>
           )}
         </div>
       </div>
+    </div>
+  );
+}
+function AlbumsGlimmer() {
+  return (
+    <div className="glimmer-panel">
+      <div className="glimmer-line" />
+      <div className="glimmer-line" />
+      <div className="glimmer-line" />
     </div>
   );
 }
